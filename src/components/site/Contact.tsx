@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
-import { useForm, ValidationError } from "@formspree/react";
+import { useForm } from "@formspree/react";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
