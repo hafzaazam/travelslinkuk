@@ -94,25 +94,6 @@ export function Header() {
       >
         <Logo light={onLight} />
 
-        <nav className={`hidden xl:flex items-center gap-1 rounded-full border ${navWrap} px-1.5 py-1 shadow-soft transition-colors`}>
-          {NAV.map((item) => {
-            const isActive = active === item.href;
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className={`relative px-3.5 py-2 text-[13px] font-semibold rounded-full transition-colors ${
-                  isActive ? "text-white" : textBase
-                }`}
-              >
-                {isActive && (
-                  <span className="absolute inset-0 -z-0 rounded-full bg-gradient-brand shadow-soft" />
-                )}
-                <span className="relative z-10">{item.label}</span>
-              </a>
-            );
-          })}
-        </nav>
 
         <div className="hidden md:flex items-center gap-2 lg:gap-3">
           <a
