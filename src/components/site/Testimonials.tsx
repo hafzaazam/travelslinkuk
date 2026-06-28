@@ -78,7 +78,7 @@ export function Testimonials() {
   const current = reviews[i % reviews.length];
 
   return (
-    <section id="testimonials" className="relative py-24 px-5 lg:px-8 overflow-hidden">
+    <section id="testimonials" className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-5 lg:px-8 overflow-hidden">
       {/* Ambient premium background */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-32 left-1/2 h-96 w-[60rem] -translate-x-1/2 rounded-full bg-gradient-brand opacity-[0.07] blur-3xl" />
