@@ -102,18 +102,50 @@ export function Icon3DTourist({ className }: IconProps) {
     <Frame className={className}>
       <Defs id={id} />
       <Base id={id} />
-      {/* arc path */}
-      <path d="M14 70 Q 48 18 82 70" fill="none" stroke={`url(#${id}-accent)`} strokeWidth="2" strokeDasharray="3 5" opacity="0.7" />
-      <g className="icon3d-fly" style={{ transformOrigin: "48px 48px" }}>
+      {/* sun rays behind */}
+      <g className="icon3d-tilt" style={{ transformOrigin: "70px 26px" }}>
+        <circle cx="70" cy="26" r="8" fill={`url(#${id}-accent)`} />
+        <circle cx="70" cy="26" r="5" fill="#FFF6C2" opacity="0.9" />
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+          <line
+            key={a}
+            x1="70"
+            y1="26"
+            x2={70 + Math.cos((a * Math.PI) / 180) * 13}
+            y2={26 + Math.sin((a * Math.PI) / 180) * 13}
+            stroke="#FFD66B"
+            strokeWidth="2"
+            strokeLinecap="round"
+            opacity="0.85"
+          />
+        ))}
+      </g>
+      {/* suitcase */}
+      <g className="icon3d-bob">
+        {/* handle */}
+        <rect x="36" y="30" width="24" height="10" rx="5" fill="none" stroke="#1B3FCC" strokeWidth="3" />
+        {/* body */}
+        <rect x="20" y="40" width="56" height="40" rx="6" fill={`url(#${id}-body)`} />
+        <rect x="20" y="40" width="56" height="10" rx="5" fill={`url(#${id}-gloss)`} opacity="0.55" />
+        {/* center band */}
+        <rect x="20" y="56" width="56" height="6" fill="#1B3FCC" opacity="0.55" />
+        {/* luggage tag */}
+        <g className="icon3d-tilt" style={{ transformOrigin: "62px 44px" }}>
+          <line x1="60" y1="42" x2="66" y2="50" stroke="#A8F0FF" strokeWidth="1.5" />
+          <rect x="62" y="50" width="10" height="8" rx="1.5" fill={`url(#${id}-accent)`} />
+        </g>
+        {/* palm leaf accent */}
         <path
-          d="M70 28 L42 50 L24 46 L20 52 L36 58 L40 64 L34 76 L40 78 L52 64 L70 70 Q78 60 78 44 Q78 30 70 28 Z"
-          fill={`url(#${id}-body)`}
+          d="M30 70 Q34 60 42 60 Q36 62 34 70 Q40 64 46 66 Q38 68 34 74 Z"
+          fill="#38D8E8"
+          opacity="0.85"
         />
-        <path d="M70 30 L46 50 L70 56 Q76 50 76 42 Q76 32 70 30 Z" fill={`url(#${id}-gloss)`} opacity="0.45" />
       </g>
     </Frame>
   );
 }
+
+
 
 /* ---------- Business / Building ---------- */
 export function Icon3DBusiness({ className }: IconProps) {
