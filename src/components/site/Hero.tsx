@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, PhoneCall, Sparkles, ChevronDown } from "lucide-react";
-
+import { ArrowRight, PhoneCall, Star, MapPin, Users, ChevronDown } from "lucide-react";
 
 import heroAirport from "@/assets/hero-airport.jpg";
 import heroLondon from "@/assets/hero-london.jpg";
@@ -14,6 +13,7 @@ const SLIDES = [
     subtitle: "Helping students, professionals, families and tourists obtain visas quickly and confidently.",
     primary: "Apply Now",
     secondary: "Free Consultation",
+    spotlight: { place: "London Gateway · UK", tag: "From £0 assessment" },
   },
   {
     image: heroLondon,
@@ -22,6 +22,7 @@ const SLIDES = [
     subtitle: "Expert visa assistance with high approval guidance and complete documentation support.",
     primary: "Start Your Journey",
     secondary: "Explore Countries",
+    spotlight: { place: "Canada · Study Pathway", tag: "98% approval guidance" },
   },
   {
     image: heroTraveler,
@@ -30,12 +31,19 @@ const SLIDES = [
     subtitle: "From application to approval, we simplify your immigration journey end-to-end.",
     primary: "Book Consultation",
     secondary: "Our Process",
+    spotlight: { place: "Australia · Skilled Visa", tag: "End-to-end handling" },
   },
+];
+
+const STATS = [
+  { value: "25+", label: "Destinations" },
+  { value: "12k+", label: "Happy Clients" },
+  { value: "24/7", label: "Global Support" },
 ];
 
 export function Hero() {
   const [i, setI] = useState(0);
-  const [drag, setDrag] = useState(0); // px offset while swiping
+  const [drag, setDrag] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef<number | null>(null);
   const pausedRef = useRef(false);
@@ -70,17 +78,19 @@ export function Hero() {
     setTimeout(() => (pausedRef.current = false), 800);
   };
 
+  const slide = SLIDES[i];
+
   return (
     <section
       id="home"
-      className="relative min-h-[100svh] overflow-hidden touch-pan-y select-none"
+      className="relative min-h-[100svh] overflow-hidden touch-pan-y select-none bg-[#04081a]"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
       onPointerLeave={() => startX.current !== null && endDrag()}
     >
-
+      {/* Background slides */}
       {SLIDES.map((s, idx) => (
         <div
           key={idx}
@@ -90,20 +100,21 @@ export function Hero() {
           <img
             src={s.image}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover scale-105"
+            className={`absolute inset-0 h-full w-full object-cover scale-105 transition-transform duration-[8000ms] ease-out ${
+              idx === i ? "scale-110" : "scale-105"
+            }`}
             loading={idx === 0 ? "eager" : "lazy"}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#050b1f]/85 via-[#081637]/75 to-[#0a1e4a]/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#04081a]/95 via-[#06112b]/55 to-[#04081a]/40" />
-          
+          <div className="absolute inset-0 bg-gradient-to-r from-[#04081a] via-[#04081a]/75 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#04081a] via-[#04081a]/40 to-transparent" />
         </div>
       ))}
 
-      {/* glow orbs */}
-      <div className="pointer-events-none absolute -top-32 -right-20 h-96 w-96 rounded-full bg-brand-cyan/25 blur-3xl animate-float" />
-      <div className="pointer-events-none absolute bottom-10 -left-24 h-96 w-96 rounded-full bg-brand-aqua/20 blur-3xl animate-float" />
+      {/* Glow orbs */}
+      <div className="pointer-events-none absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-brand-cyan/20 blur-[120px] animate-float" />
+      <div className="pointer-events-none absolute bottom-1/4 -right-20 h-96 w-96 rounded-full bg-primary/15 blur-[120px] animate-float" />
 
-      {/* subtle grain texture */}
+      {/* Subtle grain */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
@@ -113,94 +124,147 @@ export function Hero() {
         }}
       />
 
-
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pt-32 pb-28 lg:px-8">
-        {/* soft scrim behind text for legibility */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-[#04081a]/85 via-[#04081a]/50 to-transparent" />
-
-
+      {/* Main content grid */}
+      <div className="relative mx-auto grid min-h-[100svh] max-w-7xl items-center gap-10 px-5 pt-32 pb-40 lg:grid-cols-2 lg:px-8 lg:pb-32">
+        {/* Left column */}
         <div
           key={i}
-          className="relative max-w-3xl animate-fade-up will-change-transform"
+          className="relative max-w-xl animate-fade-up will-change-transform"
           style={{
             transform: `translateX(${drag * 0.25}px)`,
             transition: isDragging ? "none" : "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
           }}
         >
-
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
-              </span>
-              <span className="text-brand-aqua">{SLIDES[i].eyebrow}</span>
+          {/* Eyebrow */}
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
             </span>
-            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.28em] text-white/55">
-              <Sparkles className="h-3 w-3 text-brand-aqua/80" />
-              {String(i + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
-            </span>
-          </div>
+            <span className="text-brand-aqua">{slide.eyebrow}</span>
+          </span>
 
+          {/* Headline */}
           <h1 className="mt-7 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(8,18,48,0.45)] sm:text-5xl lg:text-6xl xl:text-7xl">
-            {SLIDES[i].title[0]}{" "}
+            {slide.title[0]}{" "}
             <span className="block bg-gradient-to-r from-brand-aqua via-brand-cyan to-white bg-clip-text text-transparent">
-              {SLIDES[i].title[1]}
+              {slide.title[1]}
             </span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg font-medium leading-relaxed text-white/85 sm:text-xl">
-            {SLIDES[i].subtitle}
+
+          {/* Subtitle */}
+          <p className="mt-6 max-w-lg text-base font-medium leading-relaxed text-white/80 sm:text-lg">
+            {slide.subtitle}
           </p>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
+
+          {/* CTAs */}
+          <div className="mt-10 flex flex-wrap items-center gap-5">
             <a
               href="#contact"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-brand px-7 py-4 text-sm font-bold text-white shadow-[0_18px_40px_-12px_rgba(33,87,243,0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_50px_-12px_rgba(61,99,255,0.85)]"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
-              <span className="relative">{SLIDES[i].primary}</span>
+              <span className="relative">{slide.primary}</span>
               <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 py-4 text-sm font-bold text-white backdrop-blur-md transition hover:border-white/40 hover:bg-white/10"
+              href="tel:+440000000000"
+              className="group inline-flex items-center gap-3 text-sm font-semibold text-white transition-colors hover:text-brand-aqua"
             >
-              <PhoneCall className="h-4 w-4 text-brand-aqua" /> {SLIDES[i].secondary}
+              <span className="grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-white/5 backdrop-blur-md transition-colors group-hover:border-brand-aqua/60 group-hover:bg-brand-aqua/10">
+                <PhoneCall className="h-5 w-5 text-brand-aqua" />
+              </span>
+              {slide.secondary}
             </a>
           </div>
-
         </div>
 
+        {/* Right visual column */}
+        <div className="relative hidden lg:flex justify-center items-center h-full">
+          {/* Floating destination card */}
+          <div
+            key={`card-${i}`}
+            className="relative z-20 w-80 rounded-3xl border border-white/10 bg-white/5 p-4 rotate-3 shadow-2xl backdrop-blur-xl transition-transform duration-500 hover:rotate-0 animate-fade-up"
+          >
+            <div className="relative h-48 w-full overflow-hidden rounded-2xl">
+              <img src={slide.image} alt="" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04081a]/60 to-transparent" />
+              <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white border border-white/15">
+                <MapPin className="h-3 w-3 text-brand-aqua" />
+                Featured
+              </div>
+            </div>
+            <div className="mt-4 flex items-end justify-between">
+              <div className="min-w-0">
+                <h4 className="font-display text-lg font-bold text-white truncate">{slide.spotlight.place}</h4>
+                <p className="text-sm font-medium text-brand-aqua">{slide.spotlight.tag}</p>
+              </div>
+              <div className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-white/10 bg-white/10 px-2 py-1 text-xs font-bold text-white">
+                <Star className="h-3 w-3 fill-brand-aqua text-brand-aqua" />
+                4.9
+              </div>
+            </div>
+          </div>
 
-        {/* swipe control */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
-          <div className="flex items-center gap-2.5">
-            {SLIDES.map((_, idx) => (
-              <button
-                key={idx}
-                aria-label={`Go to slide ${idx + 1}`}
-                onClick={() => setI(idx)}
-                className={`relative h-1.5 rounded-full overflow-hidden transition-all duration-500 ${
-                  idx === i ? "w-12 bg-white/25" : "w-6 bg-white/25 hover:bg-white/40"
-                }`}
-              >
-                {idx === i && (
-                  <span
-                    key={i}
-                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-brand-aqua to-brand-cyan rounded-full"
-                    style={{ animation: "hero-progress 6.5s linear forwards" }}
-                  />
-                )}
-              </button>
+          {/* Decor stat card */}
+          <div className="absolute -bottom-2 -left-6 w-64 -rotate-6 rounded-2xl border border-brand-cyan/20 bg-[#06112b]/60 p-4 shadow-xl backdrop-blur-lg">
+            <div className="flex items-center gap-3">
+              <div className="grid h-10 w-10 place-items-center rounded-full bg-brand-cyan/20">
+                <Users className="h-5 w-5 text-brand-cyan" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-brand-cyan/70">Total Travellers</p>
+                <p className="font-bold text-white">12,482 Approved</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom strip: stats + dots + scroll cue */}
+      <div className="absolute bottom-6 left-0 right-0 z-20 px-5 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-between gap-6 md:flex-row md:items-end">
+          {/* Stats */}
+          <div className="hidden md:flex items-end gap-10">
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <p className="font-display text-2xl font-bold text-white">{s.value}</p>
+                <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55">{s.label}</p>
+              </div>
             ))}
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
-            <span className="inline-block h-px w-6 bg-white/30" />
-            <span>Scroll</span>
-            <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
+
+          {/* Dots + scroll */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex items-center gap-2.5">
+              {SLIDES.map((_, idx) => (
+                <button
+                  key={idx}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  onClick={() => setI(idx)}
+                  className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
+                    idx === i
+                      ? "w-12 bg-white/25 shadow-[0_0_8px_rgba(34,211,238,0.45)]"
+                      : "w-2.5 bg-white/25 hover:bg-white/40"
+                  }`}
+                >
+                  {idx === i && (
+                    <span
+                      key={i}
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-brand-aqua to-brand-cyan"
+                      style={{ animation: "hero-progress 6.5s linear forwards" }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
+              <span className="inline-block h-px w-6 bg-white/30" />
+              <span>Scroll</span>
+              <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
+            </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );
