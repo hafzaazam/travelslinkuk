@@ -100,7 +100,9 @@ export function Testimonials() {
             onMouseLeave={onMouseLeave}
             className="group relative rounded-3xl p-[1.5px] shadow-glow transition-transform duration-300 ease-out will-change-transform"
             style={{
-              transform: "rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))",
+              transform: reducedMotion
+                ? undefined
+                : "rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))",
               transformStyle: "preserve-3d",
               backgroundImage:
                 "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--brand-cyan, 190 90% 55%)) 50%, hsl(var(--primary)) 100%)",
