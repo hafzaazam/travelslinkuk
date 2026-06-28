@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { useForm } from "@formspree/react";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -15,7 +15,7 @@ const schema = z.object({
 });
 
 export function Contact() {
-  const [loading, setLoading] = useState(false);
+  const [state, handleFormspreeSubmit] = useForm("xvzjreol");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,26 +27,36 @@ export function Contact() {
       toast.error(parsed.error.issues[0]?.message ?? "Please check the form");
       return;
     }
-    setLoading(true);
     const subject = `${parsed.data.country} · ${parsed.data.visa}`;
     const messageBody = parsed.data.message?.trim()
       ? parsed.data.message
       : `Interested in ${parsed.data.visa} visa for ${parsed.data.country}.`;
-    const { error } = await supabase.from("contact_submissions").insert({
+    await handleFormspreeSubmit({
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
+      country: parsed.data.country,
+      visa: parsed.data.visa,
       subject,
       message: messageBody,
+      _subject: subject,
     });
-    setLoading(false);
-    if (error) {
-      toast.error("Could not send. Please try again or email us directly.");
-      return;
-    }
-    toast.success("Application received! Our team will contact you within 24 hours.");
-    form.reset();
   };
+
+  useEffect(() => {
+    if (state.succeeded) {
+      toast.success("Application received! Our team will contact you within 24 hours.");
+    }
+  }, [state.succeeded]);
+
+  useEffect(() => {
+    if (state.errors) {
+      toast.error("Could not send. Please try again or email us directly.");
+    }
+  }, [state.errors]);
+
+  const loading = state.submitting;
+
 
 
   return (
