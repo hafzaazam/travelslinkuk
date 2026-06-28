@@ -11,7 +11,7 @@ import { Process } from "@/components/site/Process";
 import { Destinations } from "@/components/site/Destinations";
 import { Testimonials } from "@/components/site/Testimonials";
 import { ReviewForm } from "@/components/site/ReviewForm";
-import { FAQ } from "@/components/site/FAQ";
+import { FAQ, FAQS } from "@/components/site/FAQ";
 import { Contact } from "@/components/site/Contact";
 import { CTABanner } from "@/components/site/CTABanner";
 import { Footer } from "@/components/site/Footer";
@@ -24,8 +24,23 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence." },
       { property: "og:title", content: "Travel Links Solution — UK Visa Consultancy" },
       { property: "og:description", content: "Premium visa guidance for tourism, family and business travel." },
+      { property: "og:url", content: "https://travelslinkuk.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
   }),
   component: Index,
 });

@@ -50,12 +50,15 @@ export function Footer() {
             </p>
           </div>
           <form onSubmit={onSubscribe} className="flex w-full max-w-md gap-2">
+            <label htmlFor="newsletter-email" className="sr-only">Email address</label>
             <input
+              id="newsletter-email"
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
+              aria-label="Email address"
               className="flex-1 rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-brand-aqua/60"
             />
             <button

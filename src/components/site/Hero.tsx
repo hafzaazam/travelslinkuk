@@ -99,6 +99,8 @@ export function Hero() {
               idx === i ? "scale-110" : "scale-105"
             }`}
             loading={idx === 0 ? "eager" : "lazy"}
+            fetchPriority={idx === 0 ? "high" : "auto"}
+            decoding={idx === 0 ? "sync" : "async"}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#04081a] via-[#04081a]/75 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#04081a] via-[#04081a]/40 to-transparent" />
