@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { SectionHeading } from "./Section";
 
 const COUNTRIES: [string, string, string][] = [
