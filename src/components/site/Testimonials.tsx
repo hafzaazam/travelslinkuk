@@ -90,9 +90,8 @@ export function Testimonials() {
             style={{
               transform: "rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))",
               transformStyle: "preserve-3d",
-              background:
-                "conic-gradient(from var(--angle,0deg), hsl(var(--primary)/.9), hsl(var(--brand-cyan,200 90% 55%)/.9), hsl(var(--primary)/.9))",
-              animation: "spin-slow 8s linear infinite",
+              backgroundImage:
+                "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--brand-cyan, 190 90% 55%)) 50%, hsl(var(--primary)) 100%)",
             }}
           >
             <div
