@@ -33,7 +33,7 @@ type Subscriber = { id: string; email: string; unsubscribed: boolean; created_at
 
 function AdminPage() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<Tab>("contacts");
+  const [tab, setTab] = useState<Tab>("dashboard");
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
