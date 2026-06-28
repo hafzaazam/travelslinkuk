@@ -53,7 +53,8 @@ export function Hero() {
             loading={idx === 0 ? "eager" : "lazy"}
           />
           <div className="absolute inset-0 bg-gradient-hero" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/60 via-transparent to-brand-deep/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/85 via-brand-deep/55 to-brand-deep/40" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_35%,rgba(61,99,255,0.35)_0%,transparent_55%),radial-gradient(circle_at_85%_75%,rgba(33,87,243,0.25)_0%,transparent_55%)]" />
         </div>
       ))}
 
@@ -61,36 +62,63 @@ export function Hero() {
       <div className="pointer-events-none absolute -top-32 -right-20 h-96 w-96 rounded-full bg-brand-cyan/40 blur-3xl animate-float" />
       <div className="pointer-events-none absolute bottom-10 -left-24 h-96 w-96 rounded-full bg-brand-aqua/30 blur-3xl animate-float" />
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pt-32 pb-24 lg:px-8">
-        <div key={i} className="max-w-3xl animate-fade-up">
-          <span className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white">
-            <Sparkles className="h-3.5 w-3.5 text-brand-aqua" />
-            {SLIDES[i].eyebrow}
+      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pt-32 pb-28 lg:px-8">
+        {/* soft scrim behind text for legibility */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-brand-deep/70 via-brand-deep/30 to-transparent" />
+
+        <div key={i} className="relative max-w-3xl animate-fade-up">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
+            </span>
+            <span className="text-brand-aqua">{SLIDES[i].eyebrow}</span>
           </span>
-          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="mt-7 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(8,18,48,0.45)] sm:text-5xl lg:text-6xl xl:text-7xl">
             {SLIDES[i].title[0]}{" "}
             <span className="block bg-gradient-to-r from-brand-aqua via-brand-cyan to-white bg-clip-text text-transparent">
               {SLIDES[i].title[1]}
             </span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-white/85 sm:text-xl">{SLIDES[i].subtitle}</p>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <p className="mt-6 max-w-2xl text-lg font-medium leading-relaxed text-white/85 sm:text-xl">
+            {SLIDES[i].subtitle}
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-glow transition hover:translate-y-[-1px]"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-brand px-7 py-4 text-sm font-bold text-white shadow-[0_18px_40px_-12px_rgba(33,87,243,0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_50px_-12px_rgba(61,99,255,0.85)]"
             >
-              {SLIDES[i].primary}
-              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="relative">{SLIDES[i].primary}</span>
+              <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-xl glass px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 transition"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 py-4 text-sm font-bold text-white backdrop-blur-md transition hover:border-white/40 hover:bg-white/10"
             >
-              <PhoneCall className="h-4 w-4" /> {SLIDES[i].secondary}
+              <PhoneCall className="h-4 w-4 text-brand-aqua" /> {SLIDES[i].secondary}
             </a>
           </div>
 
+          {/* trust strip */}
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/15 pt-6">
+            <div className="flex flex-col">
+              <span className="font-display text-2xl font-bold tracking-tight text-white">98%</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">Success Rate</span>
+            </div>
+            <div className="hidden h-8 w-px bg-white/15 sm:block" />
+            <div className="flex flex-col">
+              <span className="font-display text-2xl font-bold tracking-tight text-white">12k+</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">Visas Approved</span>
+            </div>
+            <div className="hidden h-8 w-px bg-white/15 sm:block" />
+            <div className="flex flex-col">
+              <span className="font-display text-2xl font-bold tracking-tight text-white">25+</span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">Countries Covered</span>
+            </div>
+          </div>
         </div>
+
 
         {/* controls */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3">
