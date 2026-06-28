@@ -52,19 +52,20 @@ export function Hero() {
             className="absolute inset-0 h-full w-full object-cover scale-105"
             loading={idx === 0 ? "eager" : "lazy"}
           />
-          <div className="absolute inset-0 bg-gradient-hero" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/85 via-brand-deep/55 to-brand-deep/40" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_35%,rgba(61,99,255,0.35)_0%,transparent_55%),radial-gradient(circle_at_85%_75%,rgba(33,87,243,0.25)_0%,transparent_55%)]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#050b1f]/85 via-[#081637]/75 to-[#0a1e4a]/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#04081a]/95 via-[#06112b]/55 to-[#04081a]/40" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_35%,rgba(61,99,255,0.28)_0%,transparent_55%),radial-gradient(circle_at_85%_75%,rgba(33,87,243,0.22)_0%,transparent_55%)]" />
         </div>
       ))}
 
       {/* glow orbs */}
-      <div className="pointer-events-none absolute -top-32 -right-20 h-96 w-96 rounded-full bg-brand-cyan/40 blur-3xl animate-float" />
-      <div className="pointer-events-none absolute bottom-10 -left-24 h-96 w-96 rounded-full bg-brand-aqua/30 blur-3xl animate-float" />
+      <div className="pointer-events-none absolute -top-32 -right-20 h-96 w-96 rounded-full bg-brand-cyan/25 blur-3xl animate-float" />
+      <div className="pointer-events-none absolute bottom-10 -left-24 h-96 w-96 rounded-full bg-brand-aqua/20 blur-3xl animate-float" />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pt-32 pb-28 lg:px-8">
         {/* soft scrim behind text for legibility */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-brand-deep/70 via-brand-deep/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-[#04081a]/85 via-[#04081a]/50 to-transparent" />
+
 
         <div key={i} className="relative max-w-3xl animate-fade-up">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
