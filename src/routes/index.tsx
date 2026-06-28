@@ -38,19 +38,30 @@ function Index() {
         <Hero />
         <Stats />
         <section id="about" className="py-24 px-5 lg:px-8">
-          <div className="mx-auto max-w-5xl text-center">
-            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-              About Us
-            </span>
-            <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-              A UK consultancy built on <span className="text-gradient-brand">trust, expertise and results</span>
-            </h2>
-            <p className="mt-6 text-lg text-muted-foreground">
-              Travel Links Solution is a UK-registered visa consultancy with over a decade of experience guiding
-              tourists, families and business travellers through complex visa pathways. Our team of senior
-              consultants combines deep regulatory knowledge with a genuinely personal approach — so your
-              application is in expert hands from day one.
-            </p>
+          <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-7 text-center lg:text-left">
+              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                About Us
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                A UK consultancy built on <span className="text-gradient-brand">trust, expertise and results</span>
+              </h2>
+              <p className="mt-6 text-lg text-muted-foreground">
+                Travel Links Solution is a UK-registered visa consultancy with over a decade of experience guiding
+                tourists, families and business travellers through complex visa pathways. Our team of senior
+                consultants combines deep regulatory knowledge with a genuinely personal approach — so your
+                application is in expert hands from day one.
+              </p>
+            </div>
+            <div className="lg:col-span-5 relative flex justify-center">
+              <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-brand opacity-20 blur-3xl" aria-hidden />
+              <img
+                src={aboutVisa.url}
+                alt="Approved visa document illustration"
+                className="relative w-full max-w-sm h-auto drop-shadow-[0_30px_60px_rgba(33,87,243,0.35)] animate-float"
+                loading="lazy"
+              />
+            </div>
           </div>
         </section>
         <Services />
