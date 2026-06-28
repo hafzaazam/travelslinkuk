@@ -68,16 +68,9 @@ export function Contact() {
   };
 
   useEffect(() => {
-    if (state.succeeded) {
-      setSubmitted(true);
-      formRef.current?.reset();
-      toast.success("Application received! We'll be in touch within 24 hours.");
-    }
-  }, [state.succeeded]);
-
-  useEffect(() => {
     if (state.errors) {
-      toast.error("Could not send. Please try again or email us directly.");
+      // Email side failed but the enquiry was still saved.
+      console.warn("Formspree notification failed", state.errors);
     }
   }, [state.errors]);
 
