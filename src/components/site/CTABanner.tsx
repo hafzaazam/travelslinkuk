@@ -17,7 +17,12 @@ export function CTABanner() {
             <a href="#contact" className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-soft hover:translate-y-[-1px] transition">
               Apply Now <ArrowRight className="h-4 w-4" />
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-xl glass-dark text-white px-6 py-3.5 text-sm font-semibold hover:bg-white/15 transition">
+            <a
+              href={`https://wa.me/447879465341?text=${encodeURIComponent("Hi Travel Links Solution, I'd like to enquire about a visa application.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl glass-dark text-white px-6 py-3.5 text-sm font-semibold hover:bg-white/15 transition"
+            >
               <MessageCircle className="h-4 w-4" /> WhatsApp
             </a>
           </div>
