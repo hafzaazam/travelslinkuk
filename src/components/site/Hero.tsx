@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, PhoneCall, Sparkles } from "lucide-react";
+import { ArrowRight, PhoneCall, Sparkles, ChevronDown } from "lucide-react";
+
 
 import heroAirport from "@/assets/hero-airport.jpg";
 import heroLondon from "@/assets/hero-london.jpg";
