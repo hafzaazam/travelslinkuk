@@ -78,7 +78,7 @@ export function Testimonials() {
   const current = reviews[i % reviews.length];
 
   return (
-    <section id="testimonials" className="relative py-24 px-5 lg:px-8 overflow-hidden">
+    <section id="testimonials" className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-5 lg:px-8 overflow-hidden">
       {/* Ambient premium background */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-32 left-1/2 h-96 w-[60rem] -translate-x-1/2 rounded-full bg-gradient-brand opacity-[0.07] blur-3xl" />
@@ -91,7 +91,7 @@ export function Testimonials() {
           title={<>Stories from <span className="text-gradient-brand">happy travellers</span></>}
         />
 
-        <div className="mt-14 relative" style={{ perspective: "1200px" }}>
+        <div className="mt-10 sm:mt-14 relative" style={{ perspective: "1200px" }}>
           {/* Animated gradient border wrapper */}
           <div
             ref={cardRef}
@@ -109,7 +109,7 @@ export function Testimonials() {
             }}
           >
             <div
-              className="relative overflow-hidden rounded-[calc(var(--radius)+10px)] bg-white p-8 sm:p-12"
+              className="relative overflow-hidden rounded-[calc(var(--radius)+10px)] bg-white p-5 sm:p-8 lg:p-12"
               style={{ transform: "translateZ(30px)" }}
             >
               {/* Cursor spotlight */}
@@ -136,30 +136,30 @@ export function Testimonials() {
               />
 
               <div className="relative">
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand shadow-glow transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-6deg]">
-                  <Quote className="h-6 w-6 text-white" />
+                <div className="inline-flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-brand shadow-glow transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-6deg]">
+                  <Quote className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
 
                 <p
                   key={current.id}
-                  className="mt-6 font-display text-xl sm:text-2xl lg:text-[1.85rem] font-medium leading-snug text-foreground animate-in fade-in slide-in-from-bottom-2 duration-500"
+                  className="mt-5 sm:mt-6 font-display text-lg sm:text-2xl lg:text-[1.85rem] font-medium leading-snug text-foreground break-words animate-in fade-in slide-in-from-bottom-2 duration-500"
                 >
                   "{current.comment}"
                 </p>
 
-                <div className="mt-8 flex items-center justify-between border-t border-border/60 pt-6">
-                  <div className="flex items-center gap-3">
-                    <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-brand text-sm font-bold text-white shadow-soft">
+                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-border/60 pt-5 sm:pt-6">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-brand text-sm font-bold text-white shadow-soft">
                       {current.name.charAt(0)}
                     </div>
-                    <div>
-                      <div className="font-semibold tracking-tight">{current.name}</div>
+                    <div className="min-w-0">
+                      <div className="font-semibold tracking-tight truncate">{current.name}</div>
                       {current.country && (
-                        <div className="text-xs uppercase tracking-wider text-muted-foreground">{current.country}</div>
+                        <div className="text-xs uppercase tracking-wider text-muted-foreground truncate">{current.country}</div>
                       )}
                     </div>
                   </div>
-                  <div className="flex gap-0.5">
+                  <div className="flex gap-0.5 shrink-0">
                     {Array.from({ length: 5 }).map((_, j) => (
                       <Star
                         key={j}
@@ -174,6 +174,7 @@ export function Testimonials() {
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
 
