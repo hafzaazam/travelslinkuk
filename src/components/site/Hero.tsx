@@ -152,33 +152,35 @@ export function Hero() {
         </div>
 
 
-        {/* controls */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3">
-          <button
-            aria-label="Previous slide"
-            onClick={() => setI((p) => (p - 1 + SLIDES.length) % SLIDES.length)}
-            className="grid h-10 w-10 place-items-center rounded-full glass text-white hover:bg-white/20"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <div className="flex gap-2">
+        {/* swipe control */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {SLIDES.map((_, idx) => (
               <button
                 key={idx}
-                aria-label={`Slide ${idx + 1}`}
+                aria-label={`Go to slide ${idx + 1}`}
                 onClick={() => setI(idx)}
-                className={`h-1.5 rounded-full transition-all ${idx === i ? "w-8 bg-white" : "w-2.5 bg-white/50"}`}
-              />
+                className={`relative h-1.5 rounded-full overflow-hidden transition-all duration-500 ${
+                  idx === i ? "w-12 bg-white/25" : "w-6 bg-white/25 hover:bg-white/40"
+                }`}
+              >
+                {idx === i && (
+                  <span
+                    key={i}
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-brand-aqua to-brand-cyan rounded-full"
+                    style={{ animation: "hero-progress 6.5s linear forwards" }}
+                  />
+                )}
+              </button>
             ))}
           </div>
-          <button
-            aria-label="Next slide"
-            onClick={() => setI((p) => (p + 1) % SLIDES.length)}
-            className="grid h-10 w-10 place-items-center rounded-full glass text-white hover:bg-white/20"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
+            <span className="inline-block h-px w-6 bg-white/30" />
+            <span>Swipe</span>
+            <span className="inline-block h-px w-6 bg-white/30" />
+          </div>
         </div>
+
       </div>
     </section>
   );
