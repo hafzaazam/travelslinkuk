@@ -143,7 +143,7 @@ export function Header() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
-          className={`xl:hidden relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
+          className={`relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
             onLight
               ? "border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
               : "border-border/60 bg-white/70 backdrop-blur-md hover:bg-white"
