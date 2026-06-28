@@ -94,25 +94,6 @@ export function Header() {
       >
         <Logo light={onLight} />
 
-        <nav className={`hidden xl:flex items-center gap-1 rounded-full border ${navWrap} px-1.5 py-1 shadow-soft transition-colors`}>
-          {NAV.map((item) => {
-            const isActive = active === item.href;
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className={`relative px-3.5 py-2 text-[13px] font-semibold rounded-full transition-colors ${
-                  isActive ? "text-white" : textBase
-                }`}
-              >
-                {isActive && (
-                  <span className="absolute inset-0 -z-0 rounded-full bg-gradient-brand shadow-soft" />
-                )}
-                <span className="relative z-10">{item.label}</span>
-              </a>
-            );
-          })}
-        </nav>
 
         <div className="hidden md:flex items-center gap-2 lg:gap-3">
           <a
@@ -162,7 +143,7 @@ export function Header() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
-          className={`xl:hidden relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
+          className={`relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
             onLight
               ? "border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
               : "border-border/60 bg-white/70 backdrop-blur-md hover:bg-white"
@@ -183,7 +164,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       <div
-        className={`xl:hidden overflow-hidden border-t border-border/60 bg-white/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ${
+        className={`overflow-hidden border-t border-border/60 bg-white/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ${
           open ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
