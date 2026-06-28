@@ -91,7 +91,7 @@ export function Testimonials() {
           title={<>Stories from <span className="text-gradient-brand">happy travellers</span></>}
         />
 
-        <div className="mt-14 relative" style={{ perspective: "1200px" }}>
+        <div className="mt-10 sm:mt-14 relative" style={{ perspective: "1200px" }}>
           {/* Animated gradient border wrapper */}
           <div
             ref={cardRef}
