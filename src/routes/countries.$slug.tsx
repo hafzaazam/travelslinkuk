@@ -263,6 +263,7 @@ function CountryPage() {
         </section>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
