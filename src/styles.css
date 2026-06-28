@@ -123,3 +123,21 @@
 }
 .animate-fade-up { animation: fade-up 0.7s ease-out both; }
 .animate-float { animation: float-slow 6s ease-in-out infinite; }
+
+/* 3D icon motion */
+@keyframes icon-bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(-2deg); } }
+@keyframes icon-spin-slow { to { transform: rotate(360deg); } }
+@keyframes icon-fly { 0% { transform: translate(0,0) rotate(-8deg); } 50% { transform: translate(3px,-4px) rotate(-2deg); } 100% { transform: translate(0,0) rotate(-8deg); } }
+@keyframes icon-pulse-ring { 0% { transform: scale(0.85); opacity: 0.7; } 100% { transform: scale(1.4); opacity: 0; } }
+@keyframes icon-tilt { 0%, 100% { transform: rotateZ(0deg); } 50% { transform: rotateZ(6deg); } }
+@keyframes icon-shine { 0% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+@keyframes icon-rise { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+.icon3d-bob { animation: icon-bob 3.6s ease-in-out infinite; transform-origin: center; }
+.icon3d-fly { animation: icon-fly 4s ease-in-out infinite; transform-origin: center; }
+.icon3d-spin { animation: icon-spin-slow 14s linear infinite; transform-origin: center; transform-box: fill-box; }
+.icon3d-tilt { animation: icon-tilt 4.5s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.icon3d-rise { animation: icon-rise 3.2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.icon3d-ring { animation: icon-pulse-ring 2.6s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+.icon3d-shine { animation: icon-shine 3.8s ease-in-out infinite; }
+
