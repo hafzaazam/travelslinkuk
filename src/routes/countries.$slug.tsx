@@ -236,9 +236,9 @@ function CountryPage() {
               </div>
               <Link
                 to="/countries"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-primary relative after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-gradient-brand after:transition-transform after:duration-300 hover:after:scale-x-100"
               >
-                View all <ArrowRight className="h-4 w-4" />
+                View all <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
 
