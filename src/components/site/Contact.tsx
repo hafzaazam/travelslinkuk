@@ -43,9 +43,17 @@ export function Contact() {
     });
   };
 
-  if (state.succeeded) {
-    toast.success("Application received! Our team will contact you within 24 hours.");
-  }
+  useEffect(() => {
+    if (state.succeeded) {
+      toast.success("Application received! Our team will contact you within 24 hours.");
+    }
+  }, [state.succeeded]);
+
+  useEffect(() => {
+    if (state.errors) {
+      toast.error("Could not send. Please try again or email us directly.");
+    }
+  }, [state.errors]);
 
   const loading = state.submitting;
 
