@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import {
   Star, Mail, Phone, Trash2, Check, X, LogOut, RefreshCw,
   Download, Search, MessageSquare, Users, ShieldCheck, Home,
+  LayoutDashboard, ArrowRight,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
