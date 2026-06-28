@@ -84,6 +84,7 @@ function CountriesIndex() {
         </section>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
