@@ -23,6 +23,16 @@ export function Testimonials() {
   const [i, setI] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
 
   useEffect(() => {
     supabase
@@ -47,10 +57,11 @@ export function Testimonials() {
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const px = x / rect.width;
-    const py = y / rect.height;
     el.style.setProperty("--mx", `${x}px`);
     el.style.setProperty("--my", `${y}px`);
+    if (reducedMotion) return;
+    const px = x / rect.width;
+    const py = y / rect.height;
     el.style.setProperty("--rx", `${(0.5 - py) * 6}deg`);
     el.style.setProperty("--ry", `${(px - 0.5) * 8}deg`);
   };
@@ -62,6 +73,7 @@ export function Testimonials() {
     el.style.setProperty("--rx", `0deg`);
     el.style.setProperty("--ry", `0deg`);
   };
+
 
   const current = reviews[i % reviews.length];
 
@@ -88,7 +100,9 @@ export function Testimonials() {
             onMouseLeave={onMouseLeave}
             className="group relative rounded-3xl p-[1.5px] shadow-glow transition-transform duration-300 ease-out will-change-transform"
             style={{
-              transform: "rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))",
+              transform: reducedMotion
+                ? undefined
+                : "rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))",
               transformStyle: "preserve-3d",
               backgroundImage:
                 "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--brand-cyan, 190 90% 55%)) 50%, hsl(var(--primary)) 100%)",
@@ -103,7 +117,7 @@ export function Testimonials() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 transition-opacity duration-300"
                 style={{
-                  opacity: hovering ? 1 : 0,
+                  opacity: hovering && !reducedMotion ? 1 : 0,
                   background:
                     "radial-gradient(450px circle at var(--mx,50%) var(--my,50%), hsl(var(--primary)/0.10), transparent 55%)",
                 }}
