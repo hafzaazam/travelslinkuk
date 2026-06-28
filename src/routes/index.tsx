@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import aboutVisa from "@/assets/about-visa.png.asset.json";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
