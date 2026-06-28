@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import {
   Star, Mail, Phone, Trash2, Check, X, LogOut, RefreshCw,
   Download, Search, MessageSquare, Users, ShieldCheck, Home,
+  LayoutDashboard, ArrowRight,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Tab = "contacts" | "reviews" | "subscribers";
+type Tab = "dashboard" | "contacts" | "reviews" | "subscribers";
 
 type Contact = {
   id: string; name: string; email: string; phone: string | null;
@@ -32,7 +33,7 @@ type Subscriber = { id: string; email: string; unsubscribed: boolean; created_at
 
 function AdminPage() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<Tab>("contacts");
+  const [tab, setTab] = useState<Tab>("dashboard");
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
@@ -113,6 +114,7 @@ function AdminPage() {
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <nav className="flex gap-1 -mb-px">
             {([
+              ["dashboard", LayoutDashboard, "Dashboard"],
               ["contacts", MessageSquare, "Contacts"],
               ["reviews", Star, "Reviews"],
               ["subscribers", Users, "Subscribers"],
@@ -134,10 +136,120 @@ function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+        {tab === "dashboard" && <DashboardPanel onNavigate={setTab} userEmail={userEmail} />}
         {tab === "contacts" && <ContactsPanel />}
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "subscribers" && <SubscribersPanel />}
       </main>
+    </div>
+  );
+}
+
+/* ----------- Dashboard ----------- */
+function DashboardPanel({ onNavigate, userEmail }: { onNavigate: (t: Tab) => void; userEmail: string | null }) {
+  const [stats, setStats] = useState<{
+    contacts: number; newContacts: number;
+    reviews: number; pendingReviews: number;
+    subscribers: number; activeSubscribers: number;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const [contacts, reviews, subs] = await Promise.all([
+      supabase.from("contact_submissions").select("status", { count: "exact" }),
+      supabase.from("reviews").select("approved", { count: "exact" }),
+      supabase.from("newsletter_subscribers").select("unsubscribed", { count: "exact" }),
+    ]);
+    setStats({
+      contacts: contacts.count ?? 0,
+      newContacts: (contacts.data ?? []).filter((c: { status: string }) => c.status === "new").length,
+      reviews: reviews.count ?? 0,
+      pendingReviews: (reviews.data ?? []).filter((r: { approved: boolean }) => !r.approved).length,
+      subscribers: subs.count ?? 0,
+      activeSubscribers: (subs.data ?? []).filter((s: { unsubscribed: boolean }) => !s.unsubscribed).length,
+    });
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const cards = [
+    {
+      key: "contacts" as Tab, icon: MessageSquare, label: "Contacts",
+      description: "Inbound enquiries from the contact form.",
+      total: stats?.contacts ?? 0, highlight: stats?.newContacts ?? 0, highlightLabel: "new",
+    },
+    {
+      key: "reviews" as Tab, icon: Star, label: "Reviews",
+      description: "Approve, hide and moderate customer reviews.",
+      total: stats?.reviews ?? 0, highlight: stats?.pendingReviews ?? 0, highlightLabel: "pending",
+    },
+    {
+      key: "subscribers" as Tab, icon: Users, label: "Subscribers",
+      description: "Newsletter list — search and export to CSV.",
+      total: stats?.subscribers ?? 0, highlight: stats?.activeSubscribers ?? 0, highlightLabel: "active",
+    },
+  ];
+
+  return (
+    <div>
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 className="font-display text-2xl font-bold">Welcome back</h2>
+          <p className="text-sm text-muted-foreground">
+            Signed in as <span className="font-medium text-foreground">{userEmail}</span>. Manage every customer-facing section below.
+          </p>
+        </div>
+        <button onClick={load} className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold hover:bg-secondary">
+          <RefreshCw className="h-3.5 w-3.5" /> Refresh
+        </button>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map(({ key, icon: Icon, label, description, total, highlight, highlightLabel }) => (
+          <button
+            key={key}
+            onClick={() => onNavigate(key)}
+            className="group text-left rounded-3xl border border-border bg-white p-6 shadow-soft hover:shadow-glow hover:-translate-y-0.5 transition-all"
+          >
+            <div className="flex items-start justify-between">
+              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-brand text-white shadow-glow">
+                <Icon className="h-5 w-5" />
+              </div>
+              <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+            </div>
+            <div className="mt-5 font-display text-lg font-semibold">{label}</div>
+            <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{description}</p>
+            <div className="mt-5 flex items-baseline gap-2">
+              <div className="font-display text-3xl font-bold text-gradient-brand">
+                {loading ? "…" : total}
+              </div>
+              {!loading && highlight > 0 && (
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                  {highlight} {highlightLabel}
+                </span>
+              )}
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-10 rounded-3xl border border-border bg-white p-6 shadow-soft">
+        <h3 className="font-display text-base font-semibold">Quick links</h3>
+        <p className="text-xs text-muted-foreground">Jump to other parts of the site.</p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link to="/" className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold hover:bg-secondary">
+            <Home className="h-3.5 w-3.5" /> View live site
+          </Link>
+          <a href="/#contact" className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold hover:bg-secondary">
+            <MessageSquare className="h-3.5 w-3.5" /> Contact section
+          </a>
+          <a href="/#testimonials" className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold hover:bg-secondary">
+            <Star className="h-3.5 w-3.5" /> Testimonials
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
