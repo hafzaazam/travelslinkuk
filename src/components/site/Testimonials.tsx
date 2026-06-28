@@ -23,6 +23,16 @@ export function Testimonials() {
   const [i, setI] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
 
   useEffect(() => {
     supabase
@@ -47,10 +57,11 @@ export function Testimonials() {
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const px = x / rect.width;
-    const py = y / rect.height;
     el.style.setProperty("--mx", `${x}px`);
     el.style.setProperty("--my", `${y}px`);
+    if (reducedMotion) return;
+    const px = x / rect.width;
+    const py = y / rect.height;
     el.style.setProperty("--rx", `${(0.5 - py) * 6}deg`);
     el.style.setProperty("--ry", `${(px - 0.5) * 8}deg`);
   };
@@ -62,6 +73,7 @@ export function Testimonials() {
     el.style.setProperty("--rx", `0deg`);
     el.style.setProperty("--ry", `0deg`);
   };
+
 
   const current = reviews[i % reviews.length];
 
