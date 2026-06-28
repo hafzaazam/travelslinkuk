@@ -162,7 +162,7 @@ function CountryPage() {
             </div>
 
             <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {country.visas.map((v) => (
+              {country.visas.map((v: { type: string; description: string }) => (
                 <div
                   key={v.type}
                   className="group rounded-3xl bg-white border border-border p-7 shadow-card hover:shadow-glow hover:-translate-y-1 hover:border-primary/30 transition-all"
@@ -201,7 +201,7 @@ function CountryPage() {
             </div>
 
             <ul className="space-y-3">
-              {country.requirements.map((r) => (
+              {country.requirements.map((r: string) => (
                 <li
                   key={r}
                   className="flex items-start gap-3 rounded-2xl bg-white border border-border p-4 shadow-card"
