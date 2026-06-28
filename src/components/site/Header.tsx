@@ -116,14 +116,6 @@ export function Header() {
             className={`hidden lg:block h-6 w-px ${onLight ? "bg-white/15" : "bg-border"}`}
           />
 
-          <a
-            href="#contact"
-            className={`relative px-3 py-2 text-[13px] font-semibold transition-colors after:absolute after:left-3 after:right-3 after:bottom-1 after:h-px after:scale-x-0 after:origin-left after:bg-gradient-brand after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-              onLight ? "text-white/85 hover:text-white" : "text-foreground/80 hover:text-primary"
-            }`}
-          >
-            Free Assessment
-          </a>
 
           <a
             href="#contact"
