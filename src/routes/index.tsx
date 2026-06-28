@@ -9,6 +9,7 @@ import { WhyUs } from "@/components/site/WhyUs";
 import { Process } from "@/components/site/Process";
 import { Destinations } from "@/components/site/Destinations";
 import { Testimonials } from "@/components/site/Testimonials";
+import { ReviewForm } from "@/components/site/ReviewForm";
 import { FAQ } from "@/components/site/FAQ";
 import { Contact } from "@/components/site/Contact";
 import { CTABanner } from "@/components/site/CTABanner";
@@ -56,6 +57,7 @@ function Index() {
         <Process />
         <Destinations />
         <Testimonials />
+        <ReviewForm />
         <FAQ />
         <Contact />
         <CTABanner />
