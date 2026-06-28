@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { z } from "zod";
 import { SectionHeading } from "./Section";
