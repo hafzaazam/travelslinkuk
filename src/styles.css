@@ -147,3 +147,8 @@
 html:has(.process-snap) { scroll-snap-type: y proximity; }
 .process-snap-stop { scroll-snap-align: start; scroll-snap-stop: normal; }
 
+@keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee-x 60s linear infinite; }
+.group\/marquee:hover .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
