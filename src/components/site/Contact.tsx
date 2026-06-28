@@ -188,8 +188,9 @@ export function Contact() {
                 <Field name="visa" label="Visa Type" placeholder="e.g. Tourist" />
               </div>
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
+                <label htmlFor="contact-message" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
                 <textarea
+                  id="contact-message"
                   name="message"
                   rows={4}
                   placeholder="Tell us briefly about your goal…"
@@ -243,10 +244,12 @@ export function Contact() {
 }
 
 function Field({ name, label, type = "text", placeholder }: { name: string; label: string; type?: string; placeholder?: string }) {
+  const id = `contact-${name}`;
   return (
     <div>
-      <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
       <input
+        id={id}
         name={name}
         type={type}
         placeholder={placeholder}

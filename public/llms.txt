@@ -1,0 +1,16 @@
+# Travel Links Solution
+
+> UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence.
+
+Travel Links Solution is a UK-registered visa consultancy based in Northampton.
+Senior consultants handle tourist, family and business visa applications end-to-end
+for destinations across Europe, the Americas, Asia-Pacific and beyond.
+
+## Pages
+
+- [Home](/): Overview of services, process, destinations and FAQs.
+- [Countries](/countries): Browse visa services for 25+ destinations worldwide.
+
+## Optional
+
+- [Contact](/#contact): Office address, phone, email and enquiry form.

@@ -91,10 +91,11 @@ export function ReviewForm() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <label htmlFor="review-comment" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Your Review
             </label>
             <textarea
+              id="review-comment"
               name="comment"
               required
               rows={4}
@@ -128,10 +129,12 @@ function Field({
   placeholder?: string;
   required?: boolean;
 }) {
+  const id = `review-${name}`;
   return (
     <div>
-      <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
       <input
+        id={id}
         name={name}
         required={required}
         placeholder={placeholder}

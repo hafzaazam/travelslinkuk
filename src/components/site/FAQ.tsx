@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SectionHeading } from "./Section";
 import { MessageCircle, HelpCircle } from "lucide-react";
 
-const FAQS = [
+export const FAQS = [
   { q: "How long does visa processing take?", a: "Processing times vary by country and visa type — typically 2 to 12 weeks. We provide a realistic timeline during your free consultation." },
   { q: "Which documents are required?", a: "Common requirements include passport, photos, financials, sponsorship/admission letters and biometrics. We send a tailored checklist per case." },
   { q: "Can you assist with rejected applications?", a: "Yes. We review refusal grounds, prepare a strong reapplication or appeal and improve weak documentation." },

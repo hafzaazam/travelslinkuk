@@ -96,6 +96,39 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://travelslinkuk.lovable.app/#organization",
+              name: "Travel Links Solution",
+              url: "https://travelslinkuk.lovable.app",
+              logo: "https://travelslinkuk.lovable.app/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
+              email: "info@travellinks.uk",
+              telephone: "+44-787-946-5341",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "138 Milton Street",
+                addressLocality: "Northampton",
+                postalCode: "NN2 7DE",
+                addressCountry: "GB",
+              },
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://travelslinkuk.lovable.app/#website",
+              url: "https://travelslinkuk.lovable.app",
+              name: "Travel Links Solution",
+              publisher: { "@id": "https://travelslinkuk.lovable.app/#organization" },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
