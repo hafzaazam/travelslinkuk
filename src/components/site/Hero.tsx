@@ -216,33 +216,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Bottom strip: dots + scroll cue (centered) */}
-      <div className="absolute bottom-6 left-0 right-0 z-20 px-5 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-4">
-          <div className="flex items-center gap-2.5">
-            {SLIDES.map((_, idx) => (
-              <button
-                key={idx}
-                aria-label={`Go to slide ${idx + 1}`}
-                onClick={() => setI(idx)}
-                className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
-                  idx === i
-                    ? "w-12 bg-white/25 shadow-[0_0_8px_rgba(34,211,238,0.45)]"
-                    : "w-2.5 bg-white/25 hover:bg-white/40"
-                }`}
-              >
-                {idx === i && (
-                  <span
-                    key={i}
-                    className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-brand-aqua to-brand-cyan"
-                    style={{ animation: "hero-progress 6.5s linear forwards" }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
 
     </section>
   );
