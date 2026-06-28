@@ -49,8 +49,13 @@ export function Contact() {
       return;
     }
 
-    // Also notify the team via Formspree email.
-    await handleFormspreeSubmit({
+    // Mark success based on DB save; email notification is best-effort.
+    setSubmitted(true);
+    formRef.current?.reset();
+    toast.success("Application received! We'll be in touch within 24 hours.");
+
+    // Also notify the team via Formspree email (non-blocking).
+    handleFormspreeSubmit({
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
@@ -59,7 +64,7 @@ export function Contact() {
       subject,
       message: messageBody,
       _subject: subject,
-    });
+    }).catch(() => {});
   };
 
   useEffect(() => {
