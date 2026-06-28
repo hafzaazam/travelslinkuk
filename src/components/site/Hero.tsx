@@ -195,9 +195,10 @@ export function Hero() {
           </div>
           <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
             <span className="inline-block h-px w-6 bg-white/30" />
-            <span>Swipe</span>
-            <span className="inline-block h-px w-6 bg-white/30" />
+            <span>Scroll</span>
+            <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
           </div>
+
         </div>
 
       </div>
