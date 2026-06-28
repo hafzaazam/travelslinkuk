@@ -35,11 +35,6 @@ const SLIDES = [
   },
 ];
 
-const STATS = [
-  { value: "25+", label: "Destinations" },
-  { value: "12k+", label: "Happy Clients" },
-  { value: "24/7", label: "Global Support" },
-];
 
 export function Hero() {
   const [i, setI] = useState(0);
