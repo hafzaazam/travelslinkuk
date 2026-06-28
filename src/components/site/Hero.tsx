@@ -94,7 +94,7 @@ export function Hero() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-[#050b1f]/85 via-[#081637]/75 to-[#0a1e4a]/80" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#04081a]/95 via-[#06112b]/55 to-[#04081a]/40" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_35%,rgba(61,99,255,0.28)_0%,transparent_55%),radial-gradient(circle_at_85%_75%,rgba(33,87,243,0.22)_0%,transparent_55%)]" />
+          
         </div>
       ))}
 
