@@ -96,7 +96,7 @@ export function Footer() {
           <div>
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-white">Visa Services</h4>
             <ul className="mt-4 space-y-2.5 text-sm text-white/70">
-              {["Student Visa", "Work Visa", "Tourist Visa", "Business Visa", "Family Visa", "Permanent Residency"].map((l) => (
+              {["Tourist Visa", "Business Visa", "Family Visa"].map((l) => (
                 <li key={l}><a href="#services" className="hover:text-white transition">{l}</a></li>
               ))}
             </ul>
