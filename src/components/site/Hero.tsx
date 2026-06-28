@@ -90,18 +90,6 @@ export function Hero() {
             </a>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-6 text-white/85">
-            {[
-              ["12,000+", "Visas Approved"],
-              ["98%", "Success Rate"],
-              ["25+", "Countries"],
-            ].map(([n, l]) => (
-              <div key={l} className="flex items-center gap-3">
-                <span className="font-display text-2xl font-bold text-white">{n}</span>
-                <span className="text-sm opacity-80">{l}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* controls */}
