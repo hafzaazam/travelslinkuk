@@ -27,7 +27,10 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Premium visa guidance for tourism, family and business travel." },
       { property: "og:url", content: "https://travelslinkuk.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/" }],
+    links: [
+      { rel: "canonical", href: "https://travelslinkuk.lovable.app/" },
+      { rel: "preload", as: "image", href: heroAirport, fetchpriority: "high" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
