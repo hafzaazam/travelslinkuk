@@ -1,4 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { SectionHeading } from "./Section";
+
+const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
+
 
 const COUNTRIES: [string, string, string][] = [
   ["Germany", "de", "Tourist · Family"],
@@ -44,9 +48,10 @@ export function Countries() {
         <div className="group/marquee overflow-hidden">
           <div className="flex gap-5 w-max marquee-track px-6 lg:px-12 pb-6">
             {[...COUNTRIES, ...COUNTRIES].map(([name, code, types], i) => (
-              <a
+              <Link
                 key={`${name}-${i}`}
-                href="#contact"
+                to="/countries/$slug"
+                params={{ slug: toSlug(name) }}
                 aria-label={`${name} visa services`}
                 className="group relative shrink-0 w-[260px] overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow transition-all hover:-translate-y-1"
               >
@@ -70,7 +75,7 @@ export function Countries() {
                 </div>
 
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-brand opacity-0 group-hover:opacity-100 transition" />
-              </a>
+              </Link>
             ))}
           </div>
         </div>
