@@ -35,6 +35,21 @@ export function Contact() {
     const messageBody = parsed.data.message?.trim()
       ? parsed.data.message
       : `Interested in ${parsed.data.visa} visa for ${parsed.data.country}.`;
+
+    // Save to backend so the admin panel can manage the enquiry.
+    const { error: dbError } = await supabase.from("contact_submissions").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      subject,
+      message: messageBody,
+    });
+    if (dbError) {
+      toast.error("Could not save your enquiry. Please try again.");
+      return;
+    }
+
+    // Also notify the team via Formspree email.
     await handleFormspreeSubmit({
       name: parsed.data.name,
       email: parsed.data.email,
