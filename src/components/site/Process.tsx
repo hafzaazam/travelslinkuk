@@ -102,7 +102,16 @@ export function Process() {
   });
 
   return (
-    <section id="process" ref={scrollRef} className="relative" style={{ height: `${STEPS.length * 90}vh` }}>
+    <section id="process" ref={scrollRef} className="relative process-snap" style={{ height: `${STEPS.length * 90}vh` }}>
+      {/* Snap sentinels — each one viewport tall, drives proximity snapping */}
+      {STEPS.map((s, i) => (
+        <div
+          key={`snap-${s.title}`}
+          aria-hidden
+          className="process-snap-stop absolute left-0 right-0 h-screen pointer-events-none"
+          style={{ top: `${i * 90}vh` }}
+        />
+      ))}
       {/* Sticky stage — pins while user scrolls through the step track */}
       <div className="sticky top-0 h-screen flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft overflow-hidden">
         <div className="mx-auto max-w-7xl w-full">
