@@ -117,7 +117,7 @@ export function Testimonials() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 transition-opacity duration-300"
                 style={{
-                  opacity: hovering ? 1 : 0,
+                  opacity: hovering && !reducedMotion ? 1 : 0,
                   background:
                     "radial-gradient(450px circle at var(--mx,50%) var(--my,50%), hsl(var(--primary)/0.10), transparent 55%)",
                 }}
