@@ -16,9 +16,12 @@ const schema = z.object({
 
 export function Contact() {
   const [state, handleFormspreeSubmit] = useForm("xvzjreol");
+  const formRef = useRef<HTMLFormElement>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitted || state.submitting) return;
     const form = e.currentTarget;
     const fd = new FormData(form);
     const data = Object.fromEntries(fd.entries());
@@ -45,7 +48,9 @@ export function Contact() {
 
   useEffect(() => {
     if (state.succeeded) {
-      toast.success("Application received! Our team will contact you within 24 hours.");
+      setSubmitted(true);
+      formRef.current?.reset();
+      toast.success("Application received! We'll be in touch within 24 hours.");
     }
   }, [state.succeeded]);
 
@@ -56,6 +61,8 @@ export function Contact() {
   }, [state.errors]);
 
   const loading = state.submitting;
+  const lockSubmit = submitted || loading;
+
 
 
 
