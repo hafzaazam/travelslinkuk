@@ -155,9 +155,6 @@ export function Process() {
               ))}
             </div>
 
-            <p className="mt-6 text-center text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Step {activeIndex + 1} of {STEPS.length}
-            </p>
           </div>
         </div>
       </div>
