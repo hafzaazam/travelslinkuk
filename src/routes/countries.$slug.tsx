@@ -100,15 +100,20 @@ function CountryPage() {
                   <Link
                     to="/"
                     hash="contact"
-                    className="group inline-flex items-center gap-2 h-12 px-6 text-sm font-semibold rounded-full bg-gradient-brand shadow-glow hover:-translate-y-0.5 transition"
+                    className="group relative inline-flex items-center gap-2 h-12 px-6 text-sm font-semibold rounded-full bg-gradient-brand shadow-glow overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_25px_60px_-20px_rgba(61,99,255,0.65)] active:translate-y-0"
                   >
-                    Apply for {country.name} visa
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/30 blur-md opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-[400%]"
+                    />
+                    <span className="relative">Apply for {country.name} visa</span>
+                    <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                   <a
                     href="tel:+447879465341"
-                    className="inline-flex items-center gap-2 h-12 px-6 text-sm font-semibold rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition"
+                    className="group inline-flex items-center gap-2 h-12 px-6 text-sm font-semibold rounded-full border border-white/20 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/15 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(56,216,232,0.5)]"
                   >
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_10px_var(--brand-cyan)] transition-transform group-hover:scale-150" />
                     Free Consultation
                   </a>
                 </div>
