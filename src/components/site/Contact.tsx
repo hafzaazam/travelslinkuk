@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -16,9 +17,10 @@ const schema = z.object({
 export function Contact() {
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const data = Object.fromEntries(fd.entries());
     const parsed = schema.safeParse(data);
     if (!parsed.success) {
@@ -26,12 +28,26 @@ export function Contact() {
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      toast.success("Application received! Our team will contact you within 24 hours.");
-      (e.target as HTMLFormElement).reset();
-    }, 800);
+    const subject = `${parsed.data.country} · ${parsed.data.visa}`;
+    const messageBody = parsed.data.message?.trim()
+      ? parsed.data.message
+      : `Interested in ${parsed.data.visa} visa for ${parsed.data.country}.`;
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      subject,
+      message: messageBody,
+    });
+    setLoading(false);
+    if (error) {
+      toast.error("Could not send. Please try again or email us directly.");
+      return;
+    }
+    toast.success("Application received! Our team will contact you within 24 hours.");
+    form.reset();
   };
+
 
   return (
     <section id="contact" className="py-24 px-5 lg:px-8">
