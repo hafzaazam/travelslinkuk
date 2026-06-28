@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, PhoneCall, Sparkles } from "lucide-react";
+import { ArrowRight, PhoneCall, Sparkles, ChevronDown } from "lucide-react";
+
 
 import heroAirport from "@/assets/hero-airport.jpg";
 import heroLondon from "@/assets/hero-london.jpg";
@@ -102,6 +103,17 @@ export function Hero() {
       <div className="pointer-events-none absolute -top-32 -right-20 h-96 w-96 rounded-full bg-brand-cyan/25 blur-3xl animate-float" />
       <div className="pointer-events-none absolute bottom-10 -left-24 h-96 w-96 rounded-full bg-brand-aqua/20 blur-3xl animate-float" />
 
+      {/* subtle grain texture */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>\")",
+        }}
+      />
+
+
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pt-32 pb-28 lg:px-8">
         {/* soft scrim behind text for legibility */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-[#04081a]/85 via-[#04081a]/50 to-transparent" />
@@ -116,13 +128,20 @@ export function Hero() {
           }}
         >
 
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
+              </span>
+              <span className="text-brand-aqua">{SLIDES[i].eyebrow}</span>
             </span>
-            <span className="text-brand-aqua">{SLIDES[i].eyebrow}</span>
-          </span>
+            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.28em] text-white/55">
+              <Sparkles className="h-3 w-3 text-brand-aqua/80" />
+              {String(i + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+            </span>
+          </div>
+
           <h1 className="mt-7 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(8,18,48,0.45)] sm:text-5xl lg:text-6xl xl:text-7xl">
             {SLIDES[i].title[0]}{" "}
             <span className="block bg-gradient-to-r from-brand-aqua via-brand-cyan to-white bg-clip-text text-transparent">
@@ -176,9 +195,10 @@ export function Hero() {
           </div>
           <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
             <span className="inline-block h-px w-6 bg-white/30" />
-            <span>Swipe</span>
-            <span className="inline-block h-px w-6 bg-white/30" />
+            <span>Scroll</span>
+            <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
           </div>
+
         </div>
 
       </div>

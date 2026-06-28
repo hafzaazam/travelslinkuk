@@ -114,7 +114,19 @@ export function Process() {
       ))}
       {/* Sticky stage — pins while user scrolls through the step track */}
       <div className="sticky top-0 h-screen flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft overflow-hidden">
-        <div className="mx-auto max-w-7xl w-full">
+        {/* dot pattern */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.4]"
+          style={{
+            backgroundImage:
+              "radial-gradient(hsl(var(--foreground)/0.08) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+            maskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl w-full">
           <SectionHeading
             eyebrow="Our Process"
             title={
@@ -123,6 +135,14 @@ export function Process() {
               </>
             }
           />
+
+          <div className="mt-6 flex justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground shadow-soft">
+              <span className="h-1.5 w-1.5 rounded-full bg-gradient-brand" />
+              Step {String(activeIndex + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
+            </span>
+          </div>
+
 
           <div className="mt-16 relative">
             <div className="absolute left-0 right-0 top-10 hidden lg:block h-0.5 bg-border" />
