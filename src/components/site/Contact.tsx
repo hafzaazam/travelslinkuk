@@ -38,6 +38,7 @@ export function Contact() {
       : `Interested in ${parsed.data.visa} visa for ${parsed.data.country}.`;
 
     // Save to backend so the admin panel can manage the enquiry.
+    setSaving(true);
     const { error: dbError } = await supabase.from("contact_submissions").insert({
       name: parsed.data.name,
       email: parsed.data.email,
@@ -45,6 +46,7 @@ export function Contact() {
       subject,
       message: messageBody,
     });
+    setSaving(false);
     if (dbError) {
       toast.error("Could not save your enquiry. Please try again.");
       return;
