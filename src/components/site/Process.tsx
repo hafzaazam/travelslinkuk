@@ -102,70 +102,55 @@ export function Process() {
   });
 
   return (
-    <section id="process" className="relative">
-      {/* Scroll-snap track: each child is one viewport snap stop */}
-      <div
-        ref={scrollRef}
-        style={{ scrollSnapType: "y mandatory" }}
-        className="relative"
-      >
-        {/* Sticky stage */}
-        <div className="sticky top-0 h-screen flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft">
-          <div className="mx-auto max-w-7xl w-full">
-            <SectionHeading
-              eyebrow="Our Process"
-              title={
-                <>
-                  Six simple steps to your <span className="text-gradient-brand">approved visa</span>
-                </>
-              }
+    <section id="process" ref={scrollRef} className="relative" style={{ height: `${STEPS.length * 90}vh` }}>
+      {/* Sticky stage — pins while user scrolls through the step track */}
+      <div className="sticky top-0 h-screen flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft overflow-hidden">
+        <div className="mx-auto max-w-7xl w-full">
+          <SectionHeading
+            eyebrow="Our Process"
+            title={
+              <>
+                Six simple steps to your <span className="text-gradient-brand">approved visa</span>
+              </>
+            }
+          />
+
+          <div className="mt-16 relative">
+            <div className="absolute left-0 right-0 top-10 hidden lg:block h-0.5 bg-border" />
+            <motion.div
+              style={{ width: lineWidth }}
+              className="absolute left-0 top-10 hidden lg:block h-0.5 bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua"
             />
-
-            <div className="mt-16 relative">
-              <div className="absolute left-0 right-0 top-10 hidden lg:block h-0.5 bg-border" />
-              <motion.div
-                style={{ width: lineWidth }}
-                className="absolute left-0 top-10 hidden lg:block h-0.5 bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua"
-              />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
-                {STEPS.map((s, i) => (
-                  <StepCard
-                    key={s.title}
-                    step={s}
-                    index={i}
-                    active={i === activeIndex}
-                    passed={i < activeIndex}
-                  />
-                ))}
-              </div>
-
-              {/* Progress dots / indicator */}
-              <div className="mt-12 flex items-center justify-center gap-2">
-                {STEPS.map((_, i) => (
-                  <motion.span
-                    key={i}
-                    animate={{
-                      width: i === activeIndex ? 32 : 8,
-                      backgroundColor:
-                        i <= activeIndex ? "var(--brand-deep)" : "var(--border)",
-                    }}
-                    className="h-2 rounded-full"
-                  />
-                ))}
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+              {STEPS.map((s, i) => (
+                <StepCard
+                  key={s.title}
+                  step={s}
+                  index={i}
+                  active={i === activeIndex}
+                  passed={i < activeIndex}
+                />
+              ))}
             </div>
+
+            <div className="mt-12 flex items-center justify-center gap-2">
+              {STEPS.map((_, i) => (
+                <motion.span
+                  key={i}
+                  animate={{
+                    width: i === activeIndex ? 32 : 8,
+                    backgroundColor: i <= activeIndex ? "var(--brand-deep)" : "var(--border)",
+                  }}
+                  className="h-2 rounded-full"
+                />
+              ))}
+            </div>
+
+            <p className="mt-6 text-center text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Step {activeIndex + 1} of {STEPS.length}
+            </p>
           </div>
         </div>
-
-        {/* Snap sentinels — each one viewport tall, scroll-snap aligned */}
-        {STEPS.map((s, i) => (
-          <div
-            key={s.title}
-            style={{ scrollSnapAlign: "start", scrollSnapStop: "always" }}
-            aria-hidden
-            className="h-screen -mt-[100vh] pointer-events-none"
-          />
-        ))}
       </div>
     </section>
   );
