@@ -130,16 +130,19 @@ function Field({
   placeholder: string;
   label: string;
 }) {
+  const id = `auth-${name}`;
   return (
-    <label className="block">
+    <label htmlFor={id} className="block">
       <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/70">{label}</span>
       <div className="mt-1.5 flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3.5 py-3 focus-within:border-brand-aqua/60 focus-within:bg-white/10 transition">
         <Icon className="h-4 w-4 text-white/50" />
         <input
+          id={id}
           name={name}
           type={type}
           placeholder={placeholder}
           required
+          aria-label={label}
           className="w-full bg-transparent text-sm text-white placeholder:text-white/40 outline-none"
         />
       </div>
