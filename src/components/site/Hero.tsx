@@ -34,13 +34,52 @@ const SLIDES = [
 
 export function Hero() {
   const [i, setI] = useState(0);
+  const [drag, setDrag] = useState(0); // px offset while swiping
+  const [isDragging, setIsDragging] = useState(false);
+  const startX = useRef<number | null>(null);
+  const pausedRef = useRef(false);
+
+  const go = (dir: 1 | -1) =>
+    setI((p) => (p + dir + SLIDES.length) % SLIDES.length);
+
   useEffect(() => {
-    const id = setInterval(() => setI((p) => (p + 1) % SLIDES.length), 6500);
+    const id = setInterval(() => {
+      if (!pausedRef.current) setI((p) => (p + 1) % SLIDES.length);
+    }, 6500);
     return () => clearInterval(id);
   }, []);
 
+  const onPointerDown = (e: React.PointerEvent) => {
+    startX.current = e.clientX;
+    setIsDragging(true);
+    pausedRef.current = true;
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (startX.current === null) return;
+    setDrag(e.clientX - startX.current);
+  };
+  const endDrag = () => {
+    const threshold = 60;
+    if (drag > threshold) go(-1);
+    else if (drag < -threshold) go(1);
+    startX.current = null;
+    setDrag(0);
+    setIsDragging(false);
+    setTimeout(() => (pausedRef.current = false), 800);
+  };
+
   return (
-    <section id="home" className="relative min-h-[100svh] overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-[100svh] overflow-hidden touch-pan-y select-none"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onPointerLeave={() => startX.current !== null && endDrag()}
+    >
+
       {SLIDES.map((s, idx) => (
         <div
           key={idx}
