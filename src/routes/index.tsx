@@ -14,6 +14,7 @@ import { FAQ } from "@/components/site/FAQ";
 import { Contact } from "@/components/site/Contact";
 import { CTABanner } from "@/components/site/CTABanner";
 import { Footer } from "@/components/site/Footer";
+import { BackToTop } from "@/components/site/BackToTop";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -63,6 +64,7 @@ function Index() {
         <CTABanner />
       </main>
       <Footer />
+      <BackToTop />
       <Toaster />
     </div>
   );

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { BackToTop } from "@/components/site/BackToTop";
 import { COUNTRIES } from "@/data/countries";
 
 export const Route = createFileRoute("/countries/")({
@@ -83,6 +84,7 @@ function CountriesIndex() {
         </section>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
