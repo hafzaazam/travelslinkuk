@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { SectionHeading } from "./Section";
 
 const COUNTRIES: [string, string, string][] = [
@@ -67,10 +66,6 @@ export function Countries() {
               <div className="p-5">
                 <div className="font-display text-base font-semibold text-foreground">{name}</div>
                 <div className="text-xs text-muted-foreground mt-0.5">{types}</div>
-                <div className="mt-4 flex items-center justify-between text-xs font-semibold text-primary">
-                  Apply
-                  <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </div>
               </div>
 
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-brand opacity-0 group-hover:opacity-100 transition" />
