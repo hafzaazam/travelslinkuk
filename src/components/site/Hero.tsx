@@ -221,51 +221,39 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Bottom strip: stats + dots + scroll cue */}
+      {/* Bottom strip: dots + scroll cue (centered) */}
       <div className="absolute bottom-6 left-0 right-0 z-20 px-5 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-between gap-6 md:flex-row md:items-end">
-          {/* Stats */}
-          <div className="hidden md:flex items-end gap-10">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <p className="font-display text-2xl font-bold text-white">{s.value}</p>
-                <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55">{s.label}</p>
-              </div>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-4">
+          <div className="flex items-center gap-2.5">
+            {SLIDES.map((_, idx) => (
+              <button
+                key={idx}
+                aria-label={`Go to slide ${idx + 1}`}
+                onClick={() => setI(idx)}
+                className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
+                  idx === i
+                    ? "w-12 bg-white/25 shadow-[0_0_8px_rgba(34,211,238,0.45)]"
+                    : "w-2.5 bg-white/25 hover:bg-white/40"
+                }`}
+              >
+                {idx === i && (
+                  <span
+                    key={i}
+                    className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-brand-aqua to-brand-cyan"
+                    style={{ animation: "hero-progress 6.5s linear forwards" }}
+                  />
+                )}
+              </button>
             ))}
           </div>
-
-          {/* Dots + scroll */}
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-2.5">
-              {SLIDES.map((_, idx) => (
-                <button
-                  key={idx}
-                  aria-label={`Go to slide ${idx + 1}`}
-                  onClick={() => setI(idx)}
-                  className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
-                    idx === i
-                      ? "w-12 bg-white/25 shadow-[0_0_8px_rgba(34,211,238,0.45)]"
-                      : "w-2.5 bg-white/25 hover:bg-white/40"
-                  }`}
-                >
-                  {idx === i && (
-                    <span
-                      key={i}
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-brand-aqua to-brand-cyan"
-                      style={{ animation: "hero-progress 6.5s linear forwards" }}
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
-              <span className="inline-block h-px w-6 bg-white/30" />
-              <span>Scroll</span>
-              <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
-            </div>
+          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
+            <span className="inline-block h-px w-6 bg-white/30" />
+            <span>Scroll</span>
+            <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
           </div>
         </div>
       </div>
+
     </section>
   );
 }
