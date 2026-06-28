@@ -219,11 +219,6 @@ export function Hero() {
       {/* Bottom strip: dots + scroll cue (centered) */}
       <div className="absolute bottom-6 left-0 right-0 z-20 px-5 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-4">
-          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
-            <span className="inline-block h-px w-6 bg-white/30" />
-            <span>Scroll</span>
-            <ChevronDown className="h-3 w-3 animate-bounce text-brand-aqua" />
-          </div>
           <div className="flex items-center gap-2.5">
             {SLIDES.map((_, idx) => (
               <button
