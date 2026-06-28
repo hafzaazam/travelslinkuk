@@ -19,9 +19,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Travel Links Solution — UK Visa Consultancy" },
-      { name: "description", content: "UK-based visa consultancy helping students, professionals, families and tourists obtain visas to 25+ countries with confidence." },
+      { name: "description", content: "UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence." },
       { property: "og:title", content: "Travel Links Solution — UK Visa Consultancy" },
-      { property: "og:description", content: "Premium visa guidance for study, work, family and tourism." },
+      { property: "og:description", content: "Premium visa guidance for tourism, family and business travel." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -45,8 +45,8 @@ function Index() {
             </h2>
             <p className="mt-6 text-lg text-muted-foreground">
               Travel Links Solution is a UK-registered visa consultancy with over a decade of experience guiding
-              students, professionals, families and tourists through complex immigration pathways. Our team of
-              senior consultants combines deep regulatory knowledge with a genuinely personal approach — so your
+              tourists, families and business travellers through complex visa pathways. Our team of senior
+              consultants combines deep regulatory knowledge with a genuinely personal approach — so your
               application is in expert hands from day one.
             </p>
           </div>

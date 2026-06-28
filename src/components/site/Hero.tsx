@@ -10,7 +10,7 @@ const SLIDES = [
     image: heroAirport,
     eyebrow: "UK-Based · Trusted Since 2014",
     title: ["Your Trusted UK Visa Consultancy", "for Global Opportunities"],
-    subtitle: "Helping students, professionals, families and tourists obtain visas quickly and confidently.",
+    subtitle: "Helping tourists, families and business travellers obtain visas quickly and confidently.",
     primary: "Apply Now",
     secondary: "Free Consultation",
     spotlight: { place: "London Gateway · UK", tag: "From £0 assessment" },
@@ -18,20 +18,20 @@ const SLIDES = [
   {
     image: heroLondon,
     eyebrow: "25+ Destinations",
-    title: ["Study, Work & Visit", "the World's Top Destinations"],
+    title: ["Visit the World's", "Top Destinations"],
     subtitle: "Expert visa assistance with high approval guidance and complete documentation support.",
     primary: "Start Your Journey",
     secondary: "Explore Countries",
-    spotlight: { place: "Canada · Study Pathway", tag: "98% approval guidance" },
+    spotlight: { place: "Canada · Tourist Visa", tag: "98% approval guidance" },
   },
   {
     image: heroTraveler,
     eyebrow: "98% Client Satisfaction",
     title: ["Fast. Reliable.", "Professional Visa Services"],
-    subtitle: "From application to approval, we simplify your immigration journey end-to-end.",
+    subtitle: "From application to approval, we simplify your travel visa journey end-to-end.",
     primary: "Book Consultation",
     secondary: "Our Process",
-    spotlight: { place: "Australia · Skilled Visa", tag: "End-to-end handling" },
+    spotlight: { place: "Australia · Tourist Visa", tag: "End-to-end handling" },
   },
 ];
 
