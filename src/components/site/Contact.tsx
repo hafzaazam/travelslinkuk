@@ -77,7 +77,7 @@ export function Contact() {
     }
   }, [state.errors]);
 
-  const loading = state.submitting;
+  const loading = saving;
   const lockSubmit = submitted || loading;
 
 
