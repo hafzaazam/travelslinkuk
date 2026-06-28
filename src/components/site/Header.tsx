@@ -164,7 +164,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       <div
-        className={`xl:hidden overflow-hidden border-t border-border/60 bg-white/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ${
+        className={`overflow-hidden border-t border-border/60 bg-white/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ${
           open ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
