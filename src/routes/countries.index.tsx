@@ -19,8 +19,9 @@ export const Route = createFileRoute("/countries/")({
         property: "og:description",
         content: "Browse visa services for 25+ destinations across Europe, Americas, Asia and beyond.",
       },
+      { property: "og:url", content: "https://travelslinkuk.lovable.app/countries" },
     ],
-    links: [{ rel: "canonical", href: "/countries" }],
+    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/countries" }],
   }),
   component: CountriesIndex,
 });
