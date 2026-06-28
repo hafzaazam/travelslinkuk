@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle } from "lucide-react";
 import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
@@ -104,19 +104,67 @@ export function Contact() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { icon: MapPin, label: "Office", value: "138 Milton Street, Northampton, NN2 7DE" },
-                { icon: Mail, label: "Email", value: "info@travellinks.uk" },
-                { icon: Phone, label: "Phone", value: "+44 787 946 5341" },
-              ].map(({ icon: Icon, label, value }) => (
-                <div key={label} className="rounded-2xl bg-white border border-border p-5 shadow-soft">
-                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-brand text-white">
+                {
+                  icon: MapPin,
+                  label: "Office",
+                  value: "138 Milton Street, Northampton, NN2 7DE",
+                  href: "https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE",
+                  external: true,
+                },
+                {
+                  icon: Mail,
+                  label: "Email",
+                  value: "info@travellinks.uk",
+                  href:
+                    "mailto:info@travellinks.uk" +
+                    "?subject=" +
+                    encodeURIComponent("Visa enquiry — Travel Links Solution") +
+                    "&body=" +
+                    encodeURIComponent(
+                      "Hi Travel Links team,\n\n" +
+                        "I'd like to enquire about a visa application.\n\n" +
+                        "• Full name: \n" +
+                        "• Destination country: \n" +
+                        "• Visa type (Tourist / Family / Business): \n" +
+                        "• Preferred travel dates: \n" +
+                        "• Best phone number to reach me: \n\n" +
+                        "A short note about my situation:\n\n\n" +
+                        "Thank you,\n"
+                    ),
+                },
+                {
+                  icon: Phone,
+                  label: "Phone",
+                  value: "+44 787 946 5341",
+                  href: "tel:+447879465341",
+                },
+                {
+                  icon: MessageCircle,
+                  label: "WhatsApp",
+                  value: "Chat with us",
+                  href:
+                    "https://wa.me/447879465341?text=" +
+                    encodeURIComponent(
+                      "Hi Travel Links Solution, I'd like to enquire about a visa application."
+                    ),
+                  external: true,
+                },
+              ].map(({ icon: Icon, label, value, href, external }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="group rounded-2xl bg-white border border-border p-5 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-glow"
+                >
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-brand text-white transition-transform group-hover:scale-110">
                     <Icon className="h-4.5 w-4.5" />
                   </div>
                   <div className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
-                  <div className="text-sm font-medium break-words">{value}</div>
-                </div>
+                  <div className="text-sm font-medium break-words group-hover:text-primary transition-colors">{value}</div>
+                </a>
               ))}
             </div>
           </div>
