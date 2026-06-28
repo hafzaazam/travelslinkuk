@@ -97,7 +97,7 @@ export function Header() {
 
         <div className="hidden md:flex items-center gap-2 lg:gap-3">
           <a
-            href="tel:+440000000000"
+            href="tel:+447879465341"
             className={`group hidden lg:inline-flex items-center gap-2 h-10 pl-2.5 pr-3.5 text-[12px] font-semibold rounded-full border transition-all hover:-translate-y-0.5 ${
               onLight
                 ? "border-white/15 bg-white/5 text-white/90 hover:bg-white/10 hover:border-white/25"
@@ -108,7 +108,7 @@ export function Header() {
               <PhoneCall className="h-3 w-3" />
               <span className="absolute inset-0 rounded-full bg-brand-cyan/40 opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
             </span>
-            <span className="tracking-wide">+44 000 000 0000</span>
+            <span className="tracking-wide">+44 787 946 5341</span>
           </a>
 
           <span
