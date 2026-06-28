@@ -1,0 +1,49 @@
+# Nginx reverse proxy for Travel Links Solution
+# Save as: /etc/nginx/sites-available/travelslink
+# Enable:  sudo ln -s /etc/nginx/sites-available/travelslink /etc/nginx/sites-enabled/
+# Test:    sudo nginx -t
+# Reload:  sudo systemctl reload nginx
+#
+# After this is live, run Certbot to get a free SSL cert:
+#   sudo certbot --nginx -d travelslinkuk.com -d www.travelslinkuk.com
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name travelslinkuk.com www.travelslinkuk.com;
+
+    # Max upload size (forms, file fields)
+    client_max_body_size 10M;
+
+    # Gzip
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml application/json application/javascript application/xml+rss application/atom+xml image/svg+xml;
+
+    # Static assets from Nitro's public output — long cache
+    location ~* ^/(assets|_build)/ {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Everything else → Node app
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_read_timeout 60s;
+        proxy_connect_timeout 60s;
+    }
+}
