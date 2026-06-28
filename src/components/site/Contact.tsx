@@ -19,10 +19,11 @@ export function Contact() {
   const [state, handleFormspreeSubmit] = useForm("xvzjreol");
   const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (submitted || state.submitting) return;
+    if (submitted || saving) return;
     const form = e.currentTarget;
     const fd = new FormData(form);
     const data = Object.fromEntries(fd.entries());
