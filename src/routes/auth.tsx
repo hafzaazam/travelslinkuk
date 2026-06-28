@@ -10,6 +10,7 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign In — Travel Links Solution Admin" },
+      { name: "description", content: "Secure staff sign-in for the Travel Links Solution admin dashboard. Not a public page." },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),

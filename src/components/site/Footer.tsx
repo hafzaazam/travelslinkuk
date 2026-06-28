@@ -79,9 +79,14 @@ export function Footer() {
               UK-based visa consultancy guiding tourists, families and business travellers to destinations across the globe.
             </p>
             <div className="flex gap-2">
-              {[Facebook, Instagram, Linkedin, MessageCircle].map((Icon, i) => (
-                <a key={i} href="#" aria-label="Social link" className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition">
-                  <Icon className="h-4 w-4" />
+              {[
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: MessageCircle, label: "WhatsApp" },
+              ].map(({ Icon, label }) => (
+                <a key={label} href="#" aria-label={`Travel Links on ${label}`} className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                 </a>
               ))}
             </div>
