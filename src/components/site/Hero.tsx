@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, PhoneCall, Star, MapPin, ChevronDown } from "lucide-react";
+import { ArrowRight, PhoneCall, Star, MapPin, Users, ChevronDown } from "lucide-react";
 
 import heroAirport from "@/assets/hero-airport.jpg";
 import heroLondon from "@/assets/hero-london.jpg";
