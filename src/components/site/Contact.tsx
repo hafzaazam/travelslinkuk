@@ -4,6 +4,7 @@ import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
 import { useForm } from "@formspree/react";
+import { supabase } from "@/integrations/supabase/client";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
