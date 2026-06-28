@@ -107,7 +107,7 @@ export function Footer() {
             <ul className="mt-4 space-y-3 text-sm text-white/75">
               <li className="flex items-start gap-2.5"><MapPin className="h-4 w-4 mt-0.5 text-brand-aqua shrink-0" /> 138 Milton Street, Northampton, NN2 7DE, United Kingdom</li>
               <li className="flex items-start gap-2.5"><Mail className="h-4 w-4 mt-0.5 text-brand-aqua" /> info@travellinks.uk</li>
-              <li className="flex items-start gap-2.5"><Phone className="h-4 w-4 mt-0.5 text-brand-aqua" /> +44 XXXX XXX XXX</li>
+              <li className="flex items-start gap-2.5"><Phone className="h-4 w-4 mt-0.5 text-brand-aqua" /> +44 787 946 5341</li>
             </ul>
           </div>
         </div>
