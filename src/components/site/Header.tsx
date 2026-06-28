@@ -114,34 +114,49 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-2 lg:gap-3">
           <a
             href="tel:+440000000000"
-            className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-[12px] font-semibold rounded-full border transition-colors ${
+            className={`group hidden lg:inline-flex items-center gap-2 h-10 pl-2.5 pr-3.5 text-[12px] font-semibold rounded-full border transition-all hover:-translate-y-0.5 ${
               onLight
-                ? "border-white/15 bg-white/5 text-white/85 hover:bg-white/10"
-                : "border-border/60 bg-white/60 text-foreground/75 hover:text-foreground"
+                ? "border-white/15 bg-white/5 text-white/90 hover:bg-white/10 hover:border-white/25"
+                : "border-border/60 bg-white/70 text-foreground/80 hover:text-foreground hover:border-primary/30"
             }`}
           >
-            <PhoneCall className="h-3.5 w-3.5 text-brand-cyan" />
-            +44 000 000 0000
+            <span className="relative grid h-6 w-6 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
+              <PhoneCall className="h-3 w-3" />
+              <span className="absolute inset-0 rounded-full bg-brand-cyan/40 opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
+            </span>
+            <span className="tracking-wide">+44 000 000 0000</span>
           </a>
+
+          <span
+            aria-hidden
+            className={`hidden lg:block h-6 w-px ${onLight ? "bg-white/15" : "bg-border"}`}
+          />
+
           <a
             href="#contact"
-            className={`px-4 py-2.5 text-[13px] font-semibold transition-colors ${
+            className={`relative px-3 py-2 text-[13px] font-semibold transition-colors after:absolute after:left-3 after:right-3 after:bottom-1 after:h-px after:scale-x-0 after:origin-left after:bg-gradient-brand after:transition-transform after:duration-300 hover:after:scale-x-100 ${
               onLight ? "text-white/85 hover:text-white" : "text-foreground/80 hover:text-primary"
             }`}
           >
             Free Assessment
           </a>
+
           <a
             href="#contact"
-            className="group inline-flex items-center gap-1.5 px-5 py-2.5 text-[13px] font-semibold text-white rounded-full bg-gradient-brand shadow-soft hover:shadow-glow transition-all hover:-translate-y-0.5"
+            className="group relative inline-flex items-center gap-1.5 overflow-hidden h-10 px-5 text-[13px] font-semibold text-white rounded-full bg-gradient-brand shadow-soft hover:shadow-glow transition-all hover:-translate-y-0.5"
           >
-            Apply Now
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/25 blur-md opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-[400%]"
+            />
+            <span className="relative">Apply Now</span>
+            <ArrowRight className="relative h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>
+
 
         <button
           aria-label={open ? "Close menu" : "Open menu"}
