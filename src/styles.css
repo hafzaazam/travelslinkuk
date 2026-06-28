@@ -143,3 +143,7 @@
 .icon3d-ring { animation: icon-pulse-ring 2.6s ease-out infinite; transform-origin: center; transform-box: fill-box; }
 .icon3d-shine { animation: icon-shine 3.8s ease-in-out infinite; }
 
+/* Process section scroll-snap */
+html:has(.process-snap) { scroll-snap-type: y proximity; }
+.process-snap-stop { scroll-snap-align: start; scroll-snap-stop: normal; }
+
