@@ -1,29 +1,67 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Toaster } from "@/components/ui/sonner";
+import { Header } from "@/components/site/Header";
+import { Hero } from "@/components/site/Hero";
+import { Stats } from "@/components/site/Stats";
+import { Countries } from "@/components/site/Countries";
+import { Services } from "@/components/site/Services";
+import { WhyUs } from "@/components/site/WhyUs";
+import { Process } from "@/components/site/Process";
+import { Destinations } from "@/components/site/Destinations";
+import { Testimonials } from "@/components/site/Testimonials";
+import { FAQ } from "@/components/site/FAQ";
+import { Contact } from "@/components/site/Contact";
+import { CTABanner } from "@/components/site/CTABanner";
+import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Travel Links Solution — UK Visa Consultancy" },
+      { name: "description", content: "UK-based visa consultancy helping students, professionals, families and tourists obtain visas to 25+ countries with confidence." },
+      { property: "og:title", content: "Travel Links Solution — UK Visa Consultancy" },
+      { property: "og:description", content: "Premium visa guidance for study, work, family and tourism." },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <Stats />
+        <section id="about" className="py-24 px-5 lg:px-8">
+          <div className="mx-auto max-w-5xl text-center">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+              About Us
+            </span>
+            <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+              A UK consultancy built on <span className="text-gradient-brand">trust, expertise and results</span>
+            </h2>
+            <p className="mt-6 text-lg text-muted-foreground">
+              Travel Links Solution is a UK-registered visa consultancy with over a decade of experience guiding
+              students, professionals, families and tourists through complex immigration pathways. Our team of
+              senior consultants combines deep regulatory knowledge with a genuinely personal approach — so your
+              application is in expert hands from day one.
+            </p>
+          </div>
+        </section>
+        <Services />
+        <Countries />
+        <WhyUs />
+        <Process />
+        <Destinations />
+        <Testimonials />
+        <FAQ />
+        <Contact />
+        <CTABanner />
+      </main>
+      <Footer />
+      <Toaster />
     </div>
   );
 }
