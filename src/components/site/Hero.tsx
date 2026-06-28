@@ -101,23 +101,6 @@ export function Hero() {
             </a>
           </div>
 
-          {/* trust strip */}
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/15 pt-6">
-            <div className="flex flex-col">
-              <span className="font-display text-2xl font-bold tracking-tight text-white">98%</span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">Success Rate</span>
-            </div>
-            <div className="hidden h-8 w-px bg-white/15 sm:block" />
-            <div className="flex flex-col">
-              <span className="font-display text-2xl font-bold tracking-tight text-white">12k+</span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">Visas Approved</span>
-            </div>
-            <div className="hidden h-8 w-px bg-white/15 sm:block" />
-            <div className="flex flex-col">
-              <span className="font-display text-2xl font-bold tracking-tight text-white">25+</span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">Countries Covered</span>
-            </div>
-          </div>
         </div>
 
 
