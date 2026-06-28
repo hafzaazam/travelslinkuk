@@ -128,13 +128,20 @@ export function Hero() {
           }}
         >
 
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-aqua" />
+              </span>
+              <span className="text-brand-aqua">{SLIDES[i].eyebrow}</span>
             </span>
-            <span className="text-brand-aqua">{SLIDES[i].eyebrow}</span>
-          </span>
+            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.28em] text-white/55">
+              <Sparkles className="h-3 w-3 text-brand-aqua/80" />
+              {String(i + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+            </span>
+          </div>
+
           <h1 className="mt-7 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(8,18,48,0.45)] sm:text-5xl lg:text-6xl xl:text-7xl">
             {SLIDES[i].title[0]}{" "}
             <span className="block bg-gradient-to-r from-brand-aqua via-brand-cyan to-white bg-clip-text text-transparent">
