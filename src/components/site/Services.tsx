@@ -1,22 +1,17 @@
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "./Section";
 import {
-  Icon3DStudent,
-  Icon3DWork,
   Icon3DTourist,
   Icon3DBusiness,
   Icon3DFamily,
-  Icon3DPR,
 } from "./Icons3D";
 
 const SERVICES = [
-  { Icon: Icon3DStudent, title: "Student Visa", text: "University admissions, SOPs, interview prep and visa guidance." },
-  { Icon: Icon3DWork, title: "Work Visa", text: "Employment, sponsorship and skilled migration pathways." },
   { Icon: Icon3DTourist, title: "Tourist Visa", text: "Holiday, family visit and short-stay visa support." },
   { Icon: Icon3DBusiness, title: "Business Visa", text: "Meetings, conferences and investor visa programs." },
   { Icon: Icon3DFamily, title: "Family Visa", text: "Spouse, dependent and family reunification services." },
-  { Icon: Icon3DPR, title: "Permanent Residency", text: "PR consultation and long-term immigration planning." },
 ];
+
 
 export function Services() {
   return (
