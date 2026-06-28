@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { ArrowRight, PhoneCall, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, PhoneCall, Sparkles } from "lucide-react";
+
 import heroAirport from "@/assets/hero-airport.jpg";
 import heroLondon from "@/assets/hero-london.jpg";
 import heroTraveler from "@/assets/hero-traveler.jpg";
@@ -33,13 +34,52 @@ const SLIDES = [
 
 export function Hero() {
   const [i, setI] = useState(0);
+  const [drag, setDrag] = useState(0); // px offset while swiping
+  const [isDragging, setIsDragging] = useState(false);
+  const startX = useRef<number | null>(null);
+  const pausedRef = useRef(false);
+
+  const go = (dir: 1 | -1) =>
+    setI((p) => (p + dir + SLIDES.length) % SLIDES.length);
+
   useEffect(() => {
-    const id = setInterval(() => setI((p) => (p + 1) % SLIDES.length), 6500);
+    const id = setInterval(() => {
+      if (!pausedRef.current) setI((p) => (p + 1) % SLIDES.length);
+    }, 6500);
     return () => clearInterval(id);
   }, []);
 
+  const onPointerDown = (e: React.PointerEvent) => {
+    startX.current = e.clientX;
+    setIsDragging(true);
+    pausedRef.current = true;
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (startX.current === null) return;
+    setDrag(e.clientX - startX.current);
+  };
+  const endDrag = () => {
+    const threshold = 60;
+    if (drag > threshold) go(-1);
+    else if (drag < -threshold) go(1);
+    startX.current = null;
+    setDrag(0);
+    setIsDragging(false);
+    setTimeout(() => (pausedRef.current = false), 800);
+  };
+
   return (
-    <section id="home" className="relative min-h-[100svh] overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-[100svh] overflow-hidden touch-pan-y select-none"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onPointerLeave={() => startX.current !== null && endDrag()}
+    >
+
       {SLIDES.map((s, idx) => (
         <div
           key={idx}
@@ -67,7 +107,15 @@ export function Hero() {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-[#04081a]/85 via-[#04081a]/50 to-transparent" />
 
 
-        <div key={i} className="relative max-w-3xl animate-fade-up">
+        <div
+          key={i}
+          className="relative max-w-3xl animate-fade-up will-change-transform"
+          style={{
+            transform: `translateX(${drag * 0.25}px)`,
+            transition: isDragging ? "none" : "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+          }}
+        >
+
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
@@ -104,33 +152,35 @@ export function Hero() {
         </div>
 
 
-        {/* controls */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3">
-          <button
-            aria-label="Previous slide"
-            onClick={() => setI((p) => (p - 1 + SLIDES.length) % SLIDES.length)}
-            className="grid h-10 w-10 place-items-center rounded-full glass text-white hover:bg-white/20"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <div className="flex gap-2">
+        {/* swipe control */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {SLIDES.map((_, idx) => (
               <button
                 key={idx}
-                aria-label={`Slide ${idx + 1}`}
+                aria-label={`Go to slide ${idx + 1}`}
                 onClick={() => setI(idx)}
-                className={`h-1.5 rounded-full transition-all ${idx === i ? "w-8 bg-white" : "w-2.5 bg-white/50"}`}
-              />
+                className={`relative h-1.5 rounded-full overflow-hidden transition-all duration-500 ${
+                  idx === i ? "w-12 bg-white/25" : "w-6 bg-white/25 hover:bg-white/40"
+                }`}
+              >
+                {idx === i && (
+                  <span
+                    key={i}
+                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-brand-aqua to-brand-cyan rounded-full"
+                    style={{ animation: "hero-progress 6.5s linear forwards" }}
+                  />
+                )}
+              </button>
             ))}
           </div>
-          <button
-            aria-label="Next slide"
-            onClick={() => setI((p) => (p + 1) % SLIDES.length)}
-            className="grid h-10 w-10 place-items-center rounded-full glass text-white hover:bg-white/20"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/55">
+            <span className="inline-block h-px w-6 bg-white/30" />
+            <span>Swipe</span>
+            <span className="inline-block h-px w-6 bg-white/30" />
+          </div>
         </div>
+
       </div>
     </section>
   );
