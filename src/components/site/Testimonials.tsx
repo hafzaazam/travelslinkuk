@@ -109,7 +109,7 @@ export function Testimonials() {
             }}
           >
             <div
-              className="relative overflow-hidden rounded-[calc(var(--radius)+10px)] bg-white p-8 sm:p-12"
+              className="relative overflow-hidden rounded-[calc(var(--radius)+10px)] bg-white p-5 sm:p-8 lg:p-12"
               style={{ transform: "translateZ(30px)" }}
             >
               {/* Cursor spotlight */}
