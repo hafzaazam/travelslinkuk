@@ -64,6 +64,7 @@ function Index() {
         <CTABanner />
       </main>
       <Footer />
+      <BackToTop />
       <Toaster />
     </div>
   );
