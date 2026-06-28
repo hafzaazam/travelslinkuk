@@ -107,7 +107,15 @@ export function Hero() {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-[#04081a]/85 via-[#04081a]/50 to-transparent" />
 
 
-        <div key={i} className="relative max-w-3xl animate-fade-up">
+        <div
+          key={i}
+          className="relative max-w-3xl animate-fade-up will-change-transform"
+          style={{
+            transform: `translateX(${drag * 0.25}px)`,
+            transition: isDragging ? "none" : "transform 400ms cubic-bezier(0.2,0.8,0.2,1)",
+          }}
+        >
+
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-soft backdrop-blur-xl">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-aqua opacity-75" />
