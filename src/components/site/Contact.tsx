@@ -73,7 +73,7 @@ export function Contact() {
             <div className="grid sm:grid-cols-3 gap-4">
               {[
                 { icon: MapPin, label: "Office", value: "138 Milton Street, Northampton, NN2 7DE" },
-                { icon: Mail, label: "Email", value: "info@travellinkssolution.co.uk" },
+                { icon: Mail, label: "Email", value: "info@travellinks.uk" },
                 { icon: Phone, label: "Phone", value: "+44 XXXX XXX XXX" },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="rounded-2xl bg-white border border-border p-5 shadow-soft">
