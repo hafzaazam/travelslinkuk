@@ -74,7 +74,7 @@ export function Contact() {
               {[
                 { icon: MapPin, label: "Office", value: "138 Milton Street, Northampton, NN2 7DE" },
                 { icon: Mail, label: "Email", value: "info@travellinks.uk" },
-                { icon: Phone, label: "Phone", value: "+44 XXXX XXX XXX" },
+                { icon: Phone, label: "Phone", value: "+44 787 946 5341" },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="rounded-2xl bg-white border border-border p-5 shadow-soft">
                   <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-brand text-white">
