@@ -2,10 +2,10 @@ import { SectionHeading } from "./Section";
 
 const DEST = [
   { name: "Europe", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80", tag: "Schengen Area" },
-  { name: "Canada", img: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1200&q=80", tag: "Express Entry" },
-  { name: "USA", img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1200&q=80", tag: "Study & Work" },
-  { name: "Australia", img: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200&q=80", tag: "Skilled Migration" },
-  { name: "New Zealand", img: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1200&q=80", tag: "Work & Study" },
+  { name: "Canada", img: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1200&q=80", tag: "Tourist Visa" },
+  { name: "USA", img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1200&q=80", tag: "B1/B2 Visa" },
+  { name: "Australia", img: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200&q=80", tag: "Tourist Visa" },
+  { name: "New Zealand", img: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1200&q=80", tag: "Visitor Visa" },
   { name: "Asia", img: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=1200&q=80", tag: "Tourist & Business" },
 ];
 

@@ -73,7 +73,7 @@ export function Footer() {
           <div className="space-y-4">
             <Logo light />
             <p className="text-sm text-white/70 max-w-xs">
-              UK-based visa consultancy guiding students, professionals and families to destinations across the globe.
+              UK-based visa consultancy guiding tourists, families and business travellers to destinations across the globe.
             </p>
             <div className="flex gap-2">
               {[Facebook, Instagram, Linkedin, MessageCircle].map((Icon, i) => (

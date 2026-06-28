@@ -12,9 +12,9 @@ type Review = {
 };
 
 const FALLBACK: Review[] = [
-  { id: "f1", name: "Aamir K.", country: "Canada Study Visa", rating: 5, comment: "Excellent service. My Canada visa was approved smoothly and the team guided me at every step." },
+  { id: "f1", name: "Aamir K.", country: "Canada Tourist Visa", rating: 5, comment: "Excellent service. My Canada visa was approved smoothly and the team guided me at every step." },
   { id: "f2", name: "Sophia M.", country: "UK Family Visa", rating: 5, comment: "They handled all documentation professionally. I never felt lost in the process." },
-  { id: "f3", name: "Daniel R.", country: "Australia Skilled", rating: 5, comment: "Highly recommended for student and skilled visas. Truly transparent and supportive." },
+  { id: "f3", name: "Daniel R.", country: "Australia Tourist", rating: 5, comment: "Highly recommended for tourist and family visas. Truly transparent and supportive." },
   { id: "f4", name: "Priya S.", country: "Schengen Tourist", rating: 5, comment: "Quick turnaround, very organised. Got my Schengen visa within weeks." },
 ];
 

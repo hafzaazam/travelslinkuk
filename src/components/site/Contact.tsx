@@ -137,7 +137,7 @@ export function Contact() {
               <Field name="email" type="email" label="Email" placeholder="you@example.com" />
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field name="country" label="Country Interested" placeholder="e.g. Canada" />
-                <Field name="visa" label="Visa Type" placeholder="e.g. Student" />
+                <Field name="visa" label="Visa Type" placeholder="e.g. Tourist" />
               </div>
               <div>
                 <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
