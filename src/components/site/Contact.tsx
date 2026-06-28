@@ -64,7 +64,7 @@ export function Contact() {
             <div className="overflow-hidden rounded-3xl shadow-card border border-border h-80">
               <iframe
                 title="Office location"
-                src="https://www.google.com/maps?q=London%20United%20Kingdom&output=embed"
+                src="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE&output=embed"
                 className="h-full w-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -72,7 +72,7 @@ export function Contact() {
             </div>
             <div className="grid sm:grid-cols-3 gap-4">
               {[
-                { icon: MapPin, label: "Office", value: "United Kingdom" },
+                { icon: MapPin, label: "Office", value: "138 Milton Street, Northampton, NN2 7DE" },
                 { icon: Mail, label: "Email", value: "info@travellinkssolution.co.uk" },
                 { icon: Phone, label: "Phone", value: "+44 XXXX XXX XXX" },
               ].map(({ icon: Icon, label, value }) => (
