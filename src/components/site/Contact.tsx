@@ -4,6 +4,7 @@ import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
 import { useForm } from "@formspree/react";
+import { supabase } from "@/integrations/supabase/client";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -18,10 +19,11 @@ export function Contact() {
   const [state, handleFormspreeSubmit] = useForm("xvzjreol");
   const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (submitted || state.submitting) return;
+    if (submitted || saving) return;
     const form = e.currentTarget;
     const fd = new FormData(form);
     const data = Object.fromEntries(fd.entries());
@@ -34,7 +36,29 @@ export function Contact() {
     const messageBody = parsed.data.message?.trim()
       ? parsed.data.message
       : `Interested in ${parsed.data.visa} visa for ${parsed.data.country}.`;
-    await handleFormspreeSubmit({
+
+    // Save to backend so the admin panel can manage the enquiry.
+    setSaving(true);
+    const { error: dbError } = await supabase.from("contact_submissions").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      subject,
+      message: messageBody,
+    });
+    setSaving(false);
+    if (dbError) {
+      toast.error("Could not save your enquiry. Please try again.");
+      return;
+    }
+
+    // Mark success based on DB save; email notification is best-effort.
+    setSubmitted(true);
+    formRef.current?.reset();
+    toast.success("Application received! We'll be in touch within 24 hours.");
+
+    // Also notify the team via Formspree email (non-blocking).
+    handleFormspreeSubmit({
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
@@ -43,24 +67,17 @@ export function Contact() {
       subject,
       message: messageBody,
       _subject: subject,
-    });
+    }).catch(() => {});
   };
 
   useEffect(() => {
-    if (state.succeeded) {
-      setSubmitted(true);
-      formRef.current?.reset();
-      toast.success("Application received! We'll be in touch within 24 hours.");
-    }
-  }, [state.succeeded]);
-
-  useEffect(() => {
     if (state.errors) {
-      toast.error("Could not send. Please try again or email us directly.");
+      // Email side failed but the enquiry was still saved.
+      console.warn("Formspree notification failed", state.errors);
     }
   }, [state.errors]);
 
-  const loading = state.submitting;
+  const loading = saving;
   const lockSubmit = submitted || loading;
 
 
