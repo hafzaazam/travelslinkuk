@@ -192,7 +192,7 @@ function ServicesPage() {
         </section>
 
 
-        <Services />
+        <Services showHeading={false} />
 
 
         {/* What's included */}
