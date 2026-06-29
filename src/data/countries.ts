@@ -17,6 +17,20 @@ export type Country = {
   requirements: string[];
 };
 
+// Standard Schengen tourist visa checklist (used as base for European destinations).
+const SCHENGEN_CHECKLIST = [
+  "Valid passport (6+ months validity, 2 blank pages)",
+  "Two recent biometric passport-size photos",
+  "Completed and signed Schengen visa application form",
+  "Travel medical insurance (€30,000 minimum, Schengen-wide cover)",
+  "Confirmed return flight reservation",
+  "Hotel reservation covering entire stay",
+  "Day-by-day travel itinerary",
+  "Bank statements (last 3–6 months, £1,000+ recommended)",
+  "Employment letter / proof of approved leave",
+  "Cover letter explaining purpose of visit",
+];
+
 export const COUNTRIES: Country[] = [
   {
     slug: "germany",
@@ -24,7 +38,7 @@ export const COUNTRIES: Country[] = [
     code: "de",
     tagline: "Schengen gateway to Europe",
     intro:
-      "Germany welcomes millions of visitors each year for tourism, family reunions and business travel. We help you navigate the Schengen visa process end-to-end.",
+      "A Germany Tourist Visa allows you to visit Germany for travel, sightseeing, or visiting family and friends for up to 90 days within a 180-day period. We handle the full TLS appointment and embassy submission process for you.",
     capital: "Berlin",
     currency: "Euro (EUR)",
     language: "German",
@@ -34,10 +48,9 @@ export const COUNTRIES: Country[] = [
       { type: "Family Visa", description: "Visit close relatives residing in Germany with sponsorship documentation." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance (€30,000 minimum)",
-      "Proof of accommodation and itinerary",
-      "Bank statements (last 3 months)",
+      ...SCHENGEN_CHECKLIST,
+      "TLS appointment booking (£28 fee)",
+      "Embassy visa fee (£76)",
     ],
   },
   {
@@ -46,7 +59,7 @@ export const COUNTRIES: Country[] = [
     code: "fr",
     tagline: "Art, culture and Schengen access",
     intro:
-      "From Paris to the Riviera, France is one of the most visited Schengen destinations. Our consultants prepare a watertight application tailored to your purpose of visit.",
+      "France remains one of the most visited Schengen destinations — from Paris to the Riviera. Our consultants prepare a watertight TLS / VFS application tailored to your purpose of visit.",
     capital: "Paris",
     currency: "Euro (EUR)",
     language: "French",
@@ -56,10 +69,9 @@ export const COUNTRIES: Country[] = [
       { type: "Family Visa", description: "Visit relatives in France with valid invitation and sponsorship." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "Schengen-compliant travel insurance",
-      "Confirmed flights and hotel bookings",
-      "Proof of sufficient funds",
+      ...SCHENGEN_CHECKLIST,
+      "TLS appointment booking (£35 fee)",
+      "Embassy visa fee (£76)",
     ],
   },
   {
@@ -68,7 +80,7 @@ export const COUNTRIES: Country[] = [
     code: "nl",
     tagline: "Business hub of Northern Europe",
     intro:
-      "The Netherlands is a top destination for business travellers and tourists alike. We handle Schengen applications through the VFS and Dutch consulate with full prep.",
+      "The Netherlands is a top destination for business travellers and tourists alike. Visit Amsterdam's canals and museums, enjoy local cheese and stroopwafels, and travel easily across Europe.",
     capital: "Amsterdam",
     currency: "Euro (EUR)",
     language: "Dutch",
@@ -78,10 +90,9 @@ export const COUNTRIES: Country[] = [
       { type: "Business Visa", description: "Attend meetings, conferences and trade events." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance (€30,000 minimum)",
-      "Invitation letter (for business)",
-      "Bank statements and ITR",
+      ...SCHENGEN_CHECKLIST,
+      "Invitation letter (for business / family visits)",
+      "VFS appointment booking",
     ],
   },
   {
@@ -100,10 +111,9 @@ export const COUNTRIES: Country[] = [
       { type: "Visit Visa", description: "Visit family or friends with valid sponsorship." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance (€30,000 minimum)",
-      "Confirmed accommodation and itinerary",
+      ...SCHENGEN_CHECKLIST,
       "Proof of strong home ties",
+      "TLS Contact appointment booking",
     ],
   },
   {
@@ -121,12 +131,7 @@ export const COUNTRIES: Country[] = [
       { type: "Tourist Visa", description: "Schengen short-stay visa for tourism." },
       { type: "Visit Visa", description: "Visit friends or relatives based in Iceland." },
     ],
-    requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance (€30,000 minimum)",
-      "Hotel bookings and tour itinerary",
-      "Sufficient funds for stay",
-    ],
+    requirements: SCHENGEN_CHECKLIST,
   },
   {
     slug: "sweden",
@@ -143,12 +148,7 @@ export const COUNTRIES: Country[] = [
       { type: "Tourist Visa", description: "Schengen visa for short-stay tourism." },
       { type: "Family Visa", description: "Visit family members residing in Sweden." },
     ],
-    requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Accommodation proof",
-      "Financial documents",
-    ],
+    requirements: SCHENGEN_CHECKLIST,
   },
   {
     slug: "portugal",
@@ -165,12 +165,7 @@ export const COUNTRIES: Country[] = [
       { type: "Tourist Visa", description: "Short-stay Schengen visa for leisure travel." },
       { type: "Visit Visa", description: "Visit relatives or friends in Portugal." },
     ],
-    requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance (€30,000 minimum)",
-      "Flights and accommodation bookings",
-      "Bank statements",
-    ],
+    requirements: SCHENGEN_CHECKLIST,
   },
   {
     slug: "greece",
@@ -178,7 +173,7 @@ export const COUNTRIES: Country[] = [
     code: "gr",
     tagline: "Islands, history and Schengen access",
     intro:
-      "Greece's Schengen visa brings you to ancient ruins, island getaways and Mediterranean coastlines. We handle the paperwork from start to finish.",
+      "Greece's Schengen visa brings you to ancient ruins, island getaways and Mediterranean coastlines. Explore famous landmarks, experience the culture and local cuisine, and travel with the peace of mind that comes with legal permission to stay.",
     capital: "Athens",
     currency: "Euro (EUR)",
     language: "Greek",
@@ -187,12 +182,7 @@ export const COUNTRIES: Country[] = [
       { type: "Tourist Visa", description: "Schengen visa for tourism and leisure." },
       { type: "Family Visa", description: "Visit family residing in Greece." },
     ],
-    requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Hotel bookings and itinerary",
-      "Proof of funds",
-    ],
+    requirements: SCHENGEN_CHECKLIST,
   },
   {
     slug: "austria",
@@ -210,10 +200,8 @@ export const COUNTRIES: Country[] = [
       { type: "Business Visa", description: "Meetings, conferences and trade events in Austria." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance (€30,000 minimum)",
-      "Invitation or business letter",
-      "Financial documents",
+      ...SCHENGEN_CHECKLIST,
+      "Invitation or business letter (where applicable)",
     ],
   },
   {
@@ -231,12 +219,7 @@ export const COUNTRIES: Country[] = [
       { type: "Tourist Visa", description: "Schengen visa for sightseeing and leisure." },
       { type: "Family Visa", description: "Visit family or friends in Italy." },
     ],
-    requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Accommodation and itinerary proof",
-      "Bank statements",
-    ],
+    requirements: SCHENGEN_CHECKLIST,
   },
   {
     slug: "usa",
@@ -244,7 +227,7 @@ export const COUNTRIES: Country[] = [
     code: "us",
     tagline: "Across the Atlantic",
     intro:
-      "United States visit visas (B1/B2) require careful preparation and a confident interview. Our team handles documentation, DS-160 and interview prep.",
+      "United States visit visas (B1/B2) require careful preparation and a confident interview. Explore new places, experience the diverse American culture, and enjoy the legal permission to stay for your trip — our team handles documentation, DS-160 and interview prep.",
     capital: "Washington, D.C.",
     currency: "US Dollar (USD)",
     language: "English",
@@ -255,10 +238,16 @@ export const COUNTRIES: Country[] = [
       { type: "Family Visa", description: "Visit close relatives in the United States." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "DS-160 confirmation",
-      "Strong proof of home ties",
-      "Financial documents and ITR",
+      "Valid passport (6+ months validity beyond return date)",
+      "Recent US-spec passport photo (2x2 inches, white background)",
+      "Completed DS-160 confirmation page",
+      "MRV visa fee payment receipt",
+      "US embassy interview appointment confirmation",
+      "Detailed travel itinerary and hotel bookings",
+      "Return flight reservation",
+      "Bank statements (last 6 months) and proof of funds",
+      "Employment letter and proof of approved leave",
+      "Strong proof of home ties (property, family, ITR)",
     ],
   },
   {
@@ -267,7 +256,7 @@ export const COUNTRIES: Country[] = [
     code: "ca",
     tagline: "Visit the Great White North",
     intro:
-      "Canada visitor visas need detailed preparation. We build a clear, compelling case so your tourist or family visit application stands out.",
+      "A Canada visitor visa lets you explore Canada's beautiful landscapes and iconic attractions, experience the diverse culture and local cuisine, and enjoy sightseeing and outdoor adventures with legal permission to stay.",
     capital: "Ottawa",
     currency: "Canadian Dollar (CAD)",
     language: "English, French",
@@ -278,9 +267,15 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Invitation letter (if family)",
-      "Proof of funds and home ties",
+      "Two recent passport-size photos (Canada specification)",
+      "Completed IMM 5257 application form",
+      "Visa application fee receipt",
+      "Biometrics appointment confirmation (VFS)",
+      "Detailed travel itinerary and hotel bookings",
+      "Return flight reservation",
+      "Bank statements (last 6 months) and proof of funds",
+      "Employment letter / proof of approved leave",
+      "Letter of invitation (if visiting family or friends)",
     ],
   },
   {
@@ -289,7 +284,7 @@ export const COUNTRIES: Country[] = [
     code: "au",
     tagline: "Iconic landscapes Down Under",
     intro:
-      "Australia visitor visas (subclass 600) require strong documentation. Our team prepares your application with the highest approval standards.",
+      "Explore Australia's famous landmarks, experience its diverse culture and local foods, and enjoy local events and festivals — all with the peace of mind that comes from a properly prepared Subclass 600 visitor visa.",
     capital: "Canberra",
     currency: "Australian Dollar (AUD)",
     language: "English",
@@ -300,9 +295,15 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Itinerary and accommodation bookings",
-      "Financial documents",
+      "Recent passport-size photos",
+      "Completed Subclass 600 online application (ImmiAccount)",
+      "Visa application charge (VAC) payment",
+      "Health declaration and medical exam (if requested)",
+      "Detailed travel itinerary and accommodation bookings",
+      "Return flight reservation",
+      "Bank statements (last 6 months) and proof of funds",
+      "Employment letter / proof of approved leave",
+      "Invitation letter from Australian sponsor (if family-sponsored)",
     ],
   },
   {
@@ -322,9 +323,14 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Hotel bookings",
-      "Bank statements",
+      "Two recent passport-size photos",
+      "Completed Moroccan visa application form",
+      "Travel medical insurance",
+      "Confirmed return flight reservation",
+      "Hotel reservation covering entire stay",
+      "Bank statements (last 3 months)",
+      "Employment letter / proof of leave",
+      "Invitation letter (for business visits)",
     ],
   },
   {
@@ -344,9 +350,15 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Itinerary and accommodation",
-      "Proof of funds",
+      "Recent passport-size photos",
+      "Completed Visitor Visa application (INZ 1017)",
+      "Application fee payment",
+      "Travel medical insurance",
+      "Detailed itinerary and accommodation bookings",
+      "Return flight reservation",
+      "Bank statements and proof of funds",
+      "Employment letter / proof of leave",
+      "Invitation letter (if visiting family)",
     ],
   },
   {
@@ -366,9 +378,15 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Accommodation proof",
-      "Bank statements",
+      "Two recent passport-size photos",
+      "Completed AVATS online application form",
+      "Visa application fee receipt",
+      "Travel medical insurance",
+      "Detailed itinerary and accommodation proof",
+      "Return flight reservation",
+      "Bank statements (last 6 months)",
+      "Employment letter / proof of leave",
+      "Signed cover letter explaining purpose of visit",
     ],
   },
   {
@@ -388,9 +406,14 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Detailed itinerary",
-      "Hotel bookings",
-      "Financial documents",
+      "Recent passport-size photo (45mm x 45mm)",
+      "Completed Japanese visa application form",
+      "Day-by-day detailed itinerary (required)",
+      "Hotel bookings covering entire stay",
+      "Return flight reservation",
+      "Bank statements (last 6 months)",
+      "Employment letter / proof of leave",
+      "Invitation letter (for business visits)",
     ],
   },
   {
@@ -409,10 +432,15 @@ export const COUNTRIES: Country[] = [
       { type: "Business Visa", description: "Business and trade visits." },
     ],
     requirements: [
-      "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Itinerary and accommodation",
-      "Yellow fever certificate (if applicable)",
+      "Valid passport (6+ months validity, 2 blank pages)",
+      "Two recent passport-size photos",
+      "Completed BI-84 visa application form",
+      "Travel medical insurance",
+      "Confirmed itinerary and accommodation",
+      "Return flight reservation",
+      "Bank statements (last 3 months)",
+      "Yellow fever certificate (if coming from a risk area)",
+      "Invitation letter (for business visits)",
     ],
   },
   {
@@ -432,9 +460,13 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Hotel bookings",
-      "Proof of funds",
+      "Recent passport-size photo",
+      "Completed Turkish eVisa / consular application",
+      "Travel medical insurance",
+      "Hotel reservation for entire stay",
+      "Return flight reservation",
+      "Bank statements (last 3 months)",
+      "Invitation letter (if visiting family)",
     ],
   },
   {
@@ -454,9 +486,13 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Local sponsor (if required)",
-      "Confirmed bookings",
-      "Financial documents",
+      "Recent passport-size photo (Singapore specification)",
+      "Completed Form 14A",
+      "Local sponsor's Letter of Introduction (if required)",
+      "Confirmed hotel bookings",
+      "Return flight reservation",
+      "Bank statements (last 3 months)",
+      "Employment letter / proof of leave",
     ],
   },
   {
@@ -476,9 +512,13 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Hotel bookings",
+      "Two recent passport-size photos",
+      "Completed Malaysian visa application form (IMM.47)",
+      "Hotel bookings covering entire stay",
       "Return flight tickets",
-      "Bank statements",
+      "Bank statements (last 3 months)",
+      "Employment letter / proof of leave",
+      "Invitation letter (for business visits)",
     ],
   },
   {
@@ -498,9 +538,13 @@ export const COUNTRIES: Country[] = [
     ],
     requirements: [
       "Valid passport (6+ months validity)",
-      "Travel insurance",
-      "Hotel bookings",
-      "Proof of funds",
+      "Two recent passport-size photos",
+      "Completed TR / e-Visa application form",
+      "Travel medical insurance",
+      "Hotel bookings covering entire stay",
+      "Return flight reservation",
+      "Bank statements (last 3 months, minimum £700 / 20,000 THB)",
+      "Employment letter / proof of leave",
     ],
   },
 ];

@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, ArrowLeft, Check, Clock, Coins, Globe2, Landmark, MapPin } from "lucide-react";
+import { ArrowRight, ArrowLeft, Clock, Coins, Globe2, Landmark, MapPin } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
+import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
 
 export const Route = createFileRoute("/countries/$slug")({
@@ -209,19 +210,8 @@ function CountryPage() {
               </p>
             </div>
 
-            <ul className="space-y-3">
-              {country.requirements.map((r: string) => (
-                <li
-                  key={r}
-                  className="flex items-start gap-3 rounded-2xl bg-white border border-border p-4 shadow-card"
-                >
-                  <span className="mt-0.5 grid h-6 w-6 place-items-center rounded-full bg-gradient-brand text-white shrink-0">
-                    <Check className="h-3.5 w-3.5" />
-                  </span>
-                  <span className="text-sm text-foreground">{r}</span>
-                </li>
-              ))}
-            </ul>
+            <CountryChecklist slug={country.slug} items={country.requirements} />
+
           </div>
         </section>
 
