@@ -5,6 +5,7 @@ import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
+import { Eyebrow } from "@/components/site/Eyebrow";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
 import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
 
@@ -141,10 +142,7 @@ function CountryPage() {
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl grid lg:grid-cols-[1fr_1.4fr] gap-12 items-start">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                <Info className="h-3.5 w-3.5" />
-                About the country
-              </span>
+              <Eyebrow label="About the country" icon={Info} />
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 Get to know {country.name}
               </h2>
@@ -160,16 +158,7 @@ function CountryPage() {
         <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
           <div className="mx-auto max-w-7xl">
             <div className="max-w-2xl">
-              <span className="relative inline-flex p-[1.5px] rounded-full bg-gradient-brand">
-                <span className="inline-flex items-center gap-3 rounded-full bg-white/85 backdrop-blur-2xl border border-white/80 px-5 py-2">
-                  <Sparkles className="h-4 w-4 text-primary" />
-                  <span className="text-[11px] font-black uppercase tracking-[0.3em] leading-none bg-gradient-brand bg-clip-text text-transparent">
-                    Why visit
-                  </span>
-                  <span className="w-px h-3 bg-primary/15" />
-                  <ArrowRight className="h-3 w-3 text-brand-cyan" strokeWidth={2.5} />
-                </span>
-              </span>
+              <Eyebrow label="Why visit" />
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 Benefits of a {country.name} visa
               </h2>
@@ -194,9 +183,7 @@ function CountryPage() {
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="max-w-2xl">
-              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                Visa Categories
-              </span>
+              <Eyebrow label="Visa Categories" icon={MapPin} />
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 {country.name} visa types we handle
               </h2>
@@ -230,9 +217,7 @@ function CountryPage() {
         <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
           <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12">
             <div>
-              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                What you'll need
-              </span>
+              <Eyebrow label="What you'll need" icon={Check} />
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 Documents & requirements
               </h2>
@@ -257,9 +242,7 @@ function CountryPage() {
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="max-w-2xl">
-              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                At a glance
-              </span>
+              <Eyebrow label="At a glance" />
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 {country.name} visa — pros & cons
               </h2>
@@ -313,9 +296,7 @@ function CountryPage() {
           <div className="mx-auto max-w-7xl">
             <div className="flex items-end justify-between gap-6 flex-wrap">
               <div>
-                <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  Other Destinations
-                </span>
+                <Eyebrow label="Other Destinations" icon={Globe2} />
                 <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                   Explore more countries
                 </h2>
