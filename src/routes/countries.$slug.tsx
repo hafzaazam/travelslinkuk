@@ -360,6 +360,24 @@ function CountryPage() {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
+          <div className="mx-auto max-w-3xl">
+            <Eyebrow label="FAQ" icon={Info} />
+            <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+              {country.name} visa — common questions
+            </h2>
+            <dl className="mt-10 space-y-4">
+              {countryFaqs(country).map((f) => (
+                <div key={f.q} className="rounded-2xl border border-border bg-white p-5 shadow-soft">
+                  <dt className="font-display font-semibold text-base">{f.q}</dt>
+                  <dd className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.a}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
         {/* Other destinations */}
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
