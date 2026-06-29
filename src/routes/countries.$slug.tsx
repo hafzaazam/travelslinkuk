@@ -36,6 +36,52 @@ export const Route = createFileRoute("/countries/$slug")({
         ...(ogImage ? [{ property: "og:image", content: ogImage }, { name: "twitter:image", content: ogImage }] : []),
       ],
       links: canonical ? [{ rel: "canonical", href: canonical }] : [],
+      scripts: c
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "TouristDestination",
+                    "@id": `${canonical}#destination`,
+                    name: c.name,
+                    description: c.about || c.intro || c.tagline,
+                    url: canonical,
+                    image: ogImage,
+                    touristType: ["Tourists", "Families", "Business travellers", "Students"],
+                  },
+                  {
+                    "@type": "Service",
+                    "@id": `${canonical}#service`,
+                    serviceType: `${c.name} visa consultancy`,
+                    name: `${c.name} Visa Services`,
+                    url: canonical,
+                    areaServed: { "@type": "Country", name: "United Kingdom" },
+                    provider: { "@id": "https://travellinks.uk/#organization" },
+                    hasOfferCatalog: {
+                      "@type": "OfferCatalog",
+                      name: `${c.name} Visa Types`,
+                      itemListElement: c.visas.map((v) => ({
+                        "@type": "Offer",
+                        itemOffered: { "@type": "Service", name: v.type, description: v.description },
+                      })),
+                    },
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    itemListElement: [
+                      { "@type": "ListItem", position: 1, name: "Home", item: "https://travellinks.uk/" },
+                      { "@type": "ListItem", position: 2, name: "Countries", item: "https://travellinks.uk/countries" },
+                      { "@type": "ListItem", position: 3, name: c.name, item: canonical },
+                    ],
+                  },
+                ],
+              }),
+            },
+          ]
+        : [],
     };
   },
   component: CountryPage,
