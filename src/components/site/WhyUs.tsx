@@ -17,87 +17,113 @@ const ITEMS = [
 
 function ScrollWheel() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0); // 0..ITEMS.length-1 (fractional)
 
   useEffect(() => {
+    let raf = 0;
     const onScroll = () => {
-      const el = wrapRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // progress: 0 when top of wrapper hits top of viewport, 1 when bottom hits bottom
-      const total = rect.height - vh;
-      const scrolled = Math.min(Math.max(-rect.top, 0), total);
-      const p = total > 0 ? scrolled / total : 0;
-      const idx = Math.min(ITEMS.length - 1, Math.floor(p * ITEMS.length));
-      setActive(idx);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const el = wrapRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const total = rect.height - vh;
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const p = total > 0 ? scrolled / total : 0;
+        setProgress(Math.min(ITEMS.length - 1, p * (ITEMS.length - 0.001)));
+      });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
   }, []);
 
+  const active = Math.round(progress);
+
   return (
-    <div ref={wrapRef} className="relative" style={{ height: `${ITEMS.length * 70}vh` }}>
+    <div ref={wrapRef} className="relative" style={{ height: `${ITEMS.length * 60}vh` }}>
       <div className="sticky top-0 h-screen flex items-center">
-        <div className="relative w-full h-[420px] [perspective:1200px]">
+        <div className="relative w-full h-[460px] [perspective:1400px]">
+          {/* soft glow behind active card */}
+          <div
+            aria-hidden
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[28rem] rounded-full bg-gradient-brand opacity-25 blur-3xl pointer-events-none"
+          />
+
           {ITEMS.map(({ icon: Icon, title, text }, i) => {
-            const offset = i - active;
+            const offset = i - progress;
             const abs = Math.abs(offset);
-            const visible = abs <= 2;
-            const translateY = offset * 90;
-            const scale = 1 - abs * 0.12;
-            const opacity = abs === 0 ? 1 : abs === 1 ? 0.45 : abs === 2 ? 0.15 : 0;
-            const blur = abs === 0 ? 0 : abs;
-            const z = 50 - abs;
+            const visible = abs <= 2.5;
+            if (!visible) return null;
+            const translateY = offset * 96;
+            const scale = Math.max(0.7, 1 - abs * 0.11);
+            const opacity = Math.max(0, 1 - abs * 0.45);
+            const blur = Math.min(6, abs * 2);
+            const rotX = offset * -6;
+            const z = 50 - Math.round(abs * 10);
+            const isActive = Math.round(progress) === i;
             return (
               <div
                 key={title}
-                className="absolute inset-x-0 mx-auto max-w-md transition-all duration-500 ease-out will-change-transform"
+                className="absolute inset-x-0 mx-auto max-w-md will-change-transform"
                 style={{
                   top: "50%",
-                  transform: `translateY(calc(-50% + ${translateY}px)) scale(${scale})`,
+                  transform: `translateY(calc(-50% + ${translateY}px)) scale(${scale}) rotateX(${rotX}deg)`,
                   opacity,
                   filter: `blur(${blur}px)`,
                   zIndex: z,
-                  pointerEvents: abs === 0 ? "auto" : "none",
+                  pointerEvents: isActive ? "auto" : "none",
+                  transition: "filter 400ms ease-out",
+                  transformStyle: "preserve-3d",
                 }}
-                aria-hidden={!visible}
+                aria-hidden={!isActive}
               >
                 <div
-                  className={`rounded-2xl p-6 h-full transition-all duration-500 ${
-                    abs === 0
-                      ? "glass shadow-glow border border-brand-cyan/30"
-                      : "glass shadow-soft"
+                  className={`relative rounded-2xl p-6 overflow-hidden border transition-shadow duration-500 ${
+                    isActive
+                      ? "shadow-glow border-brand-cyan/40 bg-white"
+                      : "shadow-soft border-white/50 bg-white/60 backdrop-blur-md"
                   }`}
-                  style={{ backgroundColor: abs === 0 ? undefined : "rgba(255,255,255,0.35)" }}
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-brand text-white shrink-0">
+                  {/* gradient edge highlight */}
+                  {isActive && (
+                    <div
+                      aria-hidden
+                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-cyan to-transparent"
+                    />
+                  )}
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-brand text-white shrink-0 shadow-soft">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <div className="text-xs font-medium text-muted-foreground">
+                    <div className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
                       {String(i + 1).padStart(2, "0")} / {String(ITEMS.length).padStart(2, "0")}
                     </div>
                   </div>
-                  <h3 className="mt-4 font-display text-xl font-semibold">{title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{text}</p>
+                  <h3 className="mt-5 font-display text-xl font-semibold leading-tight">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
                 </div>
               </div>
             );
           })}
 
           {/* progress rail */}
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-2">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-2.5">
             {ITEMS.map((_, i) => (
               <span
                 key={i}
                 className={`block w-1 rounded-full transition-all duration-300 ${
-                  i === active ? "h-6 bg-brand-blue" : "h-2 bg-foreground/20"
+                  i === active
+                    ? "h-7 bg-gradient-brand"
+                    : i < active
+                    ? "h-2 bg-brand-blue/40"
+                    : "h-2 bg-foreground/15"
                 }`}
               />
             ))}
