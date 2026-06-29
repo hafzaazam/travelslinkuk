@@ -233,7 +233,14 @@ function CountryPage() {
               <p className="mt-4 text-muted-foreground">
                 We give you a precise document checklist, review every item, and submit a fully prepared file — so nothing slows your application down.
               </p>
+              <img
+                src={travelSuitcase.url}
+                alt="Travel suitcase and airplane illustration"
+                className="mt-8 w-full max-w-sm mx-auto lg:mx-0"
+                loading="lazy"
+              />
             </div>
+
 
             <CountryChecklist slug={country.slug} items={country.requirements} />
 
