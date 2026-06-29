@@ -110,6 +110,13 @@ export function ChatWidget() {
                 Online · replies instantly
               </div>
             </div>
+            <button
+              onClick={clearHistory}
+              className="rounded-md px-2 py-1 text-xs font-medium opacity-80 transition hover:bg-white/15 hover:opacity-100"
+              title="Clear conversation"
+            >
+              Clear
+            </button>
           </div>
 
           {/* Messages */}
