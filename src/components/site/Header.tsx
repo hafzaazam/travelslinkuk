@@ -173,7 +173,7 @@ export function Header() {
             return (
               <a
                 key={item.href}
-                href={item.href}
+                href={hrefFor(item.href)}
                 onClick={() => setOpen(false)}
                 style={{ transitionDelay: open ? `${i * 30}ms` : "0ms" }}
                 className={`flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all ${
