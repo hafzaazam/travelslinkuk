@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, GitCompare, X } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { ArrowRight, Check, GitCompare, Sparkles, Loader2, X } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
 import { Eyebrow } from "@/components/site/Eyebrow";
 import { COUNTRIES, type Country } from "@/data/countries";
+import { suggestBestCountry } from "@/lib/compare-ai.functions";
 
 export const Route = createFileRoute("/compare")({
   head: () => ({
