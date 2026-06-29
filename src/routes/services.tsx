@@ -10,12 +10,6 @@ import { CTABanner } from "@/components/site/CTABanner";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/Section";
 import {
-  Plane,
-  Briefcase,
-  Users,
-  GraduationCap,
-  HomeIcon,
-  RefreshCcw,
   CheckCircle2,
   ArrowRight,
   FileCheck2,
