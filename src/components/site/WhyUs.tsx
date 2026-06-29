@@ -1,142 +1,65 @@
-import { ShieldCheck, Trophy, FileCheck2, Zap, Wallet, Eye, UserCheck, Headphones } from "lucide-react";
-import { SectionHeading } from "./Section";
+import {
+  ShieldCheck,
+  Trophy,
+  FileCheck2,
+  Zap,
+  Wallet,
+  Eye,
+  UserCheck,
+  Headphones,
+  ArrowRight,
+} from "lucide-react";
 import { Reveal } from "./Reveal";
-import whyUsPlane from "@/assets/why-us-plane.png.asset.json";
-import { useEffect, useRef, useState } from "react";
+import { openApplyDialog } from "./ApplyDialog";
 
-const ITEMS = [
-  { icon: UserCheck, title: "Experienced Consultants", text: "Decade-long expertise in UK and global immigration." },
-  { icon: Trophy, title: "High Success Rate", text: "98% approval rate across visa categories." },
-  { icon: FileCheck2, title: "Complete Documentation", text: "We handle every form, letter and certified copy." },
-  { icon: Zap, title: "Fast Processing", text: "Optimised workflows for quicker turnarounds." },
-  { icon: Wallet, title: "Affordable Packages", text: "Transparent pricing with flexible plans." },
-  { icon: Eye, title: "Transparent Fees", text: "No hidden charges — ever." },
-  { icon: ShieldCheck, title: "Personalised Guidance", text: "A dedicated advisor for your entire journey." },
-  { icon: Headphones, title: "24/7 Support", text: "Round-the-clock assistance via WhatsApp & email." },
+type Tone = "primary" | "cyan" | "emerald" | "orange";
+
+const toneStyles: Record<Tone, string> = {
+  primary: "bg-primary/10 text-primary",
+  cyan: "bg-brand-cyan/15 text-brand-cyan",
+  emerald: "bg-emerald-100 text-emerald-600",
+  orange: "bg-orange-100 text-orange-600",
+};
+
+const SMALL_CARDS: { icon: typeof UserCheck; title: string; text: string; tone: Tone }[] = [
+  {
+    icon: UserCheck,
+    title: "Experienced Consultants",
+    text: "Decades of collective expertise in international immigration law.",
+    tone: "cyan",
+  },
+  {
+    icon: FileCheck2,
+    title: "Complete Documentation",
+    text: "We handle the heavy lifting, ensuring every form is perfect.",
+    tone: "primary",
+  },
+  {
+    icon: Zap,
+    title: "Fast Processing",
+    text: "Streamlined systems that cut down waiting times significantly.",
+    tone: "emerald",
+  },
+  {
+    icon: Wallet,
+    title: "Affordable Packages",
+    text: "Quality service shouldn't break the bank. Flexible plans available.",
+    tone: "cyan",
+  },
+  {
+    icon: Eye,
+    title: "Transparent Fees",
+    text: "No hidden charges. Clear, upfront pricing from day one.",
+    tone: "orange",
+  },
 ];
-
-function ScrollWheel() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0); // 0..ITEMS.length-1 (fractional)
-
-  useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const el = wrapRef.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const total = rect.height - vh;
-        const scrolled = Math.min(Math.max(-rect.top, 0), total);
-        const p = total > 0 ? scrolled / total : 0;
-        setProgress(Math.min(ITEMS.length - 1, p * (ITEMS.length - 0.001)));
-      });
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  const active = Math.round(progress);
-
-  return (
-    <div ref={wrapRef} className="relative" style={{ height: `${ITEMS.length * 60}vh` }}>
-      <div className="sticky top-0 h-screen flex items-center">
-        <div className="relative w-full h-[460px] [perspective:1400px]">
-          {/* soft glow behind active card */}
-          <div
-            aria-hidden
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[28rem] rounded-full bg-gradient-brand opacity-25 blur-3xl pointer-events-none"
-          />
-
-          {ITEMS.map(({ icon: Icon, title, text }, i) => {
-            const offset = i - progress;
-            const abs = Math.abs(offset);
-            const visible = abs <= 2.5;
-            if (!visible) return null;
-            const translateY = offset * 96;
-            const scale = Math.max(0.7, 1 - abs * 0.11);
-            const opacity = Math.max(0, 1 - abs * 0.45);
-            const blur = Math.min(6, abs * 2);
-            const rotX = offset * -6;
-            const z = 50 - Math.round(abs * 10);
-            const isActive = Math.round(progress) === i;
-            return (
-              <div
-                key={title}
-                className="absolute inset-x-0 mx-auto max-w-md will-change-transform"
-                style={{
-                  top: "50%",
-                  transform: `translateY(calc(-50% + ${translateY}px)) scale(${scale}) rotateX(${rotX}deg)`,
-                  opacity,
-                  filter: `blur(${blur}px)`,
-                  zIndex: z,
-                  pointerEvents: isActive ? "auto" : "none",
-                  transition: "filter 400ms ease-out",
-                  transformStyle: "preserve-3d",
-                }}
-                aria-hidden={!isActive}
-              >
-                <div
-                  className={`relative rounded-2xl p-6 overflow-hidden border transition-shadow duration-500 ${
-                    isActive
-                      ? "shadow-glow border-brand-cyan/40 bg-white"
-                      : "shadow-soft border-white/50 bg-white/60 backdrop-blur-md"
-                  }`}
-                >
-                  {/* gradient edge highlight */}
-                  {isActive && (
-                    <div
-                      aria-hidden
-                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-cyan to-transparent"
-                    />
-                  )}
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-brand text-white shrink-0 shadow-soft">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
-                      {String(i + 1).padStart(2, "0")} / {String(ITEMS.length).padStart(2, "0")}
-                    </div>
-                  </div>
-                  <h3 className="mt-5 font-display text-xl font-semibold leading-tight">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* progress rail */}
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-2.5">
-            {ITEMS.map((_, i) => (
-              <span
-                key={i}
-                className={`block w-1 rounded-full transition-all duration-300 ${
-                  i === active
-                    ? "h-7 bg-gradient-brand"
-                    : i < active
-                    ? "h-2 bg-brand-blue/40"
-                    : "h-2 bg-foreground/15"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function WhyUs() {
   return (
-    <section id="why" className="relative bg-gradient-soft py-24 px-5 lg:px-8 overflow-hidden">
+    <section
+      id="why"
+      className="relative bg-gradient-soft py-24 px-5 lg:px-8 overflow-hidden"
+    >
       {/* twinkle field */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         {[
@@ -149,41 +72,131 @@ export function WhyUs() {
           <span
             key={i}
             className="absolute rounded-full bg-brand-cyan/60 twinkle-dot"
-            style={{ top: p.t, left: p.l, width: p.s, height: p.s, animationDelay: p.d }}
+            style={{
+              top: p.t,
+              left: p.l,
+              width: p.s,
+              height: p.s,
+              animationDelay: p.d,
+            }}
           />
         ))}
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Why Choose Us"
-            title={<>The reasons clients <span className="text-gradient-brand">trust Travel Links</span></>}
-            description="A UK-registered consultancy combining experience, transparency and a personal touch. Scroll to explore."
-          />
-        </Reveal>
-
-        <div className="mt-14 grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          <div className="lg:col-span-5 order-first lg:order-none">
-            <div className="sticky top-24 flex justify-center">
-              <div className="relative">
-                <div className="absolute -inset-8 rounded-[2.5rem] bg-gradient-brand opacity-20 blur-3xl" aria-hidden />
-                <img
-                  src={whyUsPlane.url}
-                  alt="3D illustration of an airplane with passport and boarding passes"
-                  className="relative w-full max-w-md h-auto drop-shadow-[0_30px_60px_rgba(33,87,243,0.35)] animate-float"
-                  loading="lazy"
-                />
-              </div>
+        <div className="flex flex-col lg:flex-row gap-12 items-start">
+          {/* Left: Intro */}
+          <Reveal className="lg:w-1/3 lg:sticky lg:top-24 space-y-6">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-semibold text-xs tracking-[0.18em] uppercase">
+              Why Choose Us
             </div>
-          </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              Your trusted partner in{" "}
+              <span className="text-gradient-brand">global mobility</span>
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              We simplify complex visa processes with expert guidance and
+              transparent solutions tailored to your unique journey.
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={openApplyDialog}
+                className="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl shadow-soft hover:shadow-glow transition-all"
+              >
+                Get Started Now
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </Reveal>
 
-          <div className="lg:col-span-7">
-            <ScrollWheel />
+          {/* Right: Feature Bento */}
+          <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Big card: High Success Rate */}
+            <Reveal
+              delay={80}
+              className="md:col-span-2 p-8 rounded-3xl bg-card border border-border/60 shadow-soft hover:shadow-glow transition-all group relative overflow-hidden"
+            >
+              <div
+                aria-hidden
+                className="absolute -right-6 -top-6 opacity-[0.06] group-hover:opacity-10 transition-opacity"
+              >
+                <Trophy className="w-36 h-36 text-primary" strokeWidth={1.25} />
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-gradient-brand grid place-items-center mb-6 shadow-soft">
+                <ShieldCheck className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <h3 className="font-display text-xl font-bold mb-2">
+                High Success Rate
+              </h3>
+              <p className="text-muted-foreground">
+                Our meticulous approach delivers a{" "}
+                <span className="font-semibold text-foreground">98% approval rate</span>{" "}
+                across study, work, and tourist visas worldwide.
+              </p>
+              <div className="mt-5 h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                <div className="h-full w-[98%] bg-gradient-brand" />
+              </div>
+            </Reveal>
+
+            {/* Small cards */}
+            {SMALL_CARDS.map(({ icon: Icon, title, text, tone }, i) => (
+              <Reveal
+                key={title}
+                delay={120 + i * 60}
+                className="p-6 rounded-3xl bg-card border border-border/60 shadow-soft hover:shadow-glow hover:-translate-y-1 transition-all"
+              >
+                <div
+                  className={`w-10 h-10 rounded-xl grid place-items-center mb-4 ${toneStyles[tone]}`}
+                >
+                  <Icon className="w-5 h-5" />
+                </div>
+                <h3 className="font-display text-lg font-semibold mb-1.5">
+                  {title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {text}
+                </p>
+              </Reveal>
+            ))}
+
+            {/* Big card: Personalised + 24/7 */}
+            <Reveal
+              delay={500}
+              className="md:col-span-2 p-8 rounded-3xl bg-gradient-brand text-primary-foreground shadow-glow relative overflow-hidden group"
+            >
+              <div className="relative z-10">
+                <div className="flex gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md grid place-items-center">
+                    <UserCheck className="w-6 h-6" />
+                  </div>
+                  <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md grid place-items-center">
+                    <Headphones className="w-6 h-6" />
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                  <div>
+                    <h3 className="font-display text-2xl font-bold mb-2">
+                      Personalised Guidance & 24/7 Support
+                    </h3>
+                    <p className="text-primary-foreground/85 max-w-md">
+                      A dedicated advisor for your journey, plus round-the-clock
+                      help over WhatsApp and email — whenever you need us.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden
+                className="absolute -bottom-12 -right-12 w-56 h-56 bg-white/15 rounded-full blur-3xl"
+              />
+              <div
+                aria-hidden
+                className="absolute -top-10 -left-10 w-40 h-40 bg-brand-aqua/30 rounded-full blur-3xl"
+              />
+            </Reveal>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
