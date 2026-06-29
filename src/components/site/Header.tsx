@@ -153,8 +153,8 @@ export function Header() {
         <button
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="header-dropdown-menu"
           onClick={() => setOpen((o) => !o)}
-          onMouseEnter={() => setOpen(true)}
           className={`relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
             onLight
               ? "border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
@@ -176,6 +176,9 @@ export function Header() {
 
       {/* Dropdown menu (right-aligned) */}
       <div
+        id="header-dropdown-menu"
+        role="menu"
+        aria-hidden={!open}
         className={`absolute right-4 lg:right-8 top-full mt-2 w-72 origin-top-right rounded-2xl border border-border/60 bg-white/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_rgba(8,18,48,0.25)] transition-all duration-300 ${
           open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
         }`}
