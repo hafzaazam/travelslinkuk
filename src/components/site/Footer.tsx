@@ -122,10 +122,19 @@ export function Footer() {
 
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3 justify-between items-center text-xs text-white/60">
           <p>© 2025 Travel Links Solution. All Rights Reserved.</p>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-5">
             <a href="/privacy" className="hover:text-white transition">Privacy Policy</a>
             <a href="/terms" className="hover:text-white transition">Terms</a>
             <a href="/cookies" className="hover:text-white transition">Cookies</a>
+            <button
+              type="button"
+              onClick={() => {
+                import("./CookieConsent").then((m) => m.openCookiePreferences());
+              }}
+              className="hover:text-white transition"
+            >
+              Cookie preferences
+            </button>
             <a href="/admin" className="hover:text-white transition opacity-60">Admin</a>
           </div>
         </div>

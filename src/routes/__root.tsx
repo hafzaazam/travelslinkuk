@@ -15,6 +15,7 @@ import { SplashScreen } from "@/components/site/SplashScreen";
 import { ApplyDialog } from "@/components/site/ApplyDialog";
 import { ChatWidget } from "@/components/site/ChatWidget";
 import { NotFound } from "@/components/site/NotFound";
+import { CookieConsent } from "@/components/site/CookieConsent";
 
 
 function NotFoundComponent() {
@@ -158,6 +159,7 @@ function RootComponent() {
       <Outlet />
       <ApplyDialog />
       <ChatWidget />
+      <CookieConsent />
     </QueryClientProvider>
   );
 }
