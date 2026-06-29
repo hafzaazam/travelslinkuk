@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Facebook, Instagram, Linkedin, MessageCircle, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { MessageCircle, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Logo } from "./Logo";
