@@ -40,9 +40,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll-spy
+  // Scroll-spy — only hash anchors on the home page
   useEffect(() => {
-    const ids = NAV.map((n) => n.href.slice(1));
+    if (!isHome) return;
+    const ids = NAV.filter((n) => !n.route && n.href.startsWith("#")).map((n) => n.href.slice(1));
     const els = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => !!el);
@@ -59,7 +60,18 @@ export function Header() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [isHome]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      const target = e.target as Node | null;
+      if (target && !(target as HTMLElement).closest?.("[data-header-root]")) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, [open]);
 
   // dropdown menu — no body scroll lock
 
