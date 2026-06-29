@@ -149,34 +149,33 @@
 .splash-fade-up { animation: splash-fade-up 0.7s ease-out both; opacity: 0; }
 .splash-progress { animation: splash-progress 1.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
 
-/* Splash plane + clouds + wonders */
-@keyframes plane-fly {
-  0%   { transform: translateX(-12vw) translateY(6px) rotate(-6deg); }
-  50%  { transform: translateX(0vw)   translateY(-8px) rotate(-2deg); }
-  100% { transform: translateX(12vw)  translateY(6px)  rotate(-6deg); }
+/* Splash boarding pass */
+@keyframes bp-card-in {
+  0%   { opacity: 0; transform: translateY(40px) rotate(-2deg) scale(0.96); }
+  60%  { opacity: 1; transform: translateY(-4px) rotate(0.4deg) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
 }
-@keyframes cloud-drift-l {
-  from { transform: translateX(-10%); }
-  to   { transform: translateX(110%); }
+@keyframes bp-plane-slide {
+  0%   { left: 0%; opacity: 0; }
+  15%  { opacity: 1; }
+  100% { left: calc(100% - 22px); opacity: 1; }
 }
-@keyframes cloud-drift-r {
-  from { transform: translateX(110%); }
-  to   { transform: translateX(-10%); }
+@keyframes bp-stamp-in {
+  0%   { opacity: 0; transform: scale(2) rotate(-14deg); }
+  70%  { opacity: 1; transform: scale(0.92) rotate(-14deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-14deg); }
 }
-@keyframes plane-trail {
-  0%   { stroke-dashoffset: 600; opacity: 0; }
-  20%  { opacity: 0.9; }
-  100% { stroke-dashoffset: 0; opacity: 0.9; }
+@keyframes bp-arc-draw {
+  from { stroke-dashoffset: 1800; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
 }
-@keyframes wonders-rise {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+.bp-card { animation: bp-card-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.bp-plane { animation: bp-plane-slide 2.4s cubic-bezier(0.65, 0, 0.35, 1) 0.6s both; }
+.bp-stamp { animation: bp-stamp-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 1.4s both; opacity: 0; }
+.bp-arc {
+  stroke-dasharray: 2 9;
+  animation: bp-arc-draw 2s ease-out 0.2s both;
 }
-.splash-plane { animation: plane-fly 5s ease-in-out infinite; transform-origin: center; }
-.splash-cloud-l { animation: cloud-drift-l 22s linear infinite; }
-.splash-cloud-r { animation: cloud-drift-r 28s linear infinite; }
-.splash-trail { stroke-dasharray: 600; animation: plane-trail 3.2s ease-out both; }
-.splash-wonders { animation: wonders-rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 
 
 /* 3D icon motion */
