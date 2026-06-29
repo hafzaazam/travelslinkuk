@@ -234,7 +234,7 @@ function ComparePage() {
                       src={`https://flagcdn.com/w40/${c.code}.png`}
                       alt=""
                       className="h-4 w-6 object-cover rounded-sm"
-                      loading="lazy"
+                      loading="lazy" decoding="async"
                     />
                     {c.name}
                     {isOn && <X className="h-3.5 w-3.5 opacity-80" />}
@@ -273,7 +273,7 @@ function ComparePage() {
                               src={`https://flagcdn.com/w80/${c.code}.png`}
                               alt={`${c.name} flag`}
                               className="h-8 w-12 object-cover rounded-md shadow-soft"
-                              loading="lazy"
+                              loading="lazy" decoding="async"
                             />
                             <div>
                               <div className="font-display text-base font-bold text-foreground">{c.name}</div>
