@@ -242,9 +242,7 @@ function CountryPage() {
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="max-w-2xl">
-              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                At a glance
-              </span>
+              <Eyebrow label="At a glance" />
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 {country.name} visa — pros & cons
               </h2>
