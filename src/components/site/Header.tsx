@@ -64,7 +64,7 @@ export function Header() {
   // dropdown menu — no body scroll lock
 
 
-  const onLight = !scrolled; // header sits on dark hero
+  const onLight = isHome && !scrolled; // header sits on dark hero only on home
   const textBase = onLight ? "text-white/80 hover:text-white" : "text-foreground/70 hover:text-foreground";
   const navWrap = onLight
     ? "border-white/15 bg-white/10 backdrop-blur-xl"
@@ -74,7 +74,7 @@ export function Header() {
     <header
       onMouseLeave={() => setOpen(false)}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || !isHome
           ? "bg-white/85 backdrop-blur-xl border-b border-border/60 shadow-[0_8px_30px_-12px_rgba(8,18,48,0.18)]"
           : "bg-gradient-to-b from-[#04081a]/40 via-[#04081a]/15 to-transparent"
       }`}
@@ -88,13 +88,13 @@ export function Header() {
       {/* hairline */}
       <div
         className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent transition-opacity duration-500 ${
-          scrolled ? "opacity-100" : "opacity-0"
+          scrolled || !isHome ? "opacity-100" : "opacity-0"
         }`}
       />
 
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 lg:px-8 transition-all duration-300 ${
-          scrolled ? "h-20" : "h-28"
+          scrolled || !isHome ? "h-20" : "h-28"
         }`}
       >
 
