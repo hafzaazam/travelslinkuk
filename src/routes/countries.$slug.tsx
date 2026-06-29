@@ -173,24 +173,6 @@ function CountryPage() {
             </div>
             <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
               <p className="text-base text-foreground/90 leading-relaxed">{country.about}</p>
-              <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Capital</div>
-                  <div className="mt-1 font-semibold">{country.capital}</div>
-                </div>
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Language</div>
-                  <div className="mt-1 font-semibold">{country.language}</div>
-                </div>
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Currency</div>
-                  <div className="mt-1 font-semibold">{country.currency}</div>
-                </div>
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Processing</div>
-                  <div className="mt-1 font-semibold">{country.processingTime}</div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
