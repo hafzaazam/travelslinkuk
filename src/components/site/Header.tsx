@@ -88,13 +88,13 @@ export function Header() {
       {/* hairline */}
       <div
         className={`pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent transition-opacity duration-500 ${
-          scrolled ? "opacity-100" : "opacity-0"
+          scrolled || !isHome ? "opacity-100" : "opacity-0"
         }`}
       />
 
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 lg:px-8 transition-all duration-300 ${
-          scrolled ? "h-20" : "h-28"
+          scrolled || !isHome ? "h-20" : "h-28"
         }`}
       >
 
