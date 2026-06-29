@@ -10,12 +10,6 @@ import { CTABanner } from "@/components/site/CTABanner";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/Section";
 import {
-  Plane,
-  Briefcase,
-  Users,
-  GraduationCap,
-  HomeIcon,
-  RefreshCcw,
   CheckCircle2,
   ArrowRight,
   FileCheck2,
@@ -106,44 +100,6 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
-const DETAILED = [
-  {
-    icon: Plane,
-    title: "Tourist Visa",
-    text: "Holiday, family visit and short-stay applications for Schengen, UK, USA, Canada, Australia and 20+ destinations.",
-    bullets: ["Itinerary & cover letter drafting", "Financial document review", "Embassy appointment booking"],
-  },
-  {
-    icon: Briefcase,
-    title: "Business Visa",
-    text: "Meetings, conferences, trade fairs and short-term assignments — with invitation-letter handling.",
-    bullets: ["Sponsor / invitation coordination", "Multi-entry strategy", "Investor & B-1/B-2 pathways"],
-  },
-  {
-    icon: Users,
-    title: "Family Visa",
-    text: "Spouse, dependent and family reunification cases with sensitive, end-to-end case management.",
-    bullets: ["Relationship evidence portfolio", "Sponsor income & accommodation", "Dependant inclusion strategy"],
-  },
-  {
-    icon: GraduationCap,
-    title: "Study Visa",
-    text: "Student route applications for the UK, Canada, Australia, Ireland and Schengen countries.",
-    bullets: ["CAS / I-20 / LoA guidance", "Financial proof structuring", "Tier-4 / Student route filings"],
-  },
-  {
-    icon: HomeIcon,
-    title: "Settlement & PR",
-    text: "Long-stay, residency and indefinite leave applications with full eligibility assessment.",
-    bullets: ["Eligibility audit", "Document mapping", "Biometrics & decision follow-up"],
-  },
-  {
-    icon: RefreshCcw,
-    title: "Refusal & Appeal",
-    text: "Review of refused applications, reapplication strategy and administrative review support.",
-    bullets: ["Refusal-letter analysis", "Strengthened reapplication", "Appeal & review filings"],
-  },
-];
 
 const INCLUDED = [
   "Free 20-minute eligibility consultation",
@@ -208,39 +164,6 @@ function ServicesPage() {
 
         <Services />
 
-        {/* Detailed offerings */}
-        <section className="py-24 px-5 lg:px-8 bg-gradient-soft">
-          <div className="mx-auto max-w-7xl">
-            <Reveal>
-              <SectionHeading
-                eyebrow="Detailed Offerings"
-                title={<>Every visa pathway, <span className="text-gradient-brand">expertly handled</span></>}
-                description="From a quick tourist trip to long-term settlement, we cover the full spectrum of visa types."
-              />
-            </Reveal>
-            <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {DETAILED.map(({ icon: Icon, title, text, bullets }, i) => (
-                <Reveal key={title} delay={i * 80} direction="up">
-                  <div className="group h-full rounded-3xl border border-border bg-white p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-glow">
-                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-brand text-white shadow-soft transition-transform group-hover:scale-110">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="mt-4 font-display text-lg font-semibold">{title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{text}</p>
-                    <ul className="mt-4 space-y-2">
-                      {bullets.map((b) => (
-                        <li key={b} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary shrink-0" />
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* What's included */}
         <section className="py-24 px-5 lg:px-8">
