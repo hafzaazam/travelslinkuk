@@ -14,15 +14,15 @@ import {
   FileCheck2,
   Clock,
   Wallet,
-  MessageSquare,
-  ClipboardList,
-  UserCheck,
-  FileText,
-  PenLine,
-  CalendarCheck,
-  Fingerprint,
-  Headphones,
+  HelpCircle,
+  MessageCircle,
 } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { openApplyDialog } from "@/components/site/ApplyDialog";
 
 const SERVICES_FAQS = [
