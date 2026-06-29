@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { SectionHeading } from "./Section";
+import { BlurImage } from "./BlurImage";
+
 
 const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
 
