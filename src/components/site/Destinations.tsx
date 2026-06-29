@@ -1,6 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { SectionHeading } from "./Section";
 import { Reveal } from "./Reveal";
+import { BlurImage } from "./BlurImage";
+
+const lqip = (url: string) => url.replace(/[?&]w=\d+/, "").replace(/[?&]q=\d+/, "") + (url.includes("?") ? "&" : "?") + "w=32&q=20&blur=200";
+
 
 const DEST = [
   { name: "Europe", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80", alt: "Cobbled European street with historic architecture at golden hour", tag: "Schengen Area", to: "/countries" as const, slug: undefined },
