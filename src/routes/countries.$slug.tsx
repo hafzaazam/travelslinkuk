@@ -3,6 +3,7 @@ import { ArrowRight, ArrowLeft, Check, Clock, Coins, Globe2, Landmark, MapPin } 
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
+import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
 
 export const Route = createFileRoute("/countries/$slug")({
