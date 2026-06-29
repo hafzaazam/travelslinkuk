@@ -169,6 +169,15 @@ function ServicesPage() {
           </div>
           <div className="relative mx-auto max-w-4xl text-center">
             <Reveal>
+              <nav aria-label="Breadcrumb" className="mb-6 flex justify-center">
+                <ol className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  <li>
+                    <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page" className="text-primary">Services</li>
+                </ol>
+              </nav>
               <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 Visa Services
               </span>
