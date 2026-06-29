@@ -169,9 +169,6 @@ function CountryPage() {
                   key={i}
                   className="flex items-start gap-3 rounded-2xl bg-white border border-border p-5 shadow-card hover:shadow-glow hover:-translate-y-0.5 transition-all"
                 >
-                  <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
-                    <Sparkles className="h-4 w-4" />
-                  </span>
                   <span className="text-sm text-foreground leading-relaxed">{b}</span>
                 </div>
               ))}
