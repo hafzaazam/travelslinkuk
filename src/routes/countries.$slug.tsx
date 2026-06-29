@@ -203,6 +203,8 @@ function CountryPage() {
                   src={`https://flagcdn.com/w1280/${country.code}.png`}
                   alt={`${country.name} flag`}
                   className="h-full w-full object-cover"
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </div>
             </div>
