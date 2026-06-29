@@ -77,6 +77,14 @@ export const Route = createFileRoute("/countries/$slug")({
                       { "@type": "ListItem", position: 3, name: c.name, item: canonical },
                     ],
                   },
+                  {
+                    "@type": "FAQPage",
+                    mainEntity: countryFaqs(c).map((f) => ({
+                      "@type": "Question",
+                      name: f.q,
+                      acceptedAnswer: { "@type": "Answer", text: f.a },
+                    })),
+                  },
                 ],
               }),
             },
