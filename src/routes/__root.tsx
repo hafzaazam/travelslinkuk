@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     scripts: [
       { src: "https://www.googletagmanager.com/gtag/js?id=G-5NL691N6SK", async: true },
       {
-        children: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-5NL691N6SK');`,
+        children: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;try{var s=localStorage.getItem('tls-cookie-consent-v1');var c=s?JSON.parse(s):null;var a=c&&c.categories&&c.categories.analytics?'granted':'denied';var f=c&&c.categories&&c.categories.functional?'granted':'denied';gtag('consent','default',{analytics_storage:a,functionality_storage:f,ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',security_storage:'granted'});}catch(e){gtag('consent','default',{analytics_storage:'denied',functionality_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',security_storage:'granted'});}gtag('js', new Date());gtag('config', 'G-5NL691N6SK', { anonymize_ip: true });`,
       },
       {
         type: "application/ld+json",
