@@ -16,19 +16,54 @@ const WELCOME: UIMessage = {
   ],
 };
 
+const STORAGE_KEY = "tls-chat-history-v1";
+
+function loadInitialMessages(): UIMessage[] {
+  if (typeof window === "undefined") return [WELCOME];
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [WELCOME];
+    const parsed = JSON.parse(raw) as UIMessage[];
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : [WELCOME];
+  } catch {
+    return [WELCOME];
+  }
+}
+
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const initialMessages = useRef<UIMessage[]>(loadInitialMessages()).current;
 
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, sendMessage, status, error, setMessages } = useChat({
     id: "travel-links-consultant",
-    messages: [WELCOME],
+    messages: initialMessages,
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  // Persist messages to localStorage whenever they change (and stream settles)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (status === "streaming" || status === "submitted") return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } catch {
+      // ignore quota / serialization errors
+    }
+  }, [messages, status]);
+
+  const clearHistory = () => {
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+    setMessages([WELCOME]);
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -75,6 +110,13 @@ export function ChatWidget() {
                 Online · replies instantly
               </div>
             </div>
+            <button
+              onClick={clearHistory}
+              className="rounded-md px-2 py-1 text-xs font-medium opacity-80 transition hover:bg-white/15 hover:opacity-100"
+              title="Clear conversation"
+            >
+              Clear
+            </button>
           </div>
 
           {/* Messages */}
