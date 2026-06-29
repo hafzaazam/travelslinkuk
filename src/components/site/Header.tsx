@@ -61,12 +61,8 @@ export function Header() {
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  // dropdown menu — no body scroll lock
+
 
   const onLight = !scrolled; // header sits on dark hero
   const textBase = onLight ? "text-white/80 hover:text-white" : "text-foreground/70 hover:text-foreground";
@@ -166,13 +162,14 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Dropdown menu (right-aligned) */}
       <div
-        className={`overflow-hidden border-t border-border/60 bg-white/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ${
-          open ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
+        className={`absolute right-4 lg:right-8 top-full mt-2 w-72 origin-top-right rounded-2xl border border-border/60 bg-white/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_rgba(8,18,48,0.25)] transition-all duration-300 ${
+          open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <div className="mx-auto max-w-7xl px-5 py-4 grid gap-1">
+        <div className="px-4 py-4 grid gap-1">
+
           {NAV.map((item, i) => {
             const isActive = active === item.href;
             return (
