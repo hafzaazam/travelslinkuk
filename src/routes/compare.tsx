@@ -32,14 +32,39 @@ export const Route = createFileRoute("/compare")({
 const MAX_SLOTS = 3;
 
 function ComparePage() {
+  const [visaFilter, setVisaFilter] = useState<string>("all");
   const [selected, setSelected] = useState<string[]>(["germany", "france", "italy"]);
+
+  const visaTypeOptions = useMemo(() => {
+    const set = new Set<string>();
+    COUNTRIES.forEach((c) => c.visas.forEach((v) => set.add(v.type)));
+    return Array.from(set).sort();
+  }, []);
+
+  const eligibleCountries = useMemo(
+    () =>
+      visaFilter === "all"
+        ? COUNTRIES
+        : COUNTRIES.filter((c) => c.visas.some((v) => v.type === visaFilter)),
+    [visaFilter]
+  );
+
+  const effectiveSelected = useMemo(
+    () =>
+      visaFilter === "all"
+        ? selected
+        : selected.filter((slug) =>
+            COUNTRIES.find((c) => c.slug === slug)?.visas.some((v) => v.type === visaFilter)
+          ),
+    [selected, visaFilter]
+  );
 
   const countries = useMemo(
     () =>
-      selected
+      effectiveSelected
         .map((slug) => COUNTRIES.find((c) => c.slug === slug))
         .filter((c): c is Country => !!c),
-    [selected]
+    [effectiveSelected]
   );
 
   const toggle = (slug: string) => {
@@ -51,10 +76,11 @@ function ComparePage() {
   };
 
   const allVisaTypes = useMemo(() => {
+    if (visaFilter !== "all") return [visaFilter];
     const set = new Set<string>();
     countries.forEach((c) => c.visas.forEach((v) => set.add(v.type)));
     return Array.from(set);
-  }, [countries]);
+  }, [countries, visaFilter]);
 
   return (
     <div className="min-h-screen bg-background">
