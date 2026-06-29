@@ -226,16 +226,11 @@ function ServicesPage() {
             </Reveal>
             <Reveal direction="left" delay={100}>
               <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 shadow-card">
-                <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
-                  {INCLUDED.map(({ icon: Icon, title, desc }) => (
-                    <li key={title} className="flex items-start gap-3">
-                      <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
-                        <Icon className="h-4.5 w-4.5" strokeWidth={2} />
-                      </span>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground leading-snug">{title}</p>
-                        <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{desc}</p>
-                      </div>
+                <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
+                  {INCLUDED.map(({ title, desc }) => (
+                    <li key={title} className="border-l-2 border-primary/20 pl-4">
+                      <p className="text-sm font-semibold text-foreground leading-snug">{title}</p>
+                      <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{desc}</p>
                     </li>
                   ))}
                 </ul>
