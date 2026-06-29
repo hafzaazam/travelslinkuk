@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouterState } from "@tanstack/react-router";
 import { Menu, X, ArrowRight, PhoneCall } from "lucide-react";
 import { Logo } from "./Logo";
 import { openApplyDialog } from "./ApplyDialog";
@@ -20,6 +21,9 @@ export function Header() {
   const [progress, setProgress] = useState(0);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("#home");
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isHome = pathname === "/";
+  const hrefFor = (hash: string) => (isHome ? hash : `/${hash}`);
 
   useEffect(() => {
     const onScroll = () => {
@@ -169,7 +173,7 @@ export function Header() {
             return (
               <a
                 key={item.href}
-                href={item.href}
+                href={hrefFor(item.href)}
                 onClick={() => setOpen(false)}
                 style={{ transitionDelay: open ? `${i * 30}ms` : "0ms" }}
                 className={`flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all ${
@@ -185,7 +189,7 @@ export function Header() {
           })}
           <div className="mt-3 grid grid-cols-2 gap-2">
             <a
-              href="#contact"
+              href={hrefFor("#contact")}
               onClick={() => setOpen(false)}
               className="text-center px-4 py-3 text-sm font-semibold text-primary border border-primary/25 rounded-xl"
             >
