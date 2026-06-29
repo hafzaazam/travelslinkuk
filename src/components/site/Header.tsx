@@ -89,9 +89,10 @@ export function Header() {
 
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 lg:px-8 transition-all duration-300 ${
-          scrolled ? "h-16" : "h-20"
+          scrolled ? "h-20" : "h-28"
         }`}
       >
+
         <Logo light={onLight} />
 
 
