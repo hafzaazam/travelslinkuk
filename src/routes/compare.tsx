@@ -440,6 +440,80 @@ function ComparePage() {
                 </table>
               </div>
             )}
+
+            {/* AI Suggestion */}
+            {countries.length > 0 && (
+              <div className="mt-10 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-white to-fuchsia-500/5 p-6 sm:p-8 shadow-card">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
+                      <Sparkles className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <Eyebrow label="AI Suggestion" />
+                      <h2 className="mt-2 font-display text-xl sm:text-2xl font-bold">
+                        Which country fits you best?
+                      </h2>
+                      <p className="mt-1 text-sm text-muted-foreground max-w-xl">
+                        Let AI weigh up the destinations you've selected
+                        {visaFilter !== "all" ? ` for the ${visaFilter}` : ""} and recommend a top pick.
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={aiLoading}
+                    onClick={async () => {
+                      setAiLoading(true);
+                      setAiError("");
+                      setAiSuggestion("");
+                      try {
+                        const payload = {
+                          visaType: visaFilter,
+                          countries: countries.map((c) => ({
+                            name: c.name,
+                            slug: c.slug,
+                            processingTime: c.processingTime,
+                            currency: c.currency,
+                            visas: c.visas.map((v) => v.type),
+                            pros: c.pros,
+                            cons: c.cons,
+                            profile: PROFILES[c.slug],
+                          })),
+                        };
+                        const result = await runSuggest({ data: payload });
+                        setAiSuggestion(result.suggestion);
+                      } catch (e) {
+                        setAiError(e instanceof Error ? e.message : "Something went wrong.");
+                      } finally {
+                        setAiLoading(false);
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:-translate-y-0.5 disabled:opacity-60 disabled:hover:translate-y-0"
+                  >
+                    {aiLoading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" /> Thinking…
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4" /> Get AI recommendation
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {(aiSuggestion || aiError) && (
+                  <div className="mt-6 rounded-2xl border border-border bg-white p-5 text-sm leading-relaxed text-foreground/90 whitespace-pre-wrap">
+                    {aiError ? (
+                      <span className="text-rose-600">{aiError}</span>
+                    ) : (
+                      aiSuggestion
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </section>
       </main>
