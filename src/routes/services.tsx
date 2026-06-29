@@ -24,6 +24,15 @@ import {
 } from "lucide-react";
 import { openApplyDialog } from "@/components/site/ApplyDialog";
 
+const SERVICES_FAQS = [
+  { q: "Which visa types does Travel Links Solution handle?", a: "We handle tourist, business, family, study, settlement and refusal-appeal visas for 25+ countries including the UK, USA, Canada, Australia, New Zealand and all Schengen states." },
+  { q: "How long does a visa application take?", a: "Most tourist and business visas take 2–6 weeks; study, family and settlement visas typically take 6–12 weeks depending on the embassy. We share a realistic timeline during your free consultation." },
+  { q: "What is your visa approval rate?", a: "Travel Links Solution maintains a 98% approval rate across all visa categories thanks to senior-consultant case review before every submission." },
+  { q: "How much do your visa services cost?", a: "Our consultancy fees are transparent and quoted upfront after a free assessment. Embassy/government fees are billed at cost with no markup." },
+  { q: "Can you help if my visa was previously refused?", a: "Yes. We review the refusal grounds, strengthen weak documentation and prepare a structured reapplication or formal appeal." },
+  { q: "Do you offer a free consultation?", a: "Yes — every enquiry starts with a free 20-minute consultation with a senior UK visa consultant to assess eligibility and next steps." },
+];
+
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
