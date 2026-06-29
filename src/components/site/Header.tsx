@@ -61,12 +61,8 @@ export function Header() {
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  // dropdown menu — no body scroll lock
+
 
   const onLight = !scrolled; // header sits on dark hero
   const textBase = onLight ? "text-white/80 hover:text-white" : "text-foreground/70 hover:text-foreground";
