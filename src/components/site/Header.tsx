@@ -74,7 +74,7 @@ export function Header() {
     <header
       onMouseLeave={() => setOpen(false)}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || !isHome
           ? "bg-white/85 backdrop-blur-xl border-b border-border/60 shadow-[0_8px_30px_-12px_rgba(8,18,48,0.18)]"
           : "bg-gradient-to-b from-[#04081a]/40 via-[#04081a]/15 to-transparent"
       }`}
