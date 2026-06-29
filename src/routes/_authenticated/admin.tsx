@@ -265,7 +265,7 @@ function ContactsPanel() {
     setLoading(true);
     const { data, error } = await supabase
       .from("contact_submissions")
-      .select("*")
+      .select("id,name,email,phone,subject,message,status,created_at")
       .order("created_at", { ascending: false });
     setLoading(false);
     if (error) toast.error("Failed to load contacts");

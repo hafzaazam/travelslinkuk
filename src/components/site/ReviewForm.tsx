@@ -65,14 +65,22 @@ export function ReviewForm() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Rating</label>
-            <div className="mt-2 flex items-center gap-1">
+            <div id="rating-label" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Rating
+            </div>
+            <div
+              role="radiogroup"
+              aria-labelledby="rating-label"
+              className="mt-2 flex items-center gap-1"
+            >
               {[1, 2, 3, 4, 5].map((n) => {
                 const active = (hover || rating) >= n;
                 return (
                   <button
                     key={n}
                     type="button"
+                    role="radio"
+                    aria-checked={rating === n}
                     onMouseEnter={() => setHover(n)}
                     onMouseLeave={() => setHover(0)}
                     onClick={() => setRating(n)}

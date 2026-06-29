@@ -40,9 +40,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll-spy
+  // Scroll-spy — only hash anchors on the home page
   useEffect(() => {
-    const ids = NAV.map((n) => n.href.slice(1));
+    if (!isHome) return;
+    const ids = NAV.filter((n) => !n.route && n.href.startsWith("#")).map((n) => n.href.slice(1));
     const els = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => !!el);
@@ -59,7 +60,18 @@ export function Header() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [isHome]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      const target = e.target as Node | null;
+      if (target && !(target as HTMLElement).closest?.("[data-header-root]")) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, [open]);
 
   // dropdown menu — no body scroll lock
 
@@ -72,7 +84,7 @@ export function Header() {
 
   return (
     <header
-      onMouseLeave={() => setOpen(false)}
+      data-header-root
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled || !isHome
           ? "bg-white/85 backdrop-blur-xl border-b border-border/60 shadow-[0_8px_30px_-12px_rgba(8,18,48,0.18)]"
@@ -141,8 +153,8 @@ export function Header() {
         <button
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="header-dropdown-menu"
           onClick={() => setOpen((o) => !o)}
-          onMouseEnter={() => setOpen(true)}
           className={`relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
             onLight
               ? "border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
@@ -164,6 +176,9 @@ export function Header() {
 
       {/* Dropdown menu (right-aligned) */}
       <div
+        id="header-dropdown-menu"
+        role="menu"
+        aria-hidden={!open}
         className={`absolute right-4 lg:right-8 top-full mt-2 w-72 origin-top-right rounded-2xl border border-border/60 bg-white/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_rgba(8,18,48,0.25)] transition-all duration-300 ${
           open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
         }`}

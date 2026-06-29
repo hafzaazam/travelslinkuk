@@ -125,10 +125,22 @@ export function CookieConsent() {
 
   if (!mounted || !open) return null;
 
+  const cancelPrefs = () => {
+    const existing = readConsent();
+    if (existing) {
+      setChoices(existing.categories);
+      setShowPrefs(false);
+      setOpen(false);
+    } else {
+      // No prior consent: closing without choosing = reject non-essential
+      rejectAll();
+    }
+  };
+
   return (
     <div
       role="dialog"
-      aria-modal="false"
+      aria-modal="true"
       aria-labelledby="cookie-consent-title"
       className="fixed inset-x-0 bottom-0 z-[60] px-3 pb-3 sm:px-5 sm:pb-5 pointer-events-none"
     >
@@ -196,8 +208,8 @@ export function CookieConsent() {
               </div>
               <button
                 type="button"
-                aria-label="Close preferences"
-                onClick={() => setOpen(false)}
+                aria-label="Close preferences without saving"
+                onClick={cancelPrefs}
                 className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
               >
                 <X className="h-4 w-4" />

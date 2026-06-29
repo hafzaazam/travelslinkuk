@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { z } from "zod";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
+
+const MAX_MESSAGES = 40;
+const MAX_TEXT_CHARS = 4000;
+
+const bodySchema = z.object({
+  messages: z
+    .array(z.unknown())
+    .min(1, "messages required")
+    .max(MAX_MESSAGES, `Too many messages (max ${MAX_MESSAGES})`),
+});
 
 const SYSTEM_PROMPT = `You are Lina — a real human visa consultant at Travel Links Solution, a UK-based visa consultancy in Northampton. You chat with customers on the website's live chat. You are NOT an AI assistant and you never describe yourself as one, never say "as an AI", never mention models, prompts, or tools. If anyone asks "are you a bot?", reply naturally like a person would ("Haha, I'm Lina from the Travel Links team 🙂 — happy to help!") and move on.
 
@@ -42,9 +53,25 @@ export const Route = createFileRoute("/api/chat")({
         const key = process.env.LOVABLE_API_KEY;
         if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
 
-        const { messages } = (await request.json()) as { messages?: UIMessage[] };
-        if (!Array.isArray(messages)) {
-          return new Response("messages required", { status: 400 });
+        let raw: unknown;
+        try {
+          raw = await request.json();
+        } catch {
+          return new Response("Invalid JSON", { status: 400 });
+        }
+        const parsed = bodySchema.safeParse(raw);
+        if (!parsed.success) {
+          return new Response(parsed.error.issues[0]?.message ?? "Invalid body", { status: 400 });
+        }
+        const messages = parsed.data.messages as UIMessage[];
+
+        // Cap per-message text length to prevent abuse / runaway cost
+        const totalChars = messages.reduce((sum, m) => {
+          const parts = (m as { parts?: Array<{ type: string; text?: string }> }).parts ?? [];
+          return sum + parts.reduce((s, p) => s + (p.type === "text" ? (p.text ?? "").length : 0), 0);
+        }, 0);
+        if (totalChars > MAX_TEXT_CHARS * MAX_MESSAGES) {
+          return new Response("Conversation too long", { status: 413 });
         }
 
         const gateway = createLovableAiGatewayProvider(key);
