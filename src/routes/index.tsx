@@ -17,6 +17,8 @@ import { Contact } from "@/components/site/Contact";
 import { CTABanner } from "@/components/site/CTABanner";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
+import { Reveal } from "@/components/site/Reveal";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,7 +60,7 @@ function Index() {
         <Stats />
         <section id="about" className="py-24 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <div className="lg:col-span-7 text-center lg:text-left">
+            <Reveal direction="right" className="lg:col-span-7 text-center lg:text-left">
               <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 About Us
               </span>
@@ -71,8 +73,8 @@ function Index() {
                 consultants combines deep regulatory knowledge with a genuinely personal approach — so your
                 application is in expert hands from day one.
               </p>
-            </div>
-            <div className="lg:col-span-5 relative flex justify-center">
+            </Reveal>
+            <Reveal direction="left" delay={150} className="lg:col-span-5 relative flex justify-center">
               <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-brand opacity-20 blur-3xl" aria-hidden />
               <img
                 src={aboutVisa.url}
@@ -80,7 +82,8 @@ function Index() {
                 className="relative w-full max-w-sm h-auto drop-shadow-[0_30px_60px_rgba(33,87,243,0.35)] animate-float"
                 loading="lazy"
               />
-            </div>
+            </Reveal>
+
           </div>
         </section>
         <Services />
