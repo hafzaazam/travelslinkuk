@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "https://travellinks.uk/" },
     ],
     links: [
-      { rel: "canonical", href: "/" },
+      { rel: "canonical", href: "https://travellinks.uk/" },
       { rel: "preload", as: "image", href: heroAirport, fetchpriority: "high" },
     ],
     scripts: [
