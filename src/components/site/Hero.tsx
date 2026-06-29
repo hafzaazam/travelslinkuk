@@ -185,7 +185,7 @@ export function Hero() {
             className="relative z-20 w-80 rounded-3xl border border-white/10 bg-white/5 p-4 rotate-3 shadow-2xl backdrop-blur-xl transition-transform duration-500 hover:rotate-0 animate-fade-up"
           >
             <div className="relative h-48 w-full overflow-hidden rounded-2xl">
-              <img src={slide.image} alt="" className="h-full w-full object-cover" />
+              <img src={slide.image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#04081a]/60 to-transparent" />
               <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 backdrop-blur-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white border border-white/15">
                 <MapPin className="h-3 w-3 text-brand-aqua" />
