@@ -10,11 +10,18 @@ import { CTABanner } from "@/components/site/CTABanner";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/Section";
 import {
-  
   ArrowRight,
   FileCheck2,
   Clock,
   Wallet,
+  MessageSquare,
+  ClipboardList,
+  UserCheck,
+  FileText,
+  PenLine,
+  CalendarCheck,
+  Fingerprint,
+  Headphones,
 } from "lucide-react";
 import { openApplyDialog } from "@/components/site/ApplyDialog";
 
@@ -101,15 +108,15 @@ export const Route = createFileRoute("/services")({
 });
 
 
-const INCLUDED = [
-  "Free 20-minute eligibility consultation",
-  "Personalised document checklist",
-  "Senior-consultant case review",
-  "Application form preparation",
-  "Cover letter & SOP drafting",
-  "Embassy appointment booking",
-  "Biometrics & VFS guidance",
-  "24/7 WhatsApp & email support",
+const INCLUDED: { icon: typeof MessageSquare; title: string; desc: string }[] = [
+  { icon: MessageSquare, title: "Free eligibility consultation", desc: "20-minute call with a senior UK visa consultant to assess your chances." },
+  { icon: ClipboardList, title: "Personalised document checklist", desc: "A tailored list built around your nationality, destination and visa type." },
+  { icon: UserCheck, title: "Senior-consultant case review", desc: "Every application is reviewed by a senior consultant before submission." },
+  { icon: FileText, title: "Application form preparation", desc: "Accurate, error-free completion of all embassy and online forms." },
+  { icon: PenLine, title: "Cover letter & SOP drafting", desc: "Custom-written cover letters and statements of purpose that strengthen your case." },
+  { icon: CalendarCheck, title: "Embassy appointment booking", desc: "We secure the earliest available slot at your nearest VFS or embassy centre." },
+  { icon: Fingerprint, title: "Biometrics & VFS guidance", desc: "Step-by-step support for biometrics, document submission and centre visits." },
+  { icon: Headphones, title: "24/7 WhatsApp & email support", desc: "Direct access to your consultant from enquiry through to visa decision." },
 ];
 
 function ServicesPage() {
@@ -219,10 +226,16 @@ function ServicesPage() {
             </Reveal>
             <Reveal direction="left" delay={100}>
               <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 shadow-card">
-                <ul className="grid sm:grid-cols-2 gap-3">
-                  {INCLUDED.map((item) => (
-                    <li key={item} className="text-sm leading-relaxed">
-                      {item}
+                <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
+                  {INCLUDED.map(({ icon: Icon, title, desc }) => (
+                    <li key={title} className="flex items-start gap-3">
+                      <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
+                        <Icon className="h-4.5 w-4.5" strokeWidth={2} />
+                      </span>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground leading-snug">{title}</p>
+                        <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
