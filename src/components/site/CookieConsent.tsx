@@ -208,8 +208,8 @@ export function CookieConsent() {
               </div>
               <button
                 type="button"
-                aria-label="Close preferences"
-                onClick={() => setOpen(false)}
+                aria-label="Close preferences without saving"
+                onClick={cancelPrefs}
                 className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
               >
                 <X className="h-4 w-4" />
