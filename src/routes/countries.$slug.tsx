@@ -409,10 +409,10 @@ function CountryPage() {
                   className="group overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow hover:-translate-y-1 transition-all"
                 >
                   <div className="relative h-20 overflow-hidden">
-                    <img
+                    <BlurImage
                       src={`https://flagcdn.com/w640/${c.code}.png`}
+                      placeholder={`https://flagcdn.com/w20/${c.code}.png`}
                       alt={`${c.name} flag`}
-                      loading="lazy" decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   </div>
