@@ -11,7 +11,7 @@ const WELCOME: UIMessage = {
   parts: [
     {
       type: "text",
-      text: "Hi! I'm **Lina** from Travel Links Solution 👋\n\nI can help you choose a visa, estimate processing times, and prepare your documents. Where are you hoping to travel?",
+      text: "Hey there 👋 I'm Lina from Travel Links. What can I help you with today?",
     },
   ],
 };
