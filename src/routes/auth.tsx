@@ -24,7 +24,6 @@ const schema = z.object({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,21 +45,10 @@ function AuthPage() {
     }
     setLoading(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email: parsed.data.email,
-          password: parsed.data.password,
-          options: { emailRedirectTo: window.location.origin + "/admin" },
-        });
-        if (error) throw error;
-        toast.success("Account created. You can sign in now.");
-        setMode("signin");
-      } else {
-        const { error } = await supabase.auth.signInWithPassword(parsed.data);
-        if (error) throw error;
-        toast.success("Welcome back");
-        navigate({ to: "/admin" });
-      }
+      const { error } = await supabase.auth.signInWithPassword(parsed.data);
+      if (error) throw error;
+      toast.success("Welcome back");
+      navigate({ to: "/admin" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -77,13 +65,9 @@ function AuthPage() {
           </Link>
         </div>
         <div className="rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 shadow-2xl">
-          <h1 className="font-display text-2xl font-bold text-white">
-            {mode === "signin" ? "Admin Sign In" : "Create Admin Account"}
-          </h1>
+          <h1 className="font-display text-2xl font-bold text-white">Admin Sign In</h1>
           <p className="mt-1 text-sm text-white/60">
-            {mode === "signin"
-              ? "Access the admin dashboard"
-              : "Set up your admin login"}
+            Access the admin dashboard. Accounts are created by invitation only.
           </p>
 
           <form onSubmit={onSubmit} className="mt-7 space-y-4">
@@ -95,20 +79,10 @@ function AuthPage() {
               className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 disabled:opacity-60"
             >
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-              {mode === "signin" ? "Sign In" : "Create Account"}
+              Sign In
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </button>
           </form>
-
-          <button
-            type="button"
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="mt-5 w-full text-center text-xs text-white/60 hover:text-white"
-          >
-            {mode === "signin"
-              ? "Need an account? Sign up"
-              : "Already have an account? Sign in"}
-          </button>
         </div>
         <Link to="/" className="mt-6 block text-center text-xs text-white/50 hover:text-white">
           ← Back to website
