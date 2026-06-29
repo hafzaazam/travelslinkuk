@@ -19,6 +19,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CountriesIndexRouteImport } from './routes/countries.index'
 import { Route as CountriesSlugRouteImport } from './routes/countries.$slug'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -70,6 +71,11 @@ const CountriesSlugRoute = CountriesSlugRouteImport.update({
   path: '/countries/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/api/chat': typeof ApiChatRoute
   '/countries/$slug': typeof CountriesSlugRoute
   '/countries/': typeof CountriesIndexRoute
 }
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/api/chat': typeof ApiChatRoute
   '/countries/$slug': typeof CountriesSlugRoute
   '/countries': typeof CountriesIndexRoute
 }
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/api/chat': typeof ApiChatRoute
   '/countries/$slug': typeof CountriesSlugRoute
   '/countries/': typeof CountriesIndexRoute
 }
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/admin'
+    | '/api/chat'
     | '/countries/$slug'
     | '/countries/'
   fileRoutesByTo: FileRoutesByTo
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/admin'
+    | '/api/chat'
     | '/countries/$slug'
     | '/countries'
   id:
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/_authenticated/admin'
+    | '/api/chat'
     | '/countries/$slug'
     | '/countries/'
   fileRoutesById: FileRoutesById
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiChatRoute: typeof ApiChatRoute
   CountriesSlugRoute: typeof CountriesSlugRoute
   CountriesIndexRoute: typeof CountriesIndexRoute
 }
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CountriesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -269,6 +289,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiChatRoute: ApiChatRoute,
   CountriesSlugRoute: CountriesSlugRoute,
   CountriesIndexRoute: CountriesIndexRoute,
 }
