@@ -6,6 +6,7 @@ import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
 import { Eyebrow } from "@/components/site/Eyebrow";
+import { BlurImage } from "@/components/site/BlurImage";
 import { COUNTRIES, getCountryBySlug, type Country } from "@/data/countries";
 import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
 
