@@ -20,7 +20,7 @@ import {
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — Travel Links Solution | UK Visa Consultancy in Northampton" },
+      { title: "Contact — UK Visa Consultancy, Northampton | Travel Links" },
       { name: "description", content: "Contact Travel Links Solution for a free visa consultation. Call +44 787 946 5341, WhatsApp, email info@travellinks.uk or visit our Northampton office." },
       { name: "keywords", content: "contact visa consultant UK, Northampton visa office, free visa consultation, visa enquiry, Travel Links Solution contact" },
       { property: "og:title", content: "Contact Us — Travel Links Solution" },

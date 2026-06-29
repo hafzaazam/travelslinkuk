@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /auth
 
-Sitemap: https://travellinks.uk/sitemap.xml
+Sitemap: https://travelslinkuk.lovable.app/sitemap.xml
