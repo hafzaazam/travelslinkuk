@@ -106,44 +106,6 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
-const DETAILED = [
-  {
-    icon: Plane,
-    title: "Tourist Visa",
-    text: "Holiday, family visit and short-stay applications for Schengen, UK, USA, Canada, Australia and 20+ destinations.",
-    bullets: ["Itinerary & cover letter drafting", "Financial document review", "Embassy appointment booking"],
-  },
-  {
-    icon: Briefcase,
-    title: "Business Visa",
-    text: "Meetings, conferences, trade fairs and short-term assignments — with invitation-letter handling.",
-    bullets: ["Sponsor / invitation coordination", "Multi-entry strategy", "Investor & B-1/B-2 pathways"],
-  },
-  {
-    icon: Users,
-    title: "Family Visa",
-    text: "Spouse, dependent and family reunification cases with sensitive, end-to-end case management.",
-    bullets: ["Relationship evidence portfolio", "Sponsor income & accommodation", "Dependant inclusion strategy"],
-  },
-  {
-    icon: GraduationCap,
-    title: "Study Visa",
-    text: "Student route applications for the UK, Canada, Australia, Ireland and Schengen countries.",
-    bullets: ["CAS / I-20 / LoA guidance", "Financial proof structuring", "Tier-4 / Student route filings"],
-  },
-  {
-    icon: HomeIcon,
-    title: "Settlement & PR",
-    text: "Long-stay, residency and indefinite leave applications with full eligibility assessment.",
-    bullets: ["Eligibility audit", "Document mapping", "Biometrics & decision follow-up"],
-  },
-  {
-    icon: RefreshCcw,
-    title: "Refusal & Appeal",
-    text: "Review of refused applications, reapplication strategy and administrative review support.",
-    bullets: ["Refusal-letter analysis", "Strengthened reapplication", "Appeal & review filings"],
-  },
-];
 
 const INCLUDED = [
   "Free 20-minute eligibility consultation",
