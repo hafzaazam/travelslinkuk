@@ -299,7 +299,7 @@ function CountryPage() {
                 src={travelSuitcase.url}
                 alt="Travel suitcase and airplane illustration"
                 className="mt-8 w-full max-w-sm mx-auto lg:mx-0"
-                loading="lazy"
+                loading="lazy" decoding="async"
               />
             </div>
 
@@ -410,7 +410,7 @@ function CountryPage() {
                     <img
                       src={`https://flagcdn.com/w640/${c.code}.png`}
                       alt={`${c.name} flag`}
-                      loading="lazy"
+                      loading="lazy" decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   </div>

@@ -44,7 +44,7 @@ export function Destinations() {
                 <img
                   src={d.img}
                   alt={d.alt}
-                  loading="lazy"
+                  loading="lazy" decoding="async"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/90 via-brand-deep/30 to-transparent" />

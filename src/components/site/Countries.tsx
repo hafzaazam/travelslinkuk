@@ -60,7 +60,7 @@ export function Countries() {
                     src={`https://flagcdn.com/w640/${code}.png`}
                     srcSet={`https://flagcdn.com/w640/${code}.png 1x, https://flagcdn.com/w1280/${code}.png 2x`}
                     alt={`${name} flag`}
-                    loading="lazy"
+                    loading="lazy" decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
