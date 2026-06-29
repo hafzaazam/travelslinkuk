@@ -156,14 +156,15 @@ export function Hero() {
 
           {/* CTAs */}
           <div className="mt-10 flex flex-wrap items-center gap-5">
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={() => import("./ApplyDialog").then(m => m.openApplyDialog())}
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-brand px-7 py-4 text-sm font-bold text-white shadow-[0_18px_40px_-12px_rgba(33,87,243,0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_50px_-12px_rgba(61,99,255,0.85)]"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
               <span className="relative">{slide.primary}</span>
               <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            </button>
             <a
               href="tel:+447879465341"
               className="group inline-flex items-center gap-3 text-sm font-semibold text-white transition-colors hover:text-brand-aqua"

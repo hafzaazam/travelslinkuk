@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowRight, PhoneCall } from "lucide-react";
 import { Logo } from "./Logo";
+import { openApplyDialog } from "./ApplyDialog";
 
 const NAV = [
   { label: "Home", href: "#home" },
@@ -118,8 +119,9 @@ export function Header() {
           />
 
 
-          <a
-            href="#contact"
+          <button
+            type="button"
+            onClick={openApplyDialog}
             className="group relative inline-flex items-center gap-1.5 overflow-hidden h-10 px-5 text-[13px] font-semibold text-white rounded-full bg-gradient-brand shadow-soft hover:shadow-glow transition-all hover:-translate-y-0.5"
           >
             <span
@@ -128,7 +130,7 @@ export function Header() {
             />
             <span className="relative">Apply Now</span>
             <ArrowRight className="relative h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </button>
         </div>
 
 
@@ -189,13 +191,13 @@ export function Header() {
             >
               Free Assessment
             </a>
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
+            <button
+              type="button"
+              onClick={() => { setOpen(false); openApplyDialog(); }}
               className="text-center px-4 py-3 text-sm font-semibold text-white rounded-xl bg-gradient-brand shadow-soft"
             >
               Apply Now
-            </a>
+            </button>
           </div>
         </div>
       </div>
