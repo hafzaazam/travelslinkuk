@@ -118,49 +118,79 @@ function ServicesPage() {
       <Header />
       <main className="pt-28">
         {/* Hero */}
-        <section className="relative py-20 px-5 lg:px-8 overflow-hidden bg-gradient-soft">
-          <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
-            <div className="absolute -top-24 -left-20 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-            <div className="absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-brand-cyan/10 blur-3xl" />
+        <section className="relative overflow-hidden bg-slate-50 px-5 lg:px-8 py-24 lg:py-32">
+          {/* Animated mesh background */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
+            <div className="absolute -top-1/4 -left-1/4 h-full w-full rounded-full bg-primary/15 blur-[120px] animate-mesh-1" />
+            <div className="absolute top-1/2 -right-1/4 h-[80%] w-[80%] rounded-full bg-brand-aqua/10 blur-[140px] animate-mesh-2" />
+            <div className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full bg-indigo-400/15 blur-[130px] animate-mesh-3" />
+            <div className="absolute top-1/4 left-1/3 h-[50%] w-[50%] rounded-full bg-brand-cyan/20 blur-[120px] animate-mesh-2" />
           </div>
-          <div className="relative mx-auto max-w-4xl text-center">
+
+          <div className="relative z-10 mx-auto max-w-5xl text-center">
             <Reveal>
-              <nav aria-label="Breadcrumb" className="mb-6 flex justify-center">
-                <ol className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              {/* Breadcrumb */}
+              <nav aria-label="Breadcrumb" className="mb-10 flex justify-center">
+                <ol className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                   <li>
                     <Link to="/" className="hover:text-primary transition-colors">Home</Link>
                   </li>
-                  <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="text-primary">Services</li>
+                  <li aria-hidden="true" className="opacity-50">/</li>
+                  <li aria-current="page" className="text-slate-900">Services</li>
                 </ol>
               </nav>
-              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                Visa Services
-              </span>
-              <h1 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                End-to-end visa solutions <span className="text-gradient-brand">tailored to you</span>
+
+              {/* Eyebrow chip */}
+              <div className="mb-8 inline-flex items-center rounded-full border border-white/80 bg-white/60 px-4 py-1.5 shadow-soft ring-1 ring-slate-200/30 backdrop-blur-md">
+                <span className="relative mr-2 flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-cyan opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-cyan" />
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-600">
+                  Visa Services
+                </span>
+              </div>
+
+              {/* Headline */}
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-slate-900">
+                End-to-end visa solutions{" "}
+                <span className="block sm:inline text-gradient-brand">tailored to you</span>
               </h1>
-              <p className="mt-5 text-lg text-muted-foreground">
+
+              {/* Subtitle */}
+              <p className="mx-auto mt-8 max-w-2xl text-lg md:text-xl font-medium leading-relaxed text-slate-600/90">
                 Six core services, hundreds of case types — all handled by experienced UK consultants from initial
                 eligibility to visa stamp.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+
+              {/* CTAs */}
+              <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={openApplyDialog}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:-translate-y-0.5 transition"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-10 py-4 text-sm font-bold text-white shadow-2xl shadow-slate-300 transition-all hover:-translate-y-1 hover:bg-slate-800 active:scale-95"
                 >
                   Consult Now <ArrowRight className="h-4 w-4" />
                 </button>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary/30 bg-white px-6 py-3.5 text-sm font-semibold text-primary hover:bg-primary/5 transition"
+                  className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/40 px-10 py-4 text-sm font-bold text-slate-900 backdrop-blur-sm transition-all hover:border-slate-300 hover:bg-white active:scale-95"
                 >
                   Free consultation
                 </Link>
               </div>
+
+              {/* Trust line */}
+              <div className="mt-20 flex items-center justify-center gap-6 opacity-50">
+                <span className="h-px w-16 bg-gradient-to-r from-transparent to-slate-400" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500">
+                  Trusted by 500+ UK travellers
+                </span>
+                <span className="h-px w-16 bg-gradient-to-l from-transparent to-slate-400" />
+              </div>
             </Reveal>
           </div>
         </section>
+
 
         <Services />
 
