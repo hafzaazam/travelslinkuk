@@ -12,6 +12,15 @@ export function SplashScreen() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    // Always land at the top on initial load — strip any hash (e.g. /#contact)
+    // so refresh doesn't auto-scroll to a section.
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
     if (sessionStorage.getItem(SESSION_KEY)) return;
 
     setMounted(true);
