@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -6,12 +7,28 @@ import { BackToTop } from "@/components/site/BackToTop";
 import { Services } from "@/components/site/Services";
 import { Process } from "@/components/site/Process";
 import { CTABanner } from "@/components/site/CTABanner";
+import { Reveal } from "@/components/site/Reveal";
+import { SectionHeading } from "@/components/site/Section";
+import {
+  Plane,
+  Briefcase,
+  Users,
+  GraduationCap,
+  HomeIcon,
+  RefreshCcw,
+  CheckCircle2,
+  ArrowRight,
+  FileCheck2,
+  Clock,
+  Wallet,
+} from "lucide-react";
+import { openApplyDialog } from "@/components/site/ApplyDialog";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Visa Services — Travel Links Solution" },
-      { name: "description", content: "End-to-end tourist, business and family visa services delivered by senior UK consultants." },
+      { name: "description", content: "End-to-end tourist, business, family, study and work visa services delivered by senior UK consultants." },
       { property: "og:title", content: "Visa Services — Travel Links Solution" },
       { property: "og:description", content: "Tourist, business and family visa support handled end-to-end by UK consultants." },
     ],
@@ -20,12 +37,172 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
+const DETAILED = [
+  {
+    icon: Plane,
+    title: "Tourist Visa",
+    text: "Holiday, family visit and short-stay applications for Schengen, UK, USA, Canada, Australia and 20+ destinations.",
+    bullets: ["Itinerary & cover letter drafting", "Financial document review", "Embassy appointment booking"],
+  },
+  {
+    icon: Briefcase,
+    title: "Business Visa",
+    text: "Meetings, conferences, trade fairs and short-term assignments — with invitation-letter handling.",
+    bullets: ["Sponsor / invitation coordination", "Multi-entry strategy", "Investor & B-1/B-2 pathways"],
+  },
+  {
+    icon: Users,
+    title: "Family Visa",
+    text: "Spouse, dependent and family reunification cases with sensitive, end-to-end case management.",
+    bullets: ["Relationship evidence portfolio", "Sponsor income & accommodation", "Dependant inclusion strategy"],
+  },
+  {
+    icon: GraduationCap,
+    title: "Study Visa",
+    text: "Student route applications for the UK, Canada, Australia, Ireland and Schengen countries.",
+    bullets: ["CAS / I-20 / LoA guidance", "Financial proof structuring", "Tier-4 / Student route filings"],
+  },
+  {
+    icon: HomeIcon,
+    title: "Settlement & PR",
+    text: "Long-stay, residency and indefinite leave applications with full eligibility assessment.",
+    bullets: ["Eligibility audit", "Document mapping", "Biometrics & decision follow-up"],
+  },
+  {
+    icon: RefreshCcw,
+    title: "Refusal & Appeal",
+    text: "Review of refused applications, reapplication strategy and administrative review support.",
+    bullets: ["Refusal-letter analysis", "Strengthened reapplication", "Appeal & review filings"],
+  },
+];
+
+const INCLUDED = [
+  "Free 20-minute eligibility consultation",
+  "Personalised document checklist",
+  "Senior-consultant case review",
+  "Application form preparation",
+  "Cover letter & SOP drafting",
+  "Embassy appointment booking",
+  "Biometrics & VFS guidance",
+  "24/7 WhatsApp & email support",
+];
+
 function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-28">
+        {/* Hero */}
+        <section className="relative py-20 px-5 lg:px-8 overflow-hidden bg-gradient-soft">
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
+            <div className="absolute -top-24 -left-20 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+            <div className="absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-brand-cyan/10 blur-3xl" />
+          </div>
+          <div className="relative mx-auto max-w-4xl text-center">
+            <Reveal>
+              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                Visa Services
+              </span>
+              <h1 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                End-to-end visa solutions <span className="text-gradient-brand">tailored to you</span>
+              </h1>
+              <p className="mt-5 text-lg text-muted-foreground">
+                Six core services, hundreds of case types — all handled by experienced UK consultants from initial
+                eligibility to visa stamp.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={openApplyDialog}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:-translate-y-0.5 transition"
+                >
+                  Apply Now <ArrowRight className="h-4 w-4" />
+                </button>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary/30 bg-white px-6 py-3.5 text-sm font-semibold text-primary hover:bg-primary/5 transition"
+                >
+                  Free consultation
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         <Services />
+
+        {/* Detailed offerings */}
+        <section className="py-24 px-5 lg:px-8 bg-gradient-soft">
+          <div className="mx-auto max-w-7xl">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Detailed Offerings"
+                title={<>Every visa pathway, <span className="text-gradient-brand">expertly handled</span></>}
+                description="From a quick tourist trip to long-term settlement, we cover the full spectrum of visa types."
+              />
+            </Reveal>
+            <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {DETAILED.map(({ icon: Icon, title, text, bullets }, i) => (
+                <Reveal key={title} delay={i * 80} direction="up">
+                  <div className="group h-full rounded-3xl border border-border bg-white p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-glow">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-brand text-white shadow-soft transition-transform group-hover:scale-110">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mt-4 font-display text-lg font-semibold">{title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{text}</p>
+                    <ul className="mt-4 space-y-2">
+                      {bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary shrink-0" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* What's included */}
+        <section className="py-24 px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 items-center">
+            <Reveal direction="right">
+              <SectionHeading
+                eyebrow="What's Included"
+                title={<>Everything you need, <span className="text-gradient-brand">nothing you don't</span></>}
+                description="One transparent package — from first consultation to visa decision and beyond."
+                center={false}
+              />
+              <div className="mt-6 flex flex-wrap gap-3 text-xs">
+                {[
+                  { icon: FileCheck2, label: "Documentation" },
+                  { icon: Clock, label: "Fast turnaround" },
+                  { icon: Wallet, label: "Transparent fees" },
+                ].map(({ icon: Icon, label }) => (
+                  <span key={label} className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 font-semibold text-primary">
+                    <Icon className="h-3.5 w-3.5" /> {label}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
+            <Reveal direction="left" delay={100}>
+              <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 shadow-card">
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {INCLUDED.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm">
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                      </span>
+                      <span className="leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         <Process />
         <CTABanner />
       </main>
