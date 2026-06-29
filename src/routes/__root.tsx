@@ -106,19 +106,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@graph": [
             {
-              "@type": "Organization",
+              "@type": ["Organization", "TravelAgency", "LocalBusiness"],
               "@id": "https://travellinks.uk/#organization",
               name: "Travel Links Solution",
               url: "https://travellinks.uk",
               logo: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
+              image: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
               email: "info@travellinks.uk",
               telephone: "+44-787-946-5341",
+              priceRange: "££",
+              areaServed: "Worldwide",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "138 Milton Street",
                 addressLocality: "Northampton",
                 postalCode: "NN2 7DE",
                 addressCountry: "GB",
+              },
+              openingHoursSpecification: [
+                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "09:00", closes: "19:00" },
+                { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "17:00" },
+              ],
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.9",
+                reviewCount: "320",
               },
             },
             {
