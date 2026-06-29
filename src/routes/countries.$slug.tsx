@@ -6,6 +6,7 @@ import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
 import { Eyebrow } from "@/components/site/Eyebrow";
+import { BlurImage } from "@/components/site/BlurImage";
 import { COUNTRIES, getCountryBySlug, type Country } from "@/data/countries";
 import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
 
@@ -199,12 +200,13 @@ function CountryPage() {
               </div>
 
               <div className="hidden lg:block relative w-[280px] aspect-[3/2] rounded-2xl overflow-hidden border border-white/10 shadow-glow">
-                <img
+                <BlurImage
                   src={`https://flagcdn.com/w1280/${country.code}.png`}
+                  placeholder={`https://flagcdn.com/w20/${country.code}.png`}
                   alt={`${country.name} flag`}
                   className="h-full w-full object-cover"
+                  loading="eager"
                   fetchPriority="high"
-                  decoding="async"
                 />
               </div>
             </div>
@@ -407,10 +409,10 @@ function CountryPage() {
                   className="group overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow hover:-translate-y-1 transition-all"
                 >
                   <div className="relative h-20 overflow-hidden">
-                    <img
+                    <BlurImage
                       src={`https://flagcdn.com/w640/${c.code}.png`}
+                      placeholder={`https://flagcdn.com/w20/${c.code}.png`}
                       alt={`${c.name} flag`}
-                      loading="lazy" decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   </div>

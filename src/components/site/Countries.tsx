@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { SectionHeading } from "./Section";
+import { BlurImage } from "./BlurImage";
+
 
 const toSlug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
 
@@ -56,11 +58,11 @@ export function Countries() {
                 className="group relative shrink-0 w-[260px] overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow transition-all hover:-translate-y-1"
               >
                 <div className="relative h-32 overflow-hidden">
-                  <img
+                  <BlurImage
                     src={`https://flagcdn.com/w640/${code}.png`}
                     srcSet={`https://flagcdn.com/w640/${code}.png 1x, https://flagcdn.com/w1280/${code}.png 2x`}
+                    placeholder={`https://flagcdn.com/w20/${code}.png`}
                     alt={`${name} flag`}
-                    loading="lazy" decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />

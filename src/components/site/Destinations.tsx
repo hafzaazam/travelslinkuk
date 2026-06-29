@@ -1,6 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { SectionHeading } from "./Section";
 import { Reveal } from "./Reveal";
+import { BlurImage } from "./BlurImage";
+
+const lqip = (url: string) => url.replace(/[?&]w=\d+/, "").replace(/[?&]q=\d+/, "") + (url.includes("?") ? "&" : "?") + "w=32&q=20&blur=200";
+
 
 const DEST = [
   { name: "Europe", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80", alt: "Cobbled European street with historic architecture at golden hour", tag: "Schengen Area", to: "/countries" as const, slug: undefined },
@@ -41,10 +45,10 @@ export function Destinations() {
               "group relative block h-72 overflow-hidden rounded-3xl shadow-card hover:shadow-glow transition-shadow tilt-3d will-change-transform";
             const inner = (
               <>
-                <img
+                <BlurImage
                   src={d.img}
+                  placeholder={lqip(d.img)}
                   alt={d.alt}
-                  loading="lazy" decoding="async"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/90 via-brand-deep/30 to-transparent" />

@@ -4,6 +4,7 @@ import { ArrowRight, GitCompare } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
+import { BlurImage } from "@/components/site/BlurImage";
 import { COUNTRIES } from "@/data/countries";
 
 export const Route = createFileRoute("/countries/")({
@@ -70,11 +71,11 @@ function CountriesIndex() {
                   className="group relative overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow hover:-translate-y-1 transition-all"
                 >
                   <div className="relative h-32 overflow-hidden">
-                    <img
+                    <BlurImage
                       src={`https://flagcdn.com/w640/${c.code}.png`}
                       srcSet={`https://flagcdn.com/w640/${c.code}.png 1x, https://flagcdn.com/w1280/${c.code}.png 2x`}
+                      placeholder={`https://flagcdn.com/w20/${c.code}.png`}
                       alt={`${c.name} flag`}
-                      loading="lazy" decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
