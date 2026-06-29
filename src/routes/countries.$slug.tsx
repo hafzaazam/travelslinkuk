@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, ArrowLeft, Check, Clock, Coins, Globe2, Info, Landmark, MapPin, Sparkles, ThumbsDown, ThumbsUp, X } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Clock, Coins, GitCompare, Globe2, Info, Landmark, MapPin, Sparkles, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
@@ -115,6 +115,13 @@ function CountryPage() {
                     />
                     <span className="relative">Consult for {country.name} visa</span>
                     <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                  <Link
+                    to="/compare"
+                    className="group inline-flex items-center gap-2 h-12 px-6 text-sm font-semibold rounded-full border border-white/20 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/15 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(56,216,232,0.5)]"
+                  >
+                    <GitCompare className="h-4 w-4 text-brand-cyan" />
+                    Compare countries
                   </Link>
                   <a
                     href="tel:+447879465341"
