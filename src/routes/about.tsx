@@ -29,13 +29,13 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: "About Us — Travel Links Solution | UK Visa Consultancy" },
       { property: "og:description", content: "UK-registered visa consultancy with a decade of expertise guiding tourists, families and business travellers to 25+ destinations." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/about" },
+      { property: "og:url", content: "https://travellinks.uk/about" },
       { property: "og:site_name", content: "Travel Links Solution" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "About Us — Travel Links Solution" },
       { name: "twitter:description", content: "UK-registered visa consultancy with a decade of expertise across 25+ destinations." },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/about" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/about" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -43,11 +43,11 @@ export const Route = createFileRoute("/about")({
           "@context": "https://schema.org",
           "@type": "AboutPage",
           name: "About Travel Links Solution",
-          url: "https://travelslinkuk.lovable.app/about",
+          url: "https://travellinks.uk/about",
           mainEntity: {
             "@type": "Organization",
             name: "Travel Links Solution",
-            url: "https://travelslinkuk.lovable.app",
+            url: "https://travellinks.uk",
             address: {
               "@type": "PostalAddress",
               streetAddress: "138 Milton Street",

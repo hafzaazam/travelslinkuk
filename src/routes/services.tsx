@@ -33,13 +33,13 @@ export const Route = createFileRoute("/services")({
       { property: "og:title", content: "Visa Services — Travel Links Solution" },
       { property: "og:description", content: "Tourist, business, family, study and settlement visa support handled end-to-end by senior UK consultants." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/services" },
+      { property: "og:url", content: "https://travellinks.uk/services" },
       { property: "og:site_name", content: "Travel Links Solution" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Visa Services — Travel Links Solution" },
       { name: "twitter:description", content: "End-to-end visa services across 25+ destinations, handled by senior UK consultants." },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/services" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/services" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -48,12 +48,12 @@ export const Route = createFileRoute("/services")({
           "@type": "Service",
           serviceType: "Visa consultancy",
           name: "Travel Links Solution Visa Services",
-          url: "https://travelslinkuk.lovable.app/services",
+          url: "https://travellinks.uk/services",
           areaServed: "Worldwide",
           provider: {
             "@type": "Organization",
             name: "Travel Links Solution",
-            url: "https://travelslinkuk.lovable.app",
+            url: "https://travellinks.uk",
           },
           hasOfferCatalog: {
             "@type": "OfferCatalog",

@@ -24,9 +24,9 @@ export const Route = createFileRoute("/compare")({
         content:
           "Side-by-side visa comparison across 25+ destinations — processing time, fees, requirements, pros and cons.",
       },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/compare" },
+      { property: "og:url", content: "https://travellinks.uk/compare" },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/compare" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/compare" }],
   }),
   component: ComparePage,
 });
