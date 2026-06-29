@@ -202,7 +202,7 @@ export function Contact() {
                 disabled={lockSubmit}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:translate-y-[-1px] transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {loading ? "Sending…" : submitted ? "Submitted" : "Apply Now"} <Send className="h-4 w-4" />
+                {loading ? "Sending…" : submitted ? "Submitted" : "Consult Now"} <Send className="h-4 w-4" />
               </button>
             </form>
 

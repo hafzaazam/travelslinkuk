@@ -11,7 +11,7 @@ const SLIDES = [
     eyebrow: "UK-Based · Trusted Since 2014",
     title: ["Your Trusted UK Visa Consultancy", "for Global Opportunities"],
     subtitle: "Helping tourists, families and business travellers obtain visas quickly and confidently.",
-    primary: "Apply Now",
+    primary: "Consult Now",
     secondary: "Free Consultation",
     spotlight: { place: "London Gateway · UK", tag: "From £0 assessment" },
   },

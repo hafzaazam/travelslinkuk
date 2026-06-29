@@ -135,7 +135,7 @@ export function Header() {
               aria-hidden
               className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/25 blur-md opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-[400%]"
             />
-            <span className="relative">Apply Now</span>
+            <span className="relative">Consult Now</span>
             <ArrowRight className="relative h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </button>
         </div>
@@ -203,7 +203,7 @@ export function Header() {
               onClick={() => { setOpen(false); openApplyDialog(); }}
               className="text-center px-4 py-3 text-sm font-semibold text-white rounded-xl bg-gradient-brand shadow-soft"
             >
-              Apply Now
+              Consult Now
             </button>
           </div>
         </div>

@@ -152,7 +152,7 @@ function ServicesPage() {
                   onClick={openApplyDialog}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:-translate-y-0.5 transition"
                 >
-                  Apply Now <ArrowRight className="h-4 w-4" />
+                  Consult Now <ArrowRight className="h-4 w-4" />
                 </button>
                 <Link
                   to="/contact"

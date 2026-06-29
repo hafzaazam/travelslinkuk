@@ -91,7 +91,7 @@ export function ApplyDialog() {
       <DialogContent className="max-w-lg p-0 overflow-hidden">
         <div className="p-6 sm:p-8">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl">Apply for your visa</DialogTitle>
+            <DialogTitle className="font-display text-2xl">Consult for your visa</DialogTitle>
             <DialogDescription>
               Share a few details and our team will respond within 24 hours.
             </DialogDescription>
@@ -142,7 +142,7 @@ export function ApplyDialog() {
                 disabled={lockSubmit}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:translate-y-[-1px] transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {loading ? "Sending…" : "Apply Now"} <Send className="h-4 w-4" />
+                {loading ? "Sending…" : "Consult Now"} <Send className="h-4 w-4" />
               </button>
             </form>
           )}
