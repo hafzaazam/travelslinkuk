@@ -45,10 +45,10 @@ export function Destinations() {
               "group relative block h-72 overflow-hidden rounded-3xl shadow-card hover:shadow-glow transition-shadow tilt-3d will-change-transform";
             const inner = (
               <>
-                <img
+                <BlurImage
                   src={d.img}
+                  placeholder={lqip(d.img)}
                   alt={d.alt}
-                  loading="lazy" decoding="async"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/90 via-brand-deep/30 to-transparent" />
