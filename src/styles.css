@@ -263,3 +263,18 @@ html:has(.process-snap) { scroll-snap-type: y proximity; }
 }
 
 
+
+/* Services hero — light & airy mesh */
+@keyframes mesh-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10%, -10%) scale(1.1); }
+  66% { transform: translate(-5%, 15%) scale(0.9); }
+}
+@keyframes mesh-float-alt {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  33% { transform: translate(-15%, 5%) scale(0.95); }
+  66% { transform: translate(10%, -5%) scale(1.05); }
+}
+@utility animate-mesh-1 { animation: mesh-float 18s ease-in-out infinite; }
+@utility animate-mesh-2 { animation: mesh-float-alt 22s ease-in-out infinite; }
+@utility animate-mesh-3 { animation: mesh-float 25s ease-in-out infinite reverse; }
