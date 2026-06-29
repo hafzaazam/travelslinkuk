@@ -10,7 +10,7 @@ import { CTABanner } from "@/components/site/CTABanner";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/Section";
 import {
-  CheckCircle2,
+  
   ArrowRight,
   FileCheck2,
   Clock,
