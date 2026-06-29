@@ -10,11 +10,18 @@ import { CTABanner } from "@/components/site/CTABanner";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/Section";
 import {
-  
   ArrowRight,
   FileCheck2,
   Clock,
   Wallet,
+  MessageSquare,
+  ClipboardList,
+  UserCheck,
+  FileText,
+  PenLine,
+  CalendarCheck,
+  Fingerprint,
+  Headphones,
 } from "lucide-react";
 import { openApplyDialog } from "@/components/site/ApplyDialog";
 
@@ -101,15 +108,15 @@ export const Route = createFileRoute("/services")({
 });
 
 
-const INCLUDED = [
-  "Free 20-minute eligibility consultation",
-  "Personalised document checklist",
-  "Senior-consultant case review",
-  "Application form preparation",
-  "Cover letter & SOP drafting",
-  "Embassy appointment booking",
-  "Biometrics & VFS guidance",
-  "24/7 WhatsApp & email support",
+const INCLUDED: { icon: typeof MessageSquare; title: string; desc: string }[] = [
+  { icon: MessageSquare, title: "Free eligibility consultation", desc: "20-minute call with a senior UK visa consultant to assess your chances." },
+  { icon: ClipboardList, title: "Personalised document checklist", desc: "A tailored list built around your nationality, destination and visa type." },
+  { icon: UserCheck, title: "Senior-consultant case review", desc: "Every application is reviewed by a senior consultant before submission." },
+  { icon: FileText, title: "Application form preparation", desc: "Accurate, error-free completion of all embassy and online forms." },
+  { icon: PenLine, title: "Cover letter & SOP drafting", desc: "Custom-written cover letters and statements of purpose that strengthen your case." },
+  { icon: CalendarCheck, title: "Embassy appointment booking", desc: "We secure the earliest available slot at your nearest VFS or embassy centre." },
+  { icon: Fingerprint, title: "Biometrics & VFS guidance", desc: "Step-by-step support for biometrics, document submission and centre visits." },
+  { icon: Headphones, title: "24/7 WhatsApp & email support", desc: "Direct access to your consultant from enquiry through to visa decision." },
 ];
 
 function ServicesPage() {
