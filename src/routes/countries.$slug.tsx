@@ -173,12 +173,9 @@ function CountryPage() {
               <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                 Benefits of a {country.name} visa
               </h2>
-              <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-                {country.whyVisit}
-              </p>
             </div>
-            <div className="mt-10 grid sm:grid-cols-3 gap-4">
-              {country.benefits.slice(0, 3).map((b: string, i: number) => (
+            <div className="mt-10 grid sm:grid-cols-2 gap-4">
+              {country.benefits.map((b: string, i: number) => (
                 <div
                   key={i}
                   className="flex items-start gap-3 rounded-2xl bg-white border border-border p-5 shadow-card hover:shadow-glow hover:-translate-y-0.5 transition-all"
