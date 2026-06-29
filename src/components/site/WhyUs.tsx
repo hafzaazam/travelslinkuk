@@ -113,7 +113,9 @@ export function WhyUs() {
           <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Big card: High Success Rate */}
             <Reveal
+              direction="up"
               delay={80}
+              duration={800}
               className="md:col-span-2 p-8 rounded-3xl bg-card border border-border/60 shadow-soft hover:shadow-glow transition-all group relative overflow-hidden"
             >
               <div
