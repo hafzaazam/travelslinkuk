@@ -159,6 +159,7 @@ function RootComponent() {
       <Outlet />
       <ApplyDialog />
       <ChatWidget />
+      <CookieConsent />
     </QueryClientProvider>
   );
 }
