@@ -51,7 +51,7 @@ export default defineConfig({
               ...COUNTRY_SLUGS.map((s) => `/countries/${s}`),
             ],
           },
-        },
+        } as any,
       }
     : {}),
 });
