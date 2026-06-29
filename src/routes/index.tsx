@@ -17,6 +17,8 @@ import { Contact } from "@/components/site/Contact";
 import { CTABanner } from "@/components/site/CTABanner";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
+import { Reveal } from "@/components/site/Reveal";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
