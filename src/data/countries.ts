@@ -19,6 +19,7 @@ export type Country = {
   benefits: string[];
   pros: string[];
   cons: string[];
+  whyVisit: string;
 };
 
 // Standard Schengen tourist visa checklist (used as base for European destinations).
