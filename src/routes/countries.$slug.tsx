@@ -6,6 +6,7 @@ import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
+import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
 
 export const Route = createFileRoute("/countries/$slug")({
   loader: ({ params }) => {
@@ -232,7 +233,14 @@ function CountryPage() {
               <p className="mt-4 text-muted-foreground">
                 We give you a precise document checklist, review every item, and submit a fully prepared file — so nothing slows your application down.
               </p>
+              <img
+                src={travelSuitcase.url}
+                alt="Travel suitcase and airplane illustration"
+                className="mt-8 w-full max-w-sm mx-auto lg:mx-0"
+                loading="lazy"
+              />
             </div>
+
 
             <CountryChecklist slug={country.slug} items={country.requirements} />
 
