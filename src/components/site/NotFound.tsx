@@ -31,12 +31,15 @@ export function NotFound() {
                 Looks like you've wandered off the route
               </div>
 
-              <h1 className="mt-6 bg-gradient-brand bg-clip-text text-7xl font-extrabold tracking-tight text-transparent sm:text-8xl">
+              <div
+                aria-hidden="true"
+                className="mt-6 bg-gradient-brand bg-clip-text text-7xl font-extrabold tracking-tight text-transparent sm:text-8xl"
+              >
                 404
-              </h1>
-              <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
+              </div>
+              <h1 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
                 This page didn't board
-              </h2>
+              </h1>
               <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground sm:text-base">
                 The page you're looking for has either moved, been renamed, or
                 never existed. Let's get you back on track.
