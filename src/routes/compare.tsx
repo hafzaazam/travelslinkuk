@@ -282,8 +282,43 @@ function ComparePage() {
                   <tbody className="divide-y divide-border/70">
                     <Row label="Capital" values={countries.map((c) => c.capital)} />
                     <Row label="Currency" values={countries.map((c) => c.currency)} />
+                    <Row
+                      label="Currency value (per £1 GBP)"
+                      values={countries.map((c) => PROFILES[c.slug]?.currencyPerGBP ?? "—")}
+                      highlight
+                    />
+                    <tr>
+                      <td className="p-5 align-top text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
+                        Cost level
+                      </td>
+                      {countries.map((c) => {
+                        const tier = PROFILES[c.slug]?.costTier;
+                        return (
+                          <td key={c.slug} className="p-5 align-top">
+                            {tier ? (
+                              <span
+                                className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${COST_TIER_STYLE[tier]}`}
+                              >
+                                {tier}
+                              </span>
+                            ) : (
+                              <span className="text-sm text-muted-foreground">—</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                    <Row
+                      label="Daily budget (mid-range)"
+                      values={countries.map((c) => PROFILES[c.slug]?.dailyBudget ?? "—")}
+                    />
                     <Row label="Language" values={countries.map((c) => c.language)} />
                     <Row label="Processing time" values={countries.map((c) => c.processingTime)} highlight />
+                    <Row label="Lifestyle" values={countries.map((c) => PROFILES[c.slug]?.lifestyle ?? "—")} />
+                    <Row label="Healthcare / medical" values={countries.map((c) => PROFILES[c.slug]?.medical ?? "—")} />
+                    <Row label="Safety" values={countries.map((c) => PROFILES[c.slug]?.safety ?? "—")} />
+                    <Row label="Best season to visit" values={countries.map((c) => PROFILES[c.slug]?.bestSeason ?? "—")} />
+
 
                     <tr>
                       <td className="p-5 align-top text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
