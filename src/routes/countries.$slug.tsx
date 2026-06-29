@@ -208,7 +208,7 @@ function CountryPage() {
               </h2>
             </div>
             <div className="mt-10 grid sm:grid-cols-2 gap-4">
-              {country.benefits.map((b, i) => (
+              {country.benefits.map((b: string, i: number) => (
                 <div
                   key={i}
                   className="flex items-start gap-3 rounded-2xl bg-white border border-border p-5 shadow-card hover:shadow-glow hover:-translate-y-0.5 transition-all"
