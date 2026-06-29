@@ -200,12 +200,13 @@ function CountryPage() {
               </div>
 
               <div className="hidden lg:block relative w-[280px] aspect-[3/2] rounded-2xl overflow-hidden border border-white/10 shadow-glow">
-                <img
+                <BlurImage
                   src={`https://flagcdn.com/w1280/${country.code}.png`}
+                  placeholder={`https://flagcdn.com/w20/${country.code}.png`}
                   alt={`${country.name} flag`}
                   className="h-full w-full object-cover"
+                  loading="eager"
                   fetchPriority="high"
-                  decoding="async"
                 />
               </div>
             </div>
