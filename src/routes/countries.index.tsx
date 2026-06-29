@@ -4,6 +4,7 @@ import { ArrowRight, GitCompare } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
+import { BlurImage } from "@/components/site/BlurImage";
 import { COUNTRIES } from "@/data/countries";
 
 export const Route = createFileRoute("/countries/")({
