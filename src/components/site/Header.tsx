@@ -146,6 +146,7 @@ export function Header() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
+          onMouseEnter={() => setOpen(true)}
           className={`relative grid place-items-center h-10 w-10 rounded-xl border shadow-soft transition ${
             onLight
               ? "border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
