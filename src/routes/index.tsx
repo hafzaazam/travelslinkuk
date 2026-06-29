@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import aboutVisa from "@/assets/about-visa.png.asset.json";
 import heroAirport from "@/assets/hero-airport.jpg";
 import { Toaster } from "@/components/ui/sonner";
@@ -73,6 +74,21 @@ function Index() {
                 consultants combines deep regulatory knowledge with a genuinely personal approach — so your
                 application is in expert hands from day one.
               </p>
+              <div className="mt-7 flex flex-wrap gap-3 justify-center lg:justify-start">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-5 py-3 text-sm font-bold text-white shadow-soft hover:shadow-glow hover:-translate-y-0.5 transition"
+                >
+                  Learn more about us
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-white px-5 py-3 text-sm font-bold text-primary shadow-soft hover:shadow-glow hover:-translate-y-0.5 transition"
+                >
+                  Contact us
+                </Link>
+              </div>
             </Reveal>
             <Reveal direction="left" delay={150} className="lg:col-span-5 relative flex justify-center">
               <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-brand opacity-20 blur-3xl" aria-hidden />

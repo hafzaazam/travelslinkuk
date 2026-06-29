@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { SectionHeading } from "./Section";
 import { Reveal } from "./Reveal";
 import {
@@ -67,6 +68,16 @@ export function Services({ showHeading = true }: { showHeading?: boolean } = {})
               </div>
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-white px-6 py-3 text-sm font-bold text-primary shadow-soft hover:shadow-glow hover:-translate-y-0.5 transition"
+          >
+            View all visa services
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>
