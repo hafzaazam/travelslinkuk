@@ -159,6 +159,70 @@ function CountryPage() {
           </div>
         </section>
 
+        {/* About the country */}
+        <section className="py-20 px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl grid lg:grid-cols-[1fr_1.4fr] gap-12 items-start">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <Info className="h-3.5 w-3.5" />
+                About the country
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+                Get to know {country.name}
+              </h2>
+            </div>
+            <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
+              <p className="text-base text-foreground/90 leading-relaxed">{country.about}</p>
+              <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Capital</div>
+                  <div className="mt-1 font-semibold">{country.capital}</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Language</div>
+                  <div className="mt-1 font-semibold">{country.language}</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Currency</div>
+                  <div className="mt-1 font-semibold">{country.currency}</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Processing</div>
+                  <div className="mt-1 font-semibold">{country.processingTime}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits */}
+        <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <Sparkles className="h-3.5 w-3.5" />
+                Why visit
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+                Benefits of a {country.name} visa
+              </h2>
+            </div>
+            <div className="mt-10 grid sm:grid-cols-2 gap-4">
+              {country.benefits.map((b, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 rounded-2xl bg-white border border-border p-5 shadow-card hover:shadow-glow hover:-translate-y-0.5 transition-all"
+                >
+                  <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
+                    <Sparkles className="h-4 w-4" />
+                  </span>
+                  <span className="text-sm text-foreground leading-relaxed">{b}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Visa types */}
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
