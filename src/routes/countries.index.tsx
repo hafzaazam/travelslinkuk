@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, GitCompare } from "lucide-react";
+
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
@@ -43,7 +44,18 @@ function CountriesIndex() {
             <p className="mt-5 max-w-2xl text-base sm:text-lg text-white/80">
               Tourist, family and business visa support for destinations across Europe, the Americas, Asia-Pacific and beyond — all handled by UK-based consultants.
             </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                to="/compare"
+                className="group inline-flex items-center gap-2 h-12 px-6 text-sm font-semibold rounded-full bg-gradient-brand shadow-glow transition-all hover:-translate-y-0.5 hover:shadow-[0_25px_60px_-20px_rgba(61,99,255,0.65)]"
+              >
+                <GitCompare className="h-4 w-4" />
+                Compare countries
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
+
         </section>
 
         {/* Grid */}
