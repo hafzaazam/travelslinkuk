@@ -149,6 +149,35 @@
 .splash-fade-up { animation: splash-fade-up 0.7s ease-out both; opacity: 0; }
 .splash-progress { animation: splash-progress 1.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
 
+/* Splash plane + clouds + wonders */
+@keyframes plane-fly {
+  0%   { transform: translateX(-12vw) translateY(6px) rotate(-6deg); }
+  50%  { transform: translateX(0vw)   translateY(-8px) rotate(-2deg); }
+  100% { transform: translateX(12vw)  translateY(6px)  rotate(-6deg); }
+}
+@keyframes cloud-drift-l {
+  from { transform: translateX(-10%); }
+  to   { transform: translateX(110%); }
+}
+@keyframes cloud-drift-r {
+  from { transform: translateX(110%); }
+  to   { transform: translateX(-10%); }
+}
+@keyframes plane-trail {
+  0%   { stroke-dashoffset: 600; opacity: 0; }
+  20%  { opacity: 0.9; }
+  100% { stroke-dashoffset: 0; opacity: 0.9; }
+}
+@keyframes wonders-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.splash-plane { animation: plane-fly 5s ease-in-out infinite; transform-origin: center; }
+.splash-cloud-l { animation: cloud-drift-l 22s linear infinite; }
+.splash-cloud-r { animation: cloud-drift-r 28s linear infinite; }
+.splash-trail { stroke-dasharray: 600; animation: plane-trail 3.2s ease-out both; }
+.splash-wonders { animation: wonders-rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
 
 /* 3D icon motion */
 @keyframes icon-bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(-2deg); } }
