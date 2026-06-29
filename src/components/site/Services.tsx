@@ -20,17 +20,20 @@ function onCardMove(e: React.MouseEvent<HTMLDivElement>) {
   el.style.setProperty("--my", `${e.clientY - r.top}px`);
 }
 
-export function Services() {
+export function Services({ showHeading = true }: { showHeading?: boolean } = {}) {
   return (
     <section id="services" className="py-24 px-5 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Visa Services"
-            title={<>End-to-end visa solutions <span className="text-gradient-brand">tailored to you</span></>}
-            description="Six core services, hundreds of case types — handled by experienced UK consultants."
-          />
-        </Reveal>
+        {showHeading && (
+          <Reveal>
+            <SectionHeading
+              eyebrow="Visa Services"
+              title={<>End-to-end visa solutions <span className="text-gradient-brand">tailored to you</span></>}
+              description="Six core services, hundreds of case types — handled by experienced UK consultants."
+            />
+          </Reveal>
+        )}
+
 
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map(({ Icon, title, text }, idx) => (
