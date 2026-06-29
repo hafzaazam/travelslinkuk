@@ -296,9 +296,7 @@ function CountryPage() {
           <div className="mx-auto max-w-7xl">
             <div className="flex items-end justify-between gap-6 flex-wrap">
               <div>
-                <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  Other Destinations
-                </span>
+                <Eyebrow label="Other Destinations" icon={Globe2} />
                 <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
                   Explore more countries
                 </h2>
