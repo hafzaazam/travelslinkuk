@@ -227,10 +227,9 @@ function ServicesPage() {
             <Reveal direction="left" delay={100}>
               <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 shadow-card">
                 <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
-                  {INCLUDED.map(({ title, desc }) => (
+                  {INCLUDED.map(({ title }) => (
                     <li key={title} className="border-l-2 border-primary/20 pl-4">
                       <p className="text-sm font-semibold text-foreground leading-snug">{title}</p>
-                      <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{desc}</p>
                     </li>
                   ))}
                 </ul>
