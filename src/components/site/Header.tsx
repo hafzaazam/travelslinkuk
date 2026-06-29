@@ -4,16 +4,16 @@ import { Menu, X, ArrowRight, PhoneCall } from "lucide-react";
 import { Logo } from "./Logo";
 import { openApplyDialog } from "./ApplyDialog";
 
-const NAV = [
+const NAV: { label: string; href: string; route?: boolean }[] = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
+  { label: "About", href: "/about", route: true },
+  { label: "Services", href: "/services", route: true },
   { label: "Countries", href: "#countries" },
   { label: "Why Us", href: "#why" },
   { label: "Process", href: "#process" },
   { label: "Reviews", href: "#testimonials" },
   { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact", route: true },
 ];
 
 export function Header() {
