@@ -31,6 +31,51 @@ export const Route = createFileRoute("/compare")({
 
 const MAX_SLOTS = 3;
 
+type CostTier = "Affordable" | "Moderate" | "Expensive" | "Very Expensive";
+
+type CountryProfile = {
+  currencyPerGBP: string; // approx units per £1 GBP
+  costTier: CostTier;
+  dailyBudget: string; // mid-range traveller, per day
+  lifestyle: string;
+  medical: string; // healthcare quality / traveller note
+  safety: string;
+  bestSeason: string;
+};
+
+// Indicative, editorial values for at-a-glance comparison.
+const PROFILES: Record<string, CountryProfile> = {
+  germany:      { currencyPerGBP: "≈ €1.17", costTier: "Moderate",       dailyBudget: "£90 – £150",  lifestyle: "Orderly, cultured, great public transport", medical: "Excellent — EHIC/GHIC accepted",   safety: "Very safe",   bestSeason: "May – Sep" },
+  france:       { currencyPerGBP: "≈ €1.17", costTier: "Expensive",      dailyBudget: "£110 – £180", lifestyle: "Romantic, café culture, fashion-forward",   medical: "Excellent — world-class hospitals", safety: "Safe, watch pickpockets", bestSeason: "Apr – Oct" },
+  netherlands:  { currencyPerGBP: "≈ €1.17", costTier: "Expensive",      dailyBudget: "£110 – £170", lifestyle: "Bike-friendly, liberal, design-led",        medical: "Excellent universal system",        safety: "Very safe",   bestSeason: "Apr – Sep" },
+  switzerland:  { currencyPerGBP: "≈ CHF 1.10", costTier: "Very Expensive", dailyBudget: "£180 – £300", lifestyle: "Alpine, punctual, premium quality",      medical: "World-class, costly without insurance", safety: "Extremely safe", bestSeason: "Jun – Sep / Dec – Mar" },
+  iceland:      { currencyPerGBP: "≈ ISK 175", costTier: "Very Expensive", dailyBudget: "£170 – £280", lifestyle: "Outdoorsy, small-town, nature-first",    medical: "Excellent public healthcare",       safety: "Extremely safe", bestSeason: "Jun – Aug / Sep – Mar (auroras)" },
+  sweden:       { currencyPerGBP: "≈ SEK 13",  costTier: "Expensive",      dailyBudget: "£120 – £200", lifestyle: "Minimalist, sustainable, design-led",    medical: "Excellent universal system",        safety: "Very safe",   bestSeason: "May – Sep" },
+  portugal:     { currencyPerGBP: "≈ €1.17",   costTier: "Affordable",     dailyBudget: "£70 – £120",  lifestyle: "Relaxed coastal, foodie, sunny",         medical: "Good public + private hospitals",   safety: "Very safe",   bestSeason: "Apr – Oct" },
+  greece:       { currencyPerGBP: "≈ €1.17",   costTier: "Affordable",     dailyBudget: "£70 – £130",  lifestyle: "Island life, Mediterranean cuisine",     medical: "Good in cities, varies on islands", safety: "Safe",        bestSeason: "May – Oct" },
+  austria:      { currencyPerGBP: "≈ €1.17",   costTier: "Moderate",       dailyBudget: "£100 – £160", lifestyle: "Classical music, alpine, café culture",   medical: "Excellent universal system",        safety: "Very safe",   bestSeason: "May – Sep / Dec – Mar" },
+  italy:        { currencyPerGBP: "≈ €1.17",   costTier: "Moderate",       dailyBudget: "£90 – £160",  lifestyle: "Food, art, family-oriented, lively",      medical: "Very good public hospitals",        safety: "Safe, watch pickpockets", bestSeason: "Apr – Jun / Sep – Oct" },
+  usa:          { currencyPerGBP: "≈ $1.27",   costTier: "Expensive",      dailyBudget: "£130 – £230", lifestyle: "Big, varied — cities to wilderness",      medical: "World-class but very expensive — insurance essential", safety: "Varies by city/area", bestSeason: "Year-round (region dependent)" },
+  canada:       { currencyPerGBP: "≈ C$1.73",  costTier: "Moderate",       dailyBudget: "£100 – £170", lifestyle: "Outdoorsy, multicultural, friendly",      medical: "Excellent — traveller insurance advised", safety: "Very safe", bestSeason: "Jun – Sep / Dec – Mar (ski)" },
+  australia:    { currencyPerGBP: "≈ A$1.94",  costTier: "Expensive",      dailyBudget: "£110 – £190", lifestyle: "Outdoor, beach, laid-back",               medical: "Excellent — Medicare reciprocity for UK", safety: "Very safe", bestSeason: "Sep – Nov / Mar – May" },
+  morocco:      { currencyPerGBP: "≈ MAD 12.6", costTier: "Affordable",    dailyBudget: "£40 – £90",   lifestyle: "Vibrant souks, desert, riads",            medical: "Adequate in cities, basic elsewhere", safety: "Generally safe", bestSeason: "Mar – May / Sep – Nov" },
+  "new-zealand":{ currencyPerGBP: "≈ NZ$2.10", costTier: "Expensive",      dailyBudget: "£110 – £180", lifestyle: "Adventure, nature, small-population calm",medical: "Excellent — insurance recommended", safety: "Very safe",   bestSeason: "Dec – Feb / Jun – Aug (ski)" },
+  ireland:      { currencyPerGBP: "≈ €1.17",   costTier: "Expensive",      dailyBudget: "£100 – £170", lifestyle: "Pub culture, green countryside, friendly", medical: "Good public + private hospitals",  safety: "Very safe",   bestSeason: "May – Sep" },
+  japan:        { currencyPerGBP: "≈ ¥193",    costTier: "Moderate",       dailyBudget: "£90 – £160",  lifestyle: "Ultra-modern + traditional, polite, safe",medical: "Excellent — cash-up-front common",  safety: "Extremely safe", bestSeason: "Mar – May / Oct – Nov" },
+  "south-africa":{ currencyPerGBP: "≈ R23",    costTier: "Affordable",     dailyBudget: "£50 – £110",  lifestyle: "Safari, wine country, coastal cities",    medical: "Good private hospitals in cities",  safety: "Caution in some urban areas", bestSeason: "May – Sep (safari)" },
+  turkey:       { currencyPerGBP: "≈ ₺42",     costTier: "Affordable",     dailyBudget: "£40 – £90",   lifestyle: "Bazaars, beaches, rich history",          medical: "Good private hospitals, popular medical tourism", safety: "Generally safe", bestSeason: "Apr – Jun / Sep – Oct" },
+  singapore:    { currencyPerGBP: "≈ S$1.71",  costTier: "Expensive",      dailyBudget: "£110 – £190", lifestyle: "Clean, modern, food paradise",            medical: "World-class — major medical hub",   safety: "Extremely safe", bestSeason: "Feb – Apr" },
+  malaysia:     { currencyPerGBP: "≈ RM5.6",   costTier: "Affordable",     dailyBudget: "£40 – £90",   lifestyle: "Multicultural, tropical, foodie",         medical: "Very good private — medical tourism hub", safety: "Safe", bestSeason: "Mar – Oct" },
+  thailand:     { currencyPerGBP: "≈ ฿44",     costTier: "Affordable",     dailyBudget: "£35 – £80",   lifestyle: "Beaches, temples, street food, nightlife", medical: "Excellent private hospitals — medical tourism leader", safety: "Generally safe", bestSeason: "Nov – Mar" },
+};
+
+const COST_TIER_STYLE: Record<CostTier, string> = {
+  "Affordable":     "bg-emerald-500/10 text-emerald-700 border-emerald-500/20",
+  "Moderate":       "bg-amber-500/10 text-amber-700 border-amber-500/20",
+  "Expensive":      "bg-orange-500/10 text-orange-700 border-orange-500/20",
+  "Very Expensive": "bg-rose-500/10 text-rose-700 border-rose-500/20",
+};
+
 function ComparePage() {
   const [visaFilter, setVisaFilter] = useState<string>("all");
   const [selected, setSelected] = useState<string[]>(["germany", "france", "italy"]);
