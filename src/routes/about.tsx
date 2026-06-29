@@ -23,12 +23,44 @@ import {
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Us — Travel Links Solution" },
-      { name: "description", content: "Learn about Travel Links Solution, a UK-registered visa consultancy with senior consultants helping travellers reach 25+ countries." },
-      { property: "og:title", content: "About Us — Travel Links Solution" },
-      { property: "og:description", content: "UK-registered visa consultancy with decade-long experience guiding tourists, families and business travellers." },
+      { title: "About Us — Travel Links Solution | UK Visa Consultancy" },
+      { name: "description", content: "Meet Travel Links Solution: a UK-registered visa consultancy in Northampton with 10+ years of expertise, 98% approval rate and 25+ destinations covered." },
+      { name: "keywords", content: "UK visa consultancy, Travel Links Solution, Northampton visa agents, visa experts UK, about visa consultants" },
+      { property: "og:title", content: "About Us — Travel Links Solution | UK Visa Consultancy" },
+      { property: "og:description", content: "UK-registered visa consultancy with a decade of expertise guiding tourists, families and business travellers to 25+ destinations." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://travelslinkuk.lovable.app/about" },
+      { property: "og:site_name", content: "Travel Links Solution" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "About Us — Travel Links Solution" },
+      { name: "twitter:description", content: "UK-registered visa consultancy with a decade of expertise across 25+ destinations." },
     ],
     links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/about" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          name: "About Travel Links Solution",
+          url: "https://travelslinkuk.lovable.app/about",
+          mainEntity: {
+            "@type": "Organization",
+            name: "Travel Links Solution",
+            url: "https://travelslinkuk.lovable.app",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "138 Milton Street",
+              addressLocality: "Northampton",
+              postalCode: "NN2 7DE",
+              addressCountry: "GB",
+            },
+            telephone: "+44 787 946 5341",
+            email: "info@travellinks.uk",
+          },
+        }),
+      },
+    ],
   }),
   component: AboutPage,
 });

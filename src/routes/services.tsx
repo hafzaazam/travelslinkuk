@@ -27,12 +27,49 @@ import { openApplyDialog } from "@/components/site/ApplyDialog";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Visa Services — Travel Links Solution" },
-      { name: "description", content: "End-to-end tourist, business, family, study and work visa services delivered by senior UK consultants." },
+      { title: "Visa Services — Tourist, Business, Family & Study Visas | Travel Links Solution" },
+      { name: "description", content: "End-to-end UK visa consultancy: tourist, business, family, study, settlement and refusal-appeal services for 25+ countries with a 98% approval rate." },
+      { name: "keywords", content: "visa services UK, tourist visa, business visa, family visa, study visa, settlement visa, visa refusal appeal, UK visa consultant" },
       { property: "og:title", content: "Visa Services — Travel Links Solution" },
-      { property: "og:description", content: "Tourist, business and family visa support handled end-to-end by UK consultants." },
+      { property: "og:description", content: "Tourist, business, family, study and settlement visa support handled end-to-end by senior UK consultants." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://travelslinkuk.lovable.app/services" },
+      { property: "og:site_name", content: "Travel Links Solution" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Visa Services — Travel Links Solution" },
+      { name: "twitter:description", content: "End-to-end visa services across 25+ destinations, handled by senior UK consultants." },
     ],
     links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/services" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          serviceType: "Visa consultancy",
+          name: "Travel Links Solution Visa Services",
+          url: "https://travelslinkuk.lovable.app/services",
+          areaServed: "Worldwide",
+          provider: {
+            "@type": "Organization",
+            name: "Travel Links Solution",
+            url: "https://travelslinkuk.lovable.app",
+          },
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Visa Services",
+            itemListElement: [
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Tourist Visa" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Business Visa" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Family Visa" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Study Visa" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Settlement & PR" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Refusal & Appeal" } },
+            ],
+          },
+        }),
+      },
+    ],
   }),
   component: ServicesPage,
 });
