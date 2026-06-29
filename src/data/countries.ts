@@ -19,6 +19,7 @@ export type Country = {
   benefits: string[];
   pros: string[];
   cons: string[];
+  whyVisit: string;
 };
 
 // Standard Schengen tourist visa checklist (used as base for European destinations).
@@ -77,6 +78,8 @@ export const COUNTRIES: Country[] = [
       "Savor traditional foods like pretzels, sausages and schnitzel, plus world-famous German beer",
       "Free movement across all 29 Schengen countries on a single visa",
     ],
+    whyVisit:
+      "Germany packs Europe's biggest variety of city breaks, castles and alpine escapes into one approachable Schengen trip.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -108,6 +111,8 @@ export const COUNTRIES: Country[] = [
       "Easy onward travel by TGV to Belgium, Switzerland and Spain",
       "Schengen visa unlocks 28 additional countries",
     ],
+    whyVisit:
+      "From Paris boulevards to Riviera coves, France delivers a postcard at every turn — and your Schengen visa unlocks the rest of Europe with it.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -139,6 +144,8 @@ export const COUNTRIES: Country[] = [
       "Explore beautiful windmills, tulip fields and coastal towns",
       "Excellent base for short trips across Northern Europe",
     ],
+    whyVisit:
+      "The Netherlands is an easy, walkable, English-friendly intro to Europe — perfect for first-time Schengen travellers and short city breaks.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -170,6 +177,8 @@ export const COUNTRIES: Country[] = [
       "Lakeside cities — Geneva, Lucerne and Zurich",
       "Schengen access to all 29 member countries",
     ],
+    whyVisit:
+      "Switzerland turns a single visa into postcard alpine scenery, glacier rail journeys and some of Europe's most polished cities.",
     pros: SCHENGEN_PROS,
     cons: [
       ...SCHENGEN_CONS,
@@ -200,6 +209,8 @@ export const COUNTRIES: Country[] = [
       "Drive the Golden Circle past geysers, waterfalls and craters",
       "Schengen visa works across all 29 member countries",
     ],
+    whyVisit:
+      "Iceland is the rare destination that genuinely looks like another planet — volcanoes, glaciers and the Northern Lights, all within a short drive of Reykjavík.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -227,6 +238,8 @@ export const COUNTRIES: Country[] = [
       "Discover Scandinavian design, food halls and coffee culture",
       "Schengen visa covers all 29 member countries",
     ],
+    whyVisit:
+      "Sweden pairs design-led cities with vast forests, archipelagos and Arctic adventures unlike anywhere else in Europe.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -254,6 +267,8 @@ export const COUNTRIES: Country[] = [
       "Affordable food, wine and accommodation compared to most of Europe",
       "Schengen visa unlocks 28 additional countries",
     ],
+    whyVisit:
+      "Portugal offers Europe's warmest welcome (and weather) — historic cities, Atlantic beaches and great value from Lisbon to the Algarve.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -281,6 +296,8 @@ export const COUNTRIES: Country[] = [
       "Experience authentic Mediterranean food and culture",
       "Travel freely across all 29 Schengen countries",
     ],
+    whyVisit:
+      "Greece serves up the rare combination of ancient history, island-hopping summers and Mediterranean food on one Schengen visa.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -311,6 +328,8 @@ export const COUNTRIES: Country[] = [
       "Enjoy classical music, opera and coffee-house culture",
       "Schengen visa covers all 29 member countries",
     ],
+    whyVisit:
+      "Austria moves effortlessly between imperial city culture and alpine escapes, with first-class music, food and trains tying it all together.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -338,6 +357,8 @@ export const COUNTRIES: Country[] = [
       "Discover Renaissance art in Florence and ancient ruins in Pompeii",
       "Schengen visa unlocks 28 additional countries",
     ],
+    whyVisit:
+      "Italy is the world's most romanticised travel destination for good reason — art cities, coastlines, food and wine across every region.",
     pros: SCHENGEN_PROS,
     cons: SCHENGEN_CONS,
   },
@@ -377,6 +398,8 @@ export const COUNTRIES: Country[] = [
       "B1/B2 typically issued for up to 10 years, multiple-entry",
       "Stay up to 180 days per visit (as granted at the border)",
     ],
+    whyVisit:
+      "The USA is a full continent of experiences on a single visa — global cities, theme parks and national parks that take a lifetime to fully see.",
     pros: [
       "Long validity — often 10-year multiple-entry visa",
       "Generous stay length per entry",
@@ -423,6 +446,8 @@ export const COUNTRIES: Country[] = [
       "Multiple-entry visas typically issued for up to 10 years",
       "Stay up to 6 months per entry as decided at the border",
     ],
+    whyVisit:
+      "Canada combines world-class cities with some of the planet's most dramatic natural landscapes — and one visa covers up to 10 years of trips.",
     pros: [
       "Multiple-entry visas commonly issued for up to 10 years",
       "No interview required for most applicants",
@@ -469,6 +494,8 @@ export const COUNTRIES: Country[] = [
       "Multi-entry visas often valid for up to 3 years",
       "Stay up to 3, 6 or 12 months per entry depending on grant",
     ],
+    whyVisit:
+      "Australia offers a continent's worth of beaches, reefs, outback and cosmopolitan cities — usually on a multi-year, multi-entry visa.",
     pros: [
       "Fully online application via ImmiAccount",
       "Multiple-entry visas with long validity available",
@@ -514,6 +541,8 @@ export const COUNTRIES: Country[] = [
       "Affordable food, accommodation and travel costs",
       "Short flight times from the UK and Europe",
     ],
+    whyVisit:
+      "Morocco is North Africa's most accessible adventure — imperial cities, desert nights and Atlantic coast, just a short flight from the UK.",
     pros: [
       "Relatively quick processing compared to Schengen",
       "Strong tourism infrastructure and English-friendly services",
@@ -560,6 +589,8 @@ export const COUNTRIES: Country[] = [
       "Multi-entry visitor visas typically valid for up to 3 years",
       "Visit Lord of the Rings and Hobbiton filming locations",
     ],
+    whyVisit:
+      "New Zealand is the ultimate outdoor destination, with fjords, mountains and adventure capitals packed into two compact islands.",
     pros: [
       "Fully online application via Immigration New Zealand",
       "Multi-entry visas commonly issued",
@@ -606,6 +637,8 @@ export const COUNTRIES: Country[] = [
       "Experience Irish pub culture, music and warm hospitality",
       "British-Irish Visa Scheme can allow onward travel to the UK",
     ],
+    whyVisit:
+      "Ireland combines green coastal drives, lively cities and famously warm hospitality — and the visa can pair with onward UK travel.",
     pros: [
       "Online AVATS application with clear instructions",
       "British-Irish Visa Scheme eligibility for some applicants",
@@ -651,6 +684,8 @@ export const COUNTRIES: Country[] = [
       "Travel rapidly across the country on the Shinkansen",
       "Discover Japanese cuisine — sushi, ramen, kaiseki",
     ],
+    whyVisit:
+      "Japan blends centuries-old temples with neon-lit megacities, world-class food and a rail network that makes seeing it all effortless.",
     pros: [
       "Fast processing — often within a week",
       "Single and multi-entry options available",
@@ -696,6 +731,8 @@ export const COUNTRIES: Country[] = [
       "Drive the spectacular Garden Route along the coast",
       "Favourable exchange rate keeps travel costs low",
     ],
+    whyVisit:
+      "South Africa delivers Big-Five safaris, Cape coastlines and world-class wine country in one of the best-value long-haul trips you can take.",
     pros: [
       "Fast processing — often under two weeks",
       "Visa-free entry for several nationalities",
@@ -740,6 +777,8 @@ export const COUNTRIES: Country[] = [
       "Affordable luxury hotels, food and shopping",
       "eVisa option for fast online approval",
     ],
+    whyVisit:
+      "Turkey straddles Europe and Asia with iconic cities, Cappadocian landscapes and turquoise coastlines — at very accessible prices.",
     pros: [
       "Fast eVisa approval — often within 24 hours",
       "Inexpensive flights from the UK and Europe",
@@ -784,6 +823,8 @@ export const COUNTRIES: Country[] = [
       "Ranked among the safest and cleanest cities in the world",
       "Major hub for onward travel across Southeast Asia",
     ],
+    whyVisit:
+      "Singapore is Asia's most efficient, safest and tastiest city break — and the perfect launchpad for onward Southeast Asia travel.",
     pros: [
       "Very fast processing — typically within a week",
       "English widely spoken across all services",
@@ -828,6 +869,8 @@ export const COUNTRIES: Country[] = [
       "Rich multicultural cuisine — Malay, Chinese, Indian",
       "Visa-free entry for many nationalities",
     ],
+    whyVisit:
+      "Malaysia offers tropical beaches, rainforest adventures and one of Asia's richest food scenes at very affordable prices.",
     pros: [
       "eVisa available for many countries",
       "Fast processing — typically under a week",
@@ -872,6 +915,8 @@ export const COUNTRIES: Country[] = [
       "Famous Thai cuisine and street food culture",
       "Affordable luxury hotels and spa experiences",
     ],
+    whyVisit:
+      "Thailand is the classic Southeast Asia trip — temples, beaches, street food and famously friendly hospitality, all great value.",
     pros: [
       "eVisa available with fast online processing",
       "Long-stay options available for tourism",
