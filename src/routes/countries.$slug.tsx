@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, ArrowLeft, Check, Clock, Coins, Globe2, Landmark, MapPin } from "lucide-react";
+import { ArrowRight, ArrowLeft, Clock, Coins, Globe2, Landmark, MapPin } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
