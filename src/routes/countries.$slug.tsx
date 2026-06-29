@@ -6,6 +6,7 @@ import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
+import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
 
 export const Route = createFileRoute("/countries/$slug")({
   loader: ({ params }) => {
