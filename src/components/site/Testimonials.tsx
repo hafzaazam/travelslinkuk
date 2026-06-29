@@ -47,9 +47,24 @@ export function Testimonials() {
   }, []);
 
   useEffect(() => {
-    const id = setInterval(() => setI((p) => (p + 1) % reviews.length), 5500);
-    return () => clearInterval(id);
-  }, [reviews.length]);
+    if (reviews.length <= 1 || hovering) return;
+    let id: ReturnType<typeof setInterval> | null = null;
+    const start = () => {
+      if (id != null) return;
+      id = setInterval(() => setI((p) => (p + 1) % reviews.length), 5500);
+    };
+    const stop = () => {
+      if (id != null) clearInterval(id);
+      id = null;
+    };
+    const onVis = () => (document.hidden ? stop() : start());
+    start();
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, [reviews.length, hovering]);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current;
