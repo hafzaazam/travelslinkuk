@@ -6,8 +6,19 @@ import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
 import { Eyebrow } from "@/components/site/Eyebrow";
-import { COUNTRIES, getCountryBySlug } from "@/data/countries";
+import { COUNTRIES, getCountryBySlug, type Country } from "@/data/countries";
 import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
+
+function countryFaqs(c: Country) {
+  const visaList = c.visas.map((v) => v.type).join(", ");
+  return [
+    { q: `How long does a ${c.name} visa take to process?`, a: `${c.name} visa processing usually takes ${c.processingTime}. We share an accurate timeline for your specific case during the free consultation.` },
+    { q: `What visa types can I apply for in ${c.name}?`, a: `Travel Links Solution helps with the following ${c.name} visa categories: ${visaList}.` },
+    { q: `What documents do I need for a ${c.name} visa?`, a: `Core documents include ${c.requirements.slice(0, 4).join(", ")} and more. We send a tailored checklist after assessing your profile.` },
+    { q: `Can Travel Links Solution apply for my ${c.name} visa from the UK?`, a: `Yes. Our Northampton-based consultants handle end-to-end ${c.name} applications for UK residents — from documentation and appointment booking to interview prep.` },
+    { q: `What is the official language and currency of ${c.name}?`, a: `${c.name}'s capital is ${c.capital}. The official language is ${c.language} and the currency is ${c.currency}.` },
+  ];
+}
 
 export const Route = createFileRoute("/countries/$slug")({
   loader: ({ params }) => {
