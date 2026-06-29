@@ -191,13 +191,13 @@ export function Header() {
             >
               Free Assessment
             </a>
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
+            <button
+              type="button"
+              onClick={() => { setOpen(false); openApplyDialog(); }}
               className="text-center px-4 py-3 text-sm font-semibold text-white rounded-xl bg-gradient-brand shadow-soft"
             >
               Apply Now
-            </a>
+            </button>
           </div>
         </div>
       </div>
