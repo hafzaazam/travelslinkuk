@@ -262,6 +262,25 @@ function ServicesPage() {
         </section>
 
         <Process />
+
+        {/* FAQ */}
+        <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
+          <div className="mx-auto max-w-3xl">
+            <SectionHeading
+              eyebrow="FAQ"
+              title={<>Common questions about <span className="text-gradient-brand">our visa services</span></>}
+            />
+            <dl className="mt-10 space-y-4">
+              {SERVICES_FAQS.map((f) => (
+                <div key={f.q} className="rounded-2xl border border-border bg-white p-5 shadow-soft">
+                  <dt className="font-display font-semibold text-base">{f.q}</dt>
+                  <dd className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.a}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
         <CTABanner />
       </main>
       <Footer />
