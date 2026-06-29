@@ -90,7 +90,7 @@ export const Route = createFileRoute("/countries/$slug")({
                   },
                   {
                     "@type": "FAQPage",
-                    mainEntity: countryFaqs(c).map((f) => ({
+                    mainEntity: countryFaqs(c).map((f: { q: string; a: string }) => ({
                       "@type": "Question",
                       name: f.q,
                       acceptedAnswer: { "@type": "Answer", text: f.a },
