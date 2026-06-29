@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, ArrowLeft, Clock, Coins, Globe2, Landmark, MapPin } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Clock, Coins, Globe2, Info, Landmark, MapPin, Sparkles, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
@@ -159,6 +159,70 @@ function CountryPage() {
           </div>
         </section>
 
+        {/* About the country */}
+        <section className="py-20 px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl grid lg:grid-cols-[1fr_1.4fr] gap-12 items-start">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <Info className="h-3.5 w-3.5" />
+                About the country
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+                Get to know {country.name}
+              </h2>
+            </div>
+            <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
+              <p className="text-base text-foreground/90 leading-relaxed">{country.about}</p>
+              <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Capital</div>
+                  <div className="mt-1 font-semibold">{country.capital}</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Language</div>
+                  <div className="mt-1 font-semibold">{country.language}</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Currency</div>
+                  <div className="mt-1 font-semibold">{country.currency}</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Processing</div>
+                  <div className="mt-1 font-semibold">{country.processingTime}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits */}
+        <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <Sparkles className="h-3.5 w-3.5" />
+                Why visit
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+                Benefits of a {country.name} visa
+              </h2>
+            </div>
+            <div className="mt-10 grid sm:grid-cols-2 gap-4">
+              {country.benefits.map((b: string, i: number) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 rounded-2xl bg-white border border-border p-5 shadow-card hover:shadow-glow hover:-translate-y-0.5 transition-all"
+                >
+                  <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
+                    <Sparkles className="h-4 w-4" />
+                  </span>
+                  <span className="text-sm text-foreground leading-relaxed">{b}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Visa types */}
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
@@ -212,6 +276,61 @@ function CountryPage() {
 
             <CountryChecklist slug={country.slug} items={country.requirements} />
 
+          </div>
+        </section>
+
+        {/* Pros & Cons */}
+        <section className="py-20 px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                At a glance
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+                {country.name} visa — pros & cons
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                A balanced view of what to expect when applying for and using a {country.name} visa.
+              </p>
+            </div>
+            <div className="mt-10 grid lg:grid-cols-2 gap-6">
+              <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                    <ThumbsUp className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display text-lg font-semibold">Pros</h3>
+                </div>
+                <ul className="mt-5 space-y-3">
+                  {country.pros.map((p: string, i: number) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-600">
+                        <Check className="h-3 w-3" strokeWidth={3} />
+                      </span>
+                      <span className="text-sm text-foreground leading-relaxed">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-rose-500/10 text-rose-600">
+                    <ThumbsDown className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display text-lg font-semibold">Things to consider</h3>
+                </div>
+                <ul className="mt-5 space-y-3">
+                  {country.cons.map((c: string, i: number) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-rose-500/15 text-rose-600">
+                        <X className="h-3 w-3" strokeWidth={3} />
+                      </span>
+                      <span className="text-sm text-foreground leading-relaxed">{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
