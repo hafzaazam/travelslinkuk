@@ -79,24 +79,44 @@ export function Footer() {
               UK-based visa consultancy guiding tourists, families and business travellers to destinations across the globe.
             </p>
             <div className="flex gap-2">
-              {[
-                { Icon: Facebook, label: "Facebook" },
-                { Icon: Instagram, label: "Instagram" },
-                { Icon: Linkedin, label: "LinkedIn" },
-                { Icon: MessageCircle, label: "WhatsApp" },
-              ].map(({ Icon, label }) => (
-                <a key={label} href="#" aria-label={`Travel Links on ${label}`} className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition">
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                </a>
-              ))}
+              <a
+                href="https://wa.me/447879465341"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat with Travel Links on WhatsApp"
+                className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a
+                href="mailto:info@travellinks.uk"
+                aria-label="Email Travel Links"
+                className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a
+                href="tel:+447879465341"
+                aria-label="Call Travel Links"
+                className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+              </a>
             </div>
           </div>
 
           <div>
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-white">Quick Links</h4>
             <ul className="mt-4 space-y-2.5 text-sm text-white/70">
-              {["Home", "About", "Services", "Countries", "Process", "Contact"].map((l) => (
-                <li key={l}><a href={`#${l.toLowerCase()}`} className="hover:text-white transition">{l}</a></li>
+              {[
+                { label: "Home", href: "/" },
+                { label: "About", href: "/about" },
+                { label: "Services", href: "/services" },
+                { label: "Countries", href: "/countries" },
+                { label: "Compare", href: "/compare" },
+                { label: "Contact", href: "/contact" },
+              ].map((l) => (
+                <li key={l.label}><a href={l.href} className="hover:text-white transition">{l.label}</a></li>
               ))}
             </ul>
           </div>
@@ -105,7 +125,7 @@ export function Footer() {
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-white">Visa Services</h4>
             <ul className="mt-4 space-y-2.5 text-sm text-white/70">
               {["Tourist Visa", "Business Visa", "Family Visa"].map((l) => (
-                <li key={l}><a href="#services" className="hover:text-white transition">{l}</a></li>
+                <li key={l}><a href="/services" className="hover:text-white transition">{l}</a></li>
               ))}
             </ul>
           </div>
