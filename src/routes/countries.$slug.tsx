@@ -24,7 +24,7 @@ export const Route = createFileRoute("/countries/$slug")({
       ? `Apply for a ${c.name} visa with Travel Links Solution. ${c.tagline}. End-to-end documentation, submission and interview prep from our UK consultants.`
       : "Visa services for 25+ destinations.";
     const ogImage = c ? `https://flagcdn.com/w1280/${c.code}.png` : undefined;
-    const canonical = c ? `https://travelslinkuk.lovable.app/countries/${c.slug}` : undefined;
+    const canonical = c ? `https://travellinks.uk/countries/${c.slug}` : undefined;
     return {
       meta: [
         { title },

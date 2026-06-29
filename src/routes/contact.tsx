@@ -26,13 +26,13 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact Us — Travel Links Solution" },
       { property: "og:description", content: "Reach the Travel Links Solution team for a free 20-minute visa consultation — call, WhatsApp, email or visit our Northampton office." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/contact" },
+      { property: "og:url", content: "https://travellinks.uk/contact" },
       { property: "og:site_name", content: "Travel Links Solution" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Contact Us — Travel Links Solution" },
       { name: "twitter:description", content: "Free 20-minute visa consultation with a senior UK consultant. Reply within 24 hours." },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/contact" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/contact" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -40,11 +40,11 @@ export const Route = createFileRoute("/contact")({
           "@context": "https://schema.org",
           "@type": "ContactPage",
           name: "Contact Travel Links Solution",
-          url: "https://travelslinkuk.lovable.app/contact",
+          url: "https://travellinks.uk/contact",
           mainEntity: {
             "@type": "Organization",
             name: "Travel Links Solution",
-            url: "https://travelslinkuk.lovable.app",
+            url: "https://travellinks.uk",
             telephone: "+44 787 946 5341",
             email: "info@travellinks.uk",
             address: {
