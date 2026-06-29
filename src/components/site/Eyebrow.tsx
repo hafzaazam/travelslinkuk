@@ -9,8 +9,8 @@ export function Eyebrow({
   icon?: LucideIcon;
 }) {
   return (
-    <span className="relative inline-flex p-[1.5px] rounded-full bg-gradient-brand">
-      <span className="inline-flex items-center gap-3 rounded-full bg-white/85 backdrop-blur-2xl border border-white/80 px-5 py-2">
+    <span className="relative inline-flex p-[1.5px] rounded-md bg-gradient-brand">
+      <span className="inline-flex items-center gap-3 rounded-[5px] bg-white/85 backdrop-blur-2xl border border-white/80 px-4 py-2">
         <Icon className="h-4 w-4 text-primary" />
         <span className="text-[11px] font-black uppercase tracking-[0.3em] leading-none bg-gradient-brand bg-clip-text text-transparent">
           {label}
