@@ -37,8 +37,9 @@ export function CTABanner() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a
-                href="#contact"
+              <button
+                type="button"
+                onClick={openApplyDialog}
                 className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-soft transition hover:-translate-y-0.5 hover:shadow-glow"
               >
                 <span
@@ -47,7 +48,7 @@ export function CTABanner() {
                 />
                 <span className="relative">Apply Now</span>
                 <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+              </button>
               <a
                 href={`https://wa.me/447879465341?text=${encodeURIComponent("Hi Travel Links Solution, I'd like to enquire about a visa application.")}`}
                 target="_blank"
