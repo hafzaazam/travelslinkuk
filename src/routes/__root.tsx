@@ -94,6 +94,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" },
     ],
     scripts: [
+      { src: "https://www.googletagmanager.com/gtag/js?id=G-5NL691N6SK", async: true },
+      {
+        children: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-5NL691N6SK');`,
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify({
