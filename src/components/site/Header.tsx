@@ -64,7 +64,7 @@ export function Header() {
   // dropdown menu — no body scroll lock
 
 
-  const onLight = !scrolled; // header sits on dark hero
+  const onLight = isHome && !scrolled; // header sits on dark hero only on home
   const textBase = onLight ? "text-white/80 hover:text-white" : "text-foreground/70 hover:text-foreground";
   const navWrap = onLight
     ? "border-white/15 bg-white/10 backdrop-blur-xl"
