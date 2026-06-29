@@ -1,5 +1,6 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { openApplyDialog } from "./ApplyDialog";
 
 export function CTABanner() {
   return (
