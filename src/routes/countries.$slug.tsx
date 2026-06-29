@@ -135,30 +135,6 @@ function CountryPage() {
           </div>
         </section>
 
-        {/* Quick facts */}
-        <section className="py-12 px-5 lg:px-8 bg-gradient-soft">
-          <div className="mx-auto max-w-7xl grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { Icon: Landmark, label: "Capital", value: country.capital },
-              { Icon: Coins, label: "Currency", value: country.currency },
-              { Icon: Globe2, label: "Language", value: country.language },
-              { Icon: Clock, label: "Processing Time", value: country.processingTime },
-            ].map(({ Icon, label, value }) => (
-              <div
-                key={label}
-                className="rounded-2xl bg-white border border-border p-5 shadow-card"
-              >
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                  <Icon className="h-3.5 w-3.5" />
-                  {label}
-                </div>
-                <div className="mt-2 font-display text-base font-semibold text-foreground">
-                  {value}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
         {/* About the country */}
         <section className="py-20 px-5 lg:px-8">
