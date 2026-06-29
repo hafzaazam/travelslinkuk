@@ -192,22 +192,16 @@ export function Header() {
               </a>
             );
           })}
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <a
-              href={hrefFor("#contact")}
-              onClick={() => setOpen(false)}
-              className="text-center px-4 py-3 text-sm font-semibold text-primary border border-primary/25 rounded-xl"
-            >
-              Free Assessment
-            </a>
+          <div className="mt-3 flex justify-center">
             <button
               type="button"
               onClick={() => { setOpen(false); openApplyDialog(); }}
-              className="text-center px-4 py-3 text-sm font-semibold text-white rounded-xl bg-gradient-brand shadow-soft"
+              className="text-center px-5 py-3 text-sm font-semibold text-white rounded-xl bg-gradient-brand shadow-soft"
             >
               Consult Now
             </button>
           </div>
+
         </div>
       </div>
     </header>
