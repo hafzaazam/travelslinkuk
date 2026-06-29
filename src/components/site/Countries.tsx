@@ -83,6 +83,16 @@ export function Countries() {
         </div>
 
       </div>
+
+      <div className="mt-12 flex justify-center px-5 lg:px-8">
+        <Link
+          to="/countries"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-6 py-3 text-sm font-bold text-white shadow-soft hover:shadow-glow hover:-translate-y-0.5 transition"
+        >
+          Browse all countries
+          <span aria-hidden>→</span>
+        </Link>
+      </div>
     </section>
   );
 }
