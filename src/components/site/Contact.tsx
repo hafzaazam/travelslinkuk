@@ -166,13 +166,7 @@ export function Contact() {
           {/* Map + info */}
           <div className="space-y-6">
             <div className="overflow-hidden rounded-3xl shadow-card border border-border h-80">
-              <iframe
-                title="Office location"
-                src="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE&output=embed"
-                className="h-full w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              <MapEmbed />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
