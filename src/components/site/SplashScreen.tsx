@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import logoAsset from "@/assets/travel-links-logo.png.asset.json";
 
 const SESSION_KEY = "tls_splash_shown";
-const MIN_SHOW_MS = 1400;
+const MIN_SHOW_MS = 1600;
 const FADE_MS = 700;
 
 export function SplashScreen() {
@@ -14,7 +14,6 @@ export function SplashScreen() {
     if (typeof window === "undefined") return;
 
     // Always land at the top on initial load — strip any hash (e.g. /#contact)
-    // so refresh doesn't auto-scroll to a section.
     if (window.location.hash) {
       history.replaceState(null, "", window.location.pathname + window.location.search);
     }
@@ -70,6 +69,9 @@ export function SplashScreen() {
 
   if (!mounted) return null;
 
+  const today = new Date();
+  const dateStr = today.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }).toUpperCase();
+
   return (
     <div
       aria-hidden="true"
@@ -80,181 +82,190 @@ export function SplashScreen() {
       style={{
         transitionDuration: `${FADE_MS}ms`,
         background:
-          "linear-gradient(180deg, #04081a 0%, #0b1850 38%, #1e3fb0 65%, #38d8e8 100%)",
+          "radial-gradient(120% 80% at 50% 0%, #102a6b 0%, #0a1538 55%, #050a22 100%)",
       }}
     >
-      {/* Soft sun glow */}
-      <div className="pointer-events-none absolute left-1/2 top-[58%] -translate-x-1/2 h-[420px] w-[420px] rounded-full bg-brand-cyan/20 blur-[120px]" />
-
-      {/* Twinkling stars */}
+      {/* faint grid */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-1/2 opacity-60"
+        className="pointer-events-none absolute inset-0 opacity-[0.08]"
         style={{
           backgroundImage:
-            "radial-gradient(1px 1px at 20% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 20%, #fff, transparent), radial-gradient(1.5px 1.5px at 40% 60%, #fff, transparent), radial-gradient(1px 1px at 85% 50%, #fff, transparent), radial-gradient(1px 1px at 10% 70%, #fff, transparent)",
-          backgroundSize: "600px 400px",
+            "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
         }}
       />
 
-      {/* Drifting clouds */}
-      <Cloud className="splash-cloud-l absolute top-[18%] left-0 w-44 opacity-80" />
-      <Cloud className="splash-cloud-r absolute top-[32%] left-0 w-32 opacity-60" style={{ animationDuration: "34s" }} />
-      <Cloud className="splash-cloud-l absolute top-[46%] left-0 w-52 opacity-50" style={{ animationDuration: "40s", animationDelay: "-8s" }} />
-      <Cloud className="splash-cloud-r absolute top-[10%] left-0 w-24 opacity-70" style={{ animationDuration: "26s", animationDelay: "-6s" }} />
+      {/* dotted flight arc behind the pass */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 1200 800"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <linearGradient id="bp-arc" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="#38d8e8" stopOpacity="0" />
+            <stop offset="50%" stopColor="#38d8e8" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#34e5c5" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          className="bp-arc"
+          d="M 80 540 Q 600 120 1120 540"
+          fill="none"
+          stroke="url(#bp-arc)"
+          strokeWidth="2"
+          strokeDasharray="2 9"
+          strokeLinecap="round"
+        />
+        <circle cx="80" cy="540" r="5" fill="#38d8e8" />
+        <circle cx="1120" cy="540" r="5" fill="#34e5c5" />
+      </svg>
 
-      {/* Airplane flying across the sky */}
-      <div className="absolute left-1/2 top-[28%] -translate-x-1/2">
-        <div className="splash-plane">
-          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-            {/* trail */}
-            <path
-              className="splash-trail"
-              d="M -300 70 Q -120 30 0 60"
-              stroke="rgba(255,255,255,0.7)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              fill="none"
-            />
-            {/* plane */}
-            <g transform="translate(40 36)">
-              <path
-                d="M2 22 L40 14 L52 4 L58 4 L50 18 L62 18 L70 12 L74 14 L66 24 L74 34 L70 36 L62 30 L50 30 L58 44 L52 44 L40 34 L2 26 Z"
-                fill="#ffffff"
-                stroke="#0b1850"
-                strokeWidth="1.2"
-                strokeLinejoin="round"
-              />
-              <circle cx="46" cy="22" r="2" fill="#38d8e8" />
-              <circle cx="52" cy="22" r="2" fill="#38d8e8" />
-              <circle cx="58" cy="22" r="2" fill="#38d8e8" />
-            </g>
-          </svg>
-        </div>
-      </div>
+      {/* Boarding pass */}
+      <div className="relative z-10 flex h-full items-center justify-center px-4">
+        <div className="bp-card relative w-[min(720px,94vw)] rounded-3xl bg-white shadow-[0_40px_120px_-20px_rgba(0,0,0,0.55)] overflow-hidden">
+          {/* top color bar */}
+          <div className="h-2 bg-gradient-to-r from-brand-deep via-brand-royal to-brand-cyan" />
 
-      {/* 7 Wonders silhouette band */}
-      <div className="splash-wonders absolute inset-x-0 bottom-0" style={{ animationDelay: "0.2s" }}>
-        <svg viewBox="0 0 1440 260" preserveAspectRatio="none" className="block w-full h-[240px] sm:h-[280px]">
-          <defs>
-            <linearGradient id="ground" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#04081a" stopOpacity="0.55" />
-              <stop offset="100%" stopColor="#04081a" stopOpacity="1" />
-            </linearGradient>
-          </defs>
+          <div className="flex">
+            {/* MAIN STUB */}
+            <div className="flex-1 p-6 sm:p-7">
+              {/* Airline header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <img src={logoAsset.url} alt="" className="h-8 w-auto object-contain" />
+                  <div className="leading-tight">
+                    <p className="font-display text-[13px] font-bold text-slate-900">TRAVEL LINKS</p>
+                    <p className="text-[9px] font-semibold tracking-[0.22em] text-slate-500">SOLUTION • BOARDING PASS</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-[9px] font-semibold tracking-[0.22em] text-slate-400">FLIGHT</p>
+                  <p className="font-mono text-sm font-bold text-slate-900">TLS · 2026</p>
+                </div>
+              </div>
 
-          {/* far ground haze */}
-          <path d="M0 200 L1440 200 L1440 260 L0 260 Z" fill="url(#ground)" />
+              {/* Route — FROM ✈ TO */}
+              <div className="mt-5 flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-[9px] font-semibold tracking-[0.22em] text-slate-400">FROM</p>
+                  <p className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 leading-none">LHR</p>
+                  <p className="mt-1 text-[11px] text-slate-500">London</p>
+                </div>
 
-          <g fill="#04081a" stroke="rgba(56,216,232,0.35)" strokeWidth="1.2">
-            {/* Great Pyramid of Giza */}
-            <polygon points="60,200 160,90 260,200" />
-            <polygon points="200,200 270,120 340,200" opacity="0.85" />
+                <div className="relative flex-1 px-2 pb-1">
+                  <div className="relative h-px w-full bg-slate-300">
+                    <span className="absolute -left-1 -top-[3px] h-2 w-2 rounded-full bg-brand-deep" />
+                    <span className="absolute -right-1 -top-[3px] h-2 w-2 rounded-full bg-brand-cyan" />
+                    <svg
+                      className="bp-plane absolute -top-3 left-0 text-brand-deep"
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1L15 22v-1.5L13 19v-5.5l8 2.5z" />
+                    </svg>
+                  </div>
+                </div>
 
-            {/* Taj Mahal (dome + minarets) */}
-            <g transform="translate(330 0)">
-              <rect x="40" y="160" width="140" height="40" />
-              <path d="M40 160 Q110 80 180 160 Z" />
-              <rect x="20" y="120" width="14" height="80" />
-              <rect x="186" y="120" width="14" height="80" />
-              <circle cx="110" cy="92" r="8" />
-            </g>
+                <div className="text-right">
+                  <p className="text-[9px] font-semibold tracking-[0.22em] text-slate-400">TO</p>
+                  <p className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 leading-none">WLD</p>
+                  <p className="mt-1 text-[11px] text-slate-500">The World</p>
+                </div>
+              </div>
 
-            {/* Great Wall of China */}
-            <g transform="translate(560 0)">
-              <path d="M0 200 L0 170 L30 170 L30 150 L60 150 L60 175 L100 175 L100 155 L140 155 L140 180 L180 180 L180 160 L210 160 L210 200 Z" />
-              <rect x="28" y="135" width="4" height="20" />
-              <rect x="98" y="140" width="4" height="20" />
-              <rect x="178" y="145" width="4" height="20" />
-            </g>
+              {/* Meta row */}
+              <div className="mt-6 grid grid-cols-4 gap-3 border-t border-dashed border-slate-200 pt-4">
+                <Meta label="PASSENGER" value="YOU" />
+                <Meta label="DATE" value={dateStr} />
+                <Meta label="GATE" value="A1" />
+                <Meta label="SEAT" value="01A" />
+              </div>
 
-            {/* Colosseum */}
-            <g transform="translate(790 0)">
-              <path d="M0 200 Q90 110 180 200 Z" />
-              <rect x="10" y="170" width="160" height="30" />
-              {[0,1,2,3,4,5,6].map((i) => (
-                <rect key={i} x={20 + i*22} y={150} width="10" height="22" rx="3" fill="rgba(56,216,232,0.15)" stroke="none" />
-              ))}
-            </g>
+              {/* Progress / boarding */}
+              <div className="mt-5">
+                <div className="mb-2 flex items-center justify-between text-[10px] font-semibold tracking-[0.18em] text-slate-500">
+                  <span>BOARDING</span>
+                  <span className="font-mono text-slate-700">{Math.round(progress)}%</span>
+                </div>
+                <div className="h-[6px] w-full overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-brand-deep via-brand-royal to-brand-cyan transition-[width] duration-300 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
 
-            {/* Christ the Redeemer on a peak */}
-            <g transform="translate(990 0)">
-              <polygon points="0,200 70,120 140,200" />
-              <g transform="translate(63 95)">
-                <rect x="6" y="0" width="4" height="30" />
-                <rect x="0" y="8" width="16" height="3" />
-                <circle cx="8" cy="-3" r="3" />
-              </g>
-            </g>
+            {/* PERFORATION */}
+            <div className="relative w-[2px] my-4 bg-transparent">
+              <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 border-l-2 border-dashed border-slate-300" />
+              <span className="absolute -top-6 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[#050a22]" />
+              <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[#050a22]" />
+            </div>
 
-            {/* Petra (treasury facade) */}
-            <g transform="translate(1130 0)">
-              <rect x="0" y="120" width="140" height="80" />
-              <polygon points="0,120 70,80 140,120" />
-              <rect x="60" y="150" width="20" height="50" fill="rgba(56,216,232,0.18)" stroke="none" />
-              <rect x="20" y="135" width="10" height="40" fill="rgba(56,216,232,0.12)" stroke="none" />
-              <rect x="110" y="135" width="10" height="40" fill="rgba(56,216,232,0.12)" stroke="none" />
-            </g>
+            {/* TEAR STUB */}
+            <div className="w-[150px] sm:w-[180px] bg-slate-50 p-5 flex flex-col justify-between">
+              <div>
+                <p className="text-[9px] font-semibold tracking-[0.22em] text-slate-400">FLIGHT</p>
+                <p className="font-mono text-sm font-bold text-slate-900">TLS · 2026</p>
+                <div className="mt-3 flex items-baseline gap-1.5">
+                  <span className="font-display text-xl font-extrabold text-slate-900">LHR</span>
+                  <span className="text-slate-400">→</span>
+                  <span className="font-display text-xl font-extrabold text-slate-900">WLD</span>
+                </div>
+                <p className="mt-1 text-[10px] text-slate-500">{dateStr} · GATE A1</p>
+              </div>
 
-            {/* Chichen Itza pyramid */}
-            <g transform="translate(1290 0)">
-              <polygon points="0,200 35,170 35,150 60,130 60,110 75,95 90,110 90,130 115,150 115,170 150,200" />
-              <rect x="65" y="80" width="20" height="15" />
-            </g>
-          </g>
-        </svg>
-      </div>
+              {/* Barcode */}
+              <div className="mt-4">
+                <div className="flex h-10 items-end gap-[2px]">
+                  {Array.from({ length: 28 }).map((_, i) => (
+                    <span
+                      key={i}
+                      className="block bg-slate-900"
+                      style={{
+                        width: i % 3 === 0 ? 3 : 2,
+                        height: `${50 + ((i * 37) % 50)}%`,
+                        opacity: i % 5 === 0 ? 0.6 : 1,
+                      }}
+                    />
+                  ))}
+                </div>
+                <p className="mt-1 text-center font-mono text-[9px] tracking-[0.2em] text-slate-500">
+                  TLS · 0001 · 2026
+                </p>
+              </div>
+            </div>
+          </div>
 
-      {/* Brand + progress */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-6 px-8 text-center">
-        <div className="relative splash-pop">
-          <span className="absolute inset-0 rounded-full border border-brand-cyan/40 splash-ring" />
-          <span
-            className="absolute inset-0 rounded-full border border-brand-aqua/30 splash-ring"
-            style={{ animationDelay: "0.8s" }}
-          />
-          <div className="relative grid h-24 w-24 sm:h-28 sm:w-28 place-items-center rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-glow">
-            <img
-              src={logoAsset.url}
-              alt=""
-              className="h-14 sm:h-16 w-auto object-contain drop-shadow-[0_4px_24px_rgba(56,216,232,0.55)]"
-            />
+          {/* STAMP */}
+          <div className="bp-stamp pointer-events-none absolute right-[42%] top-6 sm:right-[44%] sm:top-8">
+            <div className="rotate-[-14deg] rounded-md border-[3px] border-brand-deep/70 px-3 py-1 text-brand-deep/80">
+              <p className="font-display text-[11px] font-extrabold tracking-[0.22em]">APPROVED</p>
+              <p className="text-center font-mono text-[8px] tracking-[0.2em]">{dateStr}</p>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="splash-fade-up" style={{ animationDelay: "0.25s" }}>
-          <p className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
-            Travel Links{" "}
-            <span className="bg-gradient-to-r from-brand-aqua via-brand-cyan to-white bg-clip-text text-transparent">
-              Solution
-            </span>
-          </p>
-          <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.32em] text-brand-cyan/90">
-            Around the world with you
-          </p>
-        </div>
-
-        <div
-          className="splash-fade-up h-[3px] w-44 overflow-hidden rounded-full bg-white/15"
-          style={{ animationDelay: "0.45s" }}
-          aria-label="Loading"
-        >
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua transition-[width] duration-300 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+      {/* Tagline */}
+      <div className="splash-fade-up absolute inset-x-0 bottom-10 text-center" style={{ animationDelay: "0.55s" }}>
+        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-brand-cyan/90">
+          Around the world with you
+        </p>
       </div>
     </div>
   );
 }
 
-function Cloud({ className, style }: { className?: string; style?: React.CSSProperties }) {
+function Meta({ label, value }: { label: string; value: string }) {
   return (
-    <svg viewBox="0 0 120 50" className={className} style={style} fill="white">
-      <ellipse cx="30" cy="32" rx="22" ry="14" />
-      <ellipse cx="55" cy="24" rx="26" ry="18" />
-      <ellipse cx="85" cy="32" rx="22" ry="14" />
-      <ellipse cx="70" cy="38" rx="30" ry="10" />
-    </svg>
+    <div>
+      <p className="text-[9px] font-semibold tracking-[0.22em] text-slate-400">{label}</p>
+      <p className="font-display text-sm font-bold text-slate-900">{value}</p>
+    </div>
   );
 }
