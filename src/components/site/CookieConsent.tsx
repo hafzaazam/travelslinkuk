@@ -125,10 +125,22 @@ export function CookieConsent() {
 
   if (!mounted || !open) return null;
 
+  const cancelPrefs = () => {
+    const existing = readConsent();
+    if (existing) {
+      setChoices(existing.categories);
+      setShowPrefs(false);
+      setOpen(false);
+    } else {
+      // No prior consent: closing without choosing = reject non-essential
+      rejectAll();
+    }
+  };
+
   return (
     <div
       role="dialog"
-      aria-modal="false"
+      aria-modal="true"
       aria-labelledby="cookie-consent-title"
       className="fixed inset-x-0 bottom-0 z-[60] px-3 pb-3 sm:px-5 sm:pb-5 pointer-events-none"
     >
