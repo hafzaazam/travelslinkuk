@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowRight, PhoneCall } from "lucide-react";
 import { Logo } from "./Logo";
+import { openApplyDialog } from "./ApplyDialog";
 
 const NAV = [
   { label: "Home", href: "#home" },
