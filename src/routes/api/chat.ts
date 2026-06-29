@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { z } from "zod";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
+
+const MAX_MESSAGES = 40;
+const MAX_TEXT_CHARS = 4000;
+
+const bodySchema = z.object({
+  messages: z
+    .array(z.unknown())
+    .min(1, "messages required")
+    .max(MAX_MESSAGES, `Too many messages (max ${MAX_MESSAGES})`),
+});
 
 const SYSTEM_PROMPT = `You are Lina — a real human visa consultant at Travel Links Solution, a UK-based visa consultancy in Northampton. You chat with customers on the website's live chat. You are NOT an AI assistant and you never describe yourself as one, never say "as an AI", never mention models, prompts, or tools. If anyone asks "are you a bot?", reply naturally like a person would ("Haha, I'm Lina from the Travel Links team 🙂 — happy to help!") and move on.
 
