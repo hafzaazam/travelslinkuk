@@ -210,19 +210,8 @@ function CountryPage() {
               </p>
             </div>
 
-            <ul className="space-y-3">
-              {country.requirements.map((r: string) => (
-                <li
-                  key={r}
-                  className="flex items-start gap-3 rounded-2xl bg-white border border-border p-4 shadow-card"
-                >
-                  <span className="mt-0.5 grid h-6 w-6 place-items-center rounded-full bg-gradient-brand text-white shrink-0">
-                    <Check className="h-3.5 w-3.5" />
-                  </span>
-                  <span className="text-sm text-foreground">{r}</span>
-                </li>
-              ))}
-            </ul>
+            <CountryChecklist slug={country.slug} items={country.requirements} />
+
           </div>
         </section>
 
