@@ -173,6 +173,22 @@ function CountryPage() {
             </div>
             <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
               <p className="text-base text-foreground/90 leading-relaxed">{country.about}</p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  { label: "Capital", value: country.capital },
+                  { label: "Language", value: country.language },
+                  { label: "Currency", value: country.currency },
+                  { label: "Processing", value: country.processingTime },
+                ].map((f) => (
+                  <span
+                    key={f.label}
+                    className="inline-flex items-center gap-2 rounded-full bg-primary/5 border border-primary/15 px-3 py-1.5 text-xs"
+                  >
+                    <span className="font-bold uppercase tracking-wider text-primary/80">{f.label}</span>
+                    <span className="font-semibold text-foreground">{f.value}</span>
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </section>
