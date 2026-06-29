@@ -55,9 +55,10 @@ export function Services() {
                 <p className="relative mt-2 text-sm text-muted-foreground leading-relaxed">{text}</p>
                 <a
                   href="#contact"
+                  aria-label={`Enquire about ${title} services`}
                   className="relative mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group/link"
                 >
-                  Learn more
+                  Enquire about {title.toLowerCase()}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
                 </a>
               </div>

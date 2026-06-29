@@ -23,14 +23,14 @@ import { Reveal } from "@/components/site/Reveal";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Travel Links Solution — UK Visa Consultancy" },
-      { name: "description", content: "UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence." },
-      { property: "og:title", content: "Travel Links Solution — UK Visa Consultancy" },
-      { property: "og:description", content: "Premium visa guidance for tourism, family and business travel." },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/" },
+      { title: "UK Visa Consultancy in Northampton | Travel Links Solution" },
+      { name: "description", content: "Trusted UK visa consultancy in Northampton. Tourist, family, business & student visa help for 25+ countries — fast, transparent, embassy-ready." },
+      { property: "og:title", content: "UK Visa Consultancy in Northampton | Travel Links Solution" },
+      { property: "og:description", content: "Trusted UK visa consultancy. Tourist, family, business & student visa help for 25+ countries — fast, transparent, embassy-ready." },
+      { property: "og:url", content: "https://travellinks.uk/" },
     ],
     links: [
-      { rel: "canonical", href: "https://travelslinkuk.lovable.app/" },
+      { rel: "canonical", href: "/" },
       { rel: "preload", as: "image", href: heroAirport, fetchpriority: "high" },
     ],
     scripts: [

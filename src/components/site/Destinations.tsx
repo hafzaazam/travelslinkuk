@@ -3,12 +3,12 @@ import { SectionHeading } from "./Section";
 import { Reveal } from "./Reveal";
 
 const DEST = [
-  { name: "Europe", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80", tag: "Schengen Area", to: "/countries" as const, slug: undefined },
-  { name: "Canada", img: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1200&q=80", tag: "Tourist Visa", to: "/countries/$slug" as const, slug: "canada" },
-  { name: "USA", img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1200&q=80", tag: "B1/B2 Visa", to: "/countries/$slug" as const, slug: "usa" },
-  { name: "Australia", img: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200&q=80", tag: "Tourist Visa", to: "/countries/$slug" as const, slug: "australia" },
-  { name: "New Zealand", img: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1200&q=80", tag: "Visitor Visa", to: "/countries/$slug" as const, slug: "new-zealand" },
-  { name: "Asia", img: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=1200&q=80", tag: "Tourist & Business", to: "/countries" as const, slug: undefined },
+  { name: "Europe", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80", alt: "Cobbled European street with historic architecture at golden hour", tag: "Schengen Area", to: "/countries" as const, slug: undefined },
+  { name: "Canada", img: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1200&q=80", alt: "Snow-capped Canadian Rocky Mountains over a turquoise lake", tag: "Tourist Visa", to: "/countries/$slug" as const, slug: "canada" },
+  { name: "USA", img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=1200&q=80", alt: "New York City skyline with the Statue of Liberty at dusk", tag: "B1/B2 Visa", to: "/countries/$slug" as const, slug: "usa" },
+  { name: "Australia", img: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200&q=80", alt: "Sydney Opera House and harbour bridge under a clear blue sky", tag: "Tourist Visa", to: "/countries/$slug" as const, slug: "australia" },
+  { name: "New Zealand", img: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1200&q=80", alt: "Lush green New Zealand mountain valley with a winding river", tag: "Visitor Visa", to: "/countries/$slug" as const, slug: "new-zealand" },
+  { name: "Asia", img: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=1200&q=80", alt: "Tokyo street at night glowing with neon signs and lanterns", tag: "Tourist & Business", to: "/countries" as const, slug: undefined },
 ];
 
 function onTilt(e: React.MouseEvent<HTMLElement>) {
@@ -43,7 +43,7 @@ export function Destinations() {
               <>
                 <img
                   src={d.img}
-                  alt={d.name}
+                  alt={d.alt}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

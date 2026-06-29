@@ -81,16 +81,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Travel Links Solution — UK Visa Consultancy" },
-      { name: "description", content: "UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence." },
-      { property: "og:title", content: "Travel Links Solution — UK Visa Consultancy" },
-      { property: "og:description", content: "UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Travel Links Solution" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Travel Links Solution — UK Visa Consultancy" },
-      { name: "twitter:description", content: "UK-based visa consultancy helping tourists, families and business travellers obtain visas to 25+ countries with confidence." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/72e57e30-45ad-42d7-bf26-667360ca0ba1/id-preview-1bd45104--1f5f9a7e-f63a-490d-8ae6-c9c048fe3a19.lovable.app-1782683033235.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/72e57e30-45ad-42d7-bf26-667360ca0ba1/id-preview-1bd45104--1f5f9a7e-f63a-490d-8ae6-c9c048fe3a19.lovable.app-1782683033235.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -108,10 +101,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@graph": [
             {
               "@type": "Organization",
-              "@id": "https://travelslinkuk.lovable.app/#organization",
+              "@id": "https://travellinks.uk/#organization",
               name: "Travel Links Solution",
-              url: "https://travelslinkuk.lovable.app",
-              logo: "https://travelslinkuk.lovable.app/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
+              url: "https://travellinks.uk",
+              logo: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
               email: "info@travellinks.uk",
               telephone: "+44-787-946-5341",
               address: {
@@ -124,10 +117,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             },
             {
               "@type": "WebSite",
-              "@id": "https://travelslinkuk.lovable.app/#website",
-              url: "https://travelslinkuk.lovable.app",
+              "@id": "https://travellinks.uk/#website",
+              url: "https://travellinks.uk",
               name: "Travel Links Solution",
-              publisher: { "@id": "https://travelslinkuk.lovable.app/#organization" },
+              publisher: { "@id": "https://travellinks.uk/#organization" },
             },
           ],
         }),
