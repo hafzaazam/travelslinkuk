@@ -46,7 +46,7 @@ export function CTABanner() {
                   aria-hidden
                   className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-primary/15 blur-md opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-[400%]"
                 />
-                <span className="relative">Apply Now</span>
+                <span className="relative">Consult Now</span>
                 <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
               <a

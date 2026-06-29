@@ -113,7 +113,7 @@ function CountryPage() {
                       aria-hidden
                       className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/30 blur-md opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-[400%]"
                     />
-                    <span className="relative">Apply for {country.name} visa</span>
+                    <span className="relative">Consult for {country.name} visa</span>
                     <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                   <a
