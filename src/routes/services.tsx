@@ -10,7 +10,7 @@ import { CTABanner } from "@/components/site/CTABanner";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/Section";
 import {
-  CheckCircle2,
+  
   ArrowRight,
   FileCheck2,
   Clock,
@@ -221,11 +221,8 @@ function ServicesPage() {
               <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 shadow-card">
                 <ul className="grid sm:grid-cols-2 gap-3">
                   {INCLUDED.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm">
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gradient-brand text-white shadow-soft">
-                        <CheckCircle2 className="h-3.5 w-3.5" />
-                      </span>
-                      <span className="leading-relaxed">{item}</span>
+                    <li key={item} className="text-sm leading-relaxed">
+                      {item}
                     </li>
                   ))}
                 </ul>
