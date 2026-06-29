@@ -279,6 +279,61 @@ function CountryPage() {
           </div>
         </section>
 
+        {/* Pros & Cons */}
+        <section className="py-20 px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-2xl">
+              <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                At a glance
+              </span>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl font-bold leading-tight">
+                {country.name} visa — pros & cons
+              </h2>
+              <p className="mt-4 text-muted-foreground">
+                A balanced view of what to expect when applying for and using a {country.name} visa.
+              </p>
+            </div>
+            <div className="mt-10 grid lg:grid-cols-2 gap-6">
+              <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+                    <ThumbsUp className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display text-lg font-semibold">Pros</h3>
+                </div>
+                <ul className="mt-5 space-y-3">
+                  {country.pros.map((p: string, i: number) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-600">
+                        <Check className="h-3 w-3" strokeWidth={3} />
+                      </span>
+                      <span className="text-sm text-foreground leading-relaxed">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-rose-500/10 text-rose-600">
+                    <ThumbsDown className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-display text-lg font-semibold">Things to consider</h3>
+                </div>
+                <ul className="mt-5 space-y-3">
+                  {country.cons.map((c: string, i: number) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-rose-500/15 text-rose-600">
+                        <X className="h-3 w-3" strokeWidth={3} />
+                      </span>
+                      <span className="text-sm text-foreground leading-relaxed">{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Other destinations */}
         <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
