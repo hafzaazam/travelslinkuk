@@ -41,31 +41,49 @@ export const suggestBestCountry = createServerFn({ method: "POST" })
       data.visaType !== "all" ? ` for a ${data.visaType}` : ""
     }:\n\n${summary}\n\nWrite a concise, friendly recommendation (max ~140 words). Pick ONE best overall match and explain why in 2–3 short sentences, then add a single line "Also consider:" mentioning the runner-up and what kind of traveller it suits. Use plain prose, no markdown headings, no bullet lists.`;
 
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: "You are a helpful, concise UK visa consultant." },
-          { role: "user", content: prompt },
-        ],
-      }),
-    });
+    // Free-tier model fallback chain — try cheap/fast OpenAI first,
+    // then Google Gemini free models. Lovable AI Gateway does not host Llama.
+    const models = [
+      "openai/gpt-5-nano",
+      "openai/gpt-5-mini",
+      "google/gemini-2.5-flash-lite",
+      "google/gemini-2.5-flash",
+      "google/gemini-3-flash-preview",
+    ];
 
-    if (!res.ok) {
+    let lastErr = "";
+    for (const model of models) {
+      const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: "system", content: "You are a helpful, concise UK visa consultant." },
+            { role: "user", content: prompt },
+          ],
+        }),
+      });
+
+      if (res.ok) {
+        const json = (await res.json()) as {
+          choices?: Array<{ message?: { content?: string } }>;
+        };
+        const suggestion =
+          json.choices?.[0]?.message?.content?.trim() ?? "No suggestion returned.";
+        return { suggestion, model };
+      }
+
       const body = await res.text();
-      if (res.status === 429) throw new Error("AI is rate-limited. Please try again in a moment.");
-      if (res.status === 402) throw new Error("AI credits exhausted. Please add credits to continue.");
-      throw new Error(`AI request failed (${res.status}): ${body.slice(0, 200)}`);
+      lastErr = `${model} → ${res.status}: ${body.slice(0, 160)}`;
+      // Only fall through on rate-limit / credit / model-availability errors.
+      if (res.status !== 429 && res.status !== 402 && res.status !== 404) {
+        throw new Error(`AI request failed (${res.status}): ${body.slice(0, 200)}`);
+      }
     }
 
-    const json = (await res.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
-    };
-    const suggestion = json.choices?.[0]?.message?.content?.trim() ?? "No suggestion returned.";
-    return { suggestion };
+    throw new Error(`All free AI models unavailable. Last error: ${lastErr}`);
   });
