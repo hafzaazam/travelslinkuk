@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SplashScreen } from "@/components/site/SplashScreen";
+import { ApplyDialog } from "@/components/site/ApplyDialog";
 
 
 function NotFoundComponent() {
