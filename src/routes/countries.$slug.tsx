@@ -5,6 +5,7 @@ import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
 import { CurrencyRate } from "@/components/site/CurrencyRate";
+import { Eyebrow } from "@/components/site/Eyebrow";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
 import travelSuitcase from "@/assets/travel-suitcase.png.asset.json";
 
