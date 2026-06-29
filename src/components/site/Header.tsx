@@ -23,7 +23,10 @@ export function Header() {
   const [active, setActive] = useState<string>("#home");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
-  const hrefFor = (hash: string) => (isHome ? hash : `/${hash}`);
+  const hrefFor = (href: string) => {
+    if (href.startsWith("/")) return href;
+    return isHome ? href : `/${href}`;
+  };
 
   useEffect(() => {
     const onScroll = () => {
