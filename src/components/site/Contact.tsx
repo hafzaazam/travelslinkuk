@@ -1,10 +1,80 @@
 import { useEffect, useRef, useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle, Cookie } from "lucide-react";
 import { z } from "zod";
 import { SectionHeading } from "./Section";
 import { toast } from "sonner";
 import { useForm } from "@formspree/react";
 import { supabase } from "@/integrations/supabase/client";
+import { openCookiePreferences } from "./CookieConsent";
+
+const CONSENT_KEY = "tls-cookie-consent-v1";
+
+function useFunctionalConsent() {
+  const [allowed, setAllowed] = useState(false);
+  useEffect(() => {
+    const read = () => {
+      try {
+        const raw = localStorage.getItem(CONSENT_KEY);
+        if (!raw) return setAllowed(false);
+        const parsed = JSON.parse(raw) as { categories?: { functional?: boolean } };
+        setAllowed(Boolean(parsed?.categories?.functional));
+      } catch {
+        setAllowed(false);
+      }
+    };
+    read();
+    const onChange = () => read();
+    window.addEventListener("cookieconsent:change", onChange);
+    window.addEventListener("storage", onChange);
+    return () => {
+      window.removeEventListener("cookieconsent:change", onChange);
+      window.removeEventListener("storage", onChange);
+    };
+  }, []);
+  return allowed;
+}
+
+function MapEmbed() {
+  const allowed = useFunctionalConsent();
+  if (allowed) {
+    return (
+      <iframe
+        title="Office location"
+        src="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE&output=embed"
+        className="h-full w-full"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+    );
+  }
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-secondary/50 px-6 py-8 text-center">
+      <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-brand text-white">
+        <Cookie className="h-5 w-5" aria-hidden="true" />
+      </span>
+      <p className="max-w-sm text-sm text-muted-foreground">
+        The embedded Google map is blocked until you allow <span className="font-semibold text-foreground">Functional cookies</span>. Google may set cookies and read your IP when the map loads.
+      </p>
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={openCookiePreferences}
+          className="inline-flex items-center justify-center rounded-xl bg-gradient-brand px-4 py-2 text-xs font-bold text-white shadow-sog hover:-translate-y-0.5 transition shadow-glow"
+        >
+          Manage cookies
+        </button>
+        <a
+          href="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-4 py-2 text-xs font-semibold text-foreground hover:bg-accent"
+        >
+          Open in Google Maps
+        </a>
+      </div>
+    </div>
+  );
+}
 
 const schema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(100),
@@ -96,13 +166,7 @@ export function Contact() {
           {/* Map + info */}
           <div className="space-y-6">
             <div className="overflow-hidden rounded-3xl shadow-card border border-border h-80">
-              <iframe
-                title="Office location"
-                src="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE&output=embed"
-                className="h-full w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              <MapEmbed />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
