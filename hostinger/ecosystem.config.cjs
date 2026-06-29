@@ -1,6 +1,6 @@
 // PM2 process file for Hostinger VPS deployment
 // Usage on the server:
-//   pm2 start deploy/ecosystem.config.cjs
+//   pm2 start hostinger/ecosystem.config.cjs
 //   pm2 save
 //   pm2 startup        # one-time, follow the printed command to enable boot start
 //

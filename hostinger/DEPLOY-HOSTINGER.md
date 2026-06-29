@@ -22,10 +22,10 @@ On your local machine, in this project's root:
 
 ```bash
 # 1. Fill in real values (especially VITE_SUPABASE_*) in a local .env
-cp deploy/.env.example .env
+cp hostinger/.env.example .env
 
 # 2. Build for Node (overrides Lovable's default Cloudflare target)
-bash deploy/build-vps.sh
+bash hostinger/build-vps.sh
 ```
 
 This produces `travelslink-vps.tar.gz` (~5–20 MB) containing the Node server bundle (`.output/`) and the deploy configs.
@@ -77,7 +77,7 @@ tar -xzf travelslink-vps.tar.gz
 rm travelslink-vps.tar.gz
 
 # Production environment
-cp deploy/.env.example .env
+cp hostinger/.env.example .env
 nano .env       # fill in the real SUPABASE_* and VITE_SUPABASE_* values, save
 chmod 600 .env
 ```
@@ -88,7 +88,7 @@ chmod 600 .env
 
 ```bash
 cd /var/www/travelslink
-pm2 start deploy/ecosystem.config.cjs
+pm2 start hostinger/ecosystem.config.cjs
 pm2 save
 pm2 startup systemd       # copy & run the command it prints (one-time)
 ```
@@ -106,8 +106,8 @@ curl -I http://127.0.0.1:3000
 
 ```bash
 # Drop in the reverse-proxy config (edit the server_name to your domain first)
-nano /var/www/travelslink/deploy/nginx.conf.example
-cp /var/www/travelslink/deploy/nginx.conf.example /etc/nginx/sites-available/travelslink
+nano /var/www/travelslink/hostinger/nginx.conf.example
+cp /var/www/travelslink/hostinger/nginx.conf.example /etc/nginx/sites-available/travelslink
 ln -s /etc/nginx/sites-available/travelslink /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 nginx -t && systemctl reload nginx
@@ -137,7 +137,7 @@ Every time you change the code in Lovable:
 
 ```bash
 # Local: rebuild & ship
-bash deploy/build-vps.sh
+bash hostinger/build-vps.sh
 scp travelslink-vps.tar.gz root@YOUR_VPS_IP:/var/www/travelslink/
 
 # Server: unpack & reload (zero-downtime)

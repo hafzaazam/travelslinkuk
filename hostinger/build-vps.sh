@@ -18,7 +18,7 @@ node -v
 
 if [ ! -f .env ]; then
   echo "ERROR: .env not found in project root."
-  echo "       Copy deploy/.env.example to .env and fill in the VITE_SUPABASE_* values first."
+  echo "       Copy hostinger/.env.example to .env and fill in the VITE_SUPABASE_* values first."
   exit 1
 fi
 
@@ -64,11 +64,11 @@ echo "==> Packaging .output/ + deploy configs"
 rm -f travelslink-vps.tar.gz
 tar -czf travelslink-vps.tar.gz \
   .output \
-  deploy/ecosystem.config.cjs \
-  deploy/.env.example \
-  deploy/nginx.conf.example \
-  deploy/DEPLOY-HOSTINGER.md
+  hostinger/ecosystem.config.cjs \
+  hostinger/.env.example \
+  hostinger/nginx.conf.example \
+  hostinger/DEPLOY-HOSTINGER.md
 
 echo ""
 echo "Done. Created: travelslink-vps.tar.gz ($(du -sh travelslink-vps.tar.gz | cut -f1))"
-echo "Upload it to your VPS and follow deploy/DEPLOY-HOSTINGER.md"
+echo "Upload it to your VPS and follow hostinger/DEPLOY-HOSTINGER.md"
