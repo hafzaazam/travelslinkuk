@@ -4,6 +4,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BackToTop } from "@/components/site/BackToTop";
 import { CountryChecklist } from "@/components/site/CountryChecklist";
+import { CurrencyRate } from "@/components/site/CurrencyRate";
 import { COUNTRIES, getCountryBySlug } from "@/data/countries";
 
 export const Route = createFileRoute("/countries/$slug")({
@@ -173,6 +174,7 @@ function CountryPage() {
             </div>
             <div className="rounded-3xl bg-white border border-border p-7 shadow-card">
               <p className="text-base text-foreground/90 leading-relaxed">{country.about}</p>
+              <CurrencyRate currency={country.currency} />
             </div>
           </div>
         </section>
