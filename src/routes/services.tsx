@@ -37,7 +37,7 @@ const SERVICES_FAQS = [
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Visa Services — Tourist, Business, Family & Study Visas | Travel Links Solution" },
+      { title: "UK Visa Services — Tourist, Business & Family | Travel Links" },
       { name: "description", content: "End-to-end UK visa consultancy: tourist, business, family, study, settlement and refusal-appeal services for 25+ countries with a 98% approval rate." },
       { name: "keywords", content: "visa services UK, tourist visa, business visa, family visa, study visa, settlement visa, visa refusal appeal, UK visa consultant" },
       { property: "og:title", content: "Visa Services — Travel Links Solution" },
