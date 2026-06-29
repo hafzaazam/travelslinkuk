@@ -81,6 +81,11 @@ const COST_TIER_STYLE: Record<CostTier, string> = {
 function ComparePage() {
   const [visaFilter, setVisaFilter] = useState<string>("all");
   const [selected, setSelected] = useState<string[]>(["germany", "france", "italy"]);
+  const [aiSuggestion, setAiSuggestion] = useState<string>("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string>("");
+  const runSuggest = useServerFn(suggestBestCountry);
+
 
   const visaTypeOptions = useMemo(() => {
     const set = new Set<string>();
