@@ -32,14 +32,39 @@ export const Route = createFileRoute("/compare")({
 const MAX_SLOTS = 3;
 
 function ComparePage() {
+  const [visaFilter, setVisaFilter] = useState<string>("all");
   const [selected, setSelected] = useState<string[]>(["germany", "france", "italy"]);
+
+  const visaTypeOptions = useMemo(() => {
+    const set = new Set<string>();
+    COUNTRIES.forEach((c) => c.visas.forEach((v) => set.add(v.type)));
+    return Array.from(set).sort();
+  }, []);
+
+  const eligibleCountries = useMemo(
+    () =>
+      visaFilter === "all"
+        ? COUNTRIES
+        : COUNTRIES.filter((c) => c.visas.some((v) => v.type === visaFilter)),
+    [visaFilter]
+  );
+
+  const effectiveSelected = useMemo(
+    () =>
+      visaFilter === "all"
+        ? selected
+        : selected.filter((slug) =>
+            COUNTRIES.find((c) => c.slug === slug)?.visas.some((v) => v.type === visaFilter)
+          ),
+    [selected, visaFilter]
+  );
 
   const countries = useMemo(
     () =>
-      selected
+      effectiveSelected
         .map((slug) => COUNTRIES.find((c) => c.slug === slug))
         .filter((c): c is Country => !!c),
-    [selected]
+    [effectiveSelected]
   );
 
   const toggle = (slug: string) => {
@@ -51,10 +76,11 @@ function ComparePage() {
   };
 
   const allVisaTypes = useMemo(() => {
+    if (visaFilter !== "all") return [visaFilter];
     const set = new Set<string>();
     countries.forEach((c) => c.visas.forEach((v) => set.add(v.type)));
     return Array.from(set);
-  }, [countries]);
+  }, [countries, visaFilter]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,21 +104,69 @@ function ComparePage() {
         {/* Picker */}
         <section className="py-12 px-5 lg:px-8 bg-gradient-soft">
           <div className="mx-auto max-w-7xl">
-            <div className="flex items-end justify-between gap-4 flex-wrap">
+            {/* Visa type filter */}
+            <div className="rounded-2xl border border-border bg-white/70 backdrop-blur p-5 shadow-soft">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <Eyebrow label="Step 1 — Choose visa" />
+                  <h2 className="mt-2 font-display text-xl sm:text-2xl font-bold">
+                    Which visa are you comparing?
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Pick a visa type to filter destinations and update the table automatically.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 sm:justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setVisaFilter("all")}
+                    className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all ${
+                      visaFilter === "all"
+                        ? "bg-gradient-brand text-white border-transparent shadow-soft"
+                        : "bg-white border-border text-foreground/80 hover:border-primary/40"
+                    }`}
+                  >
+                    All visas
+                  </button>
+                  {visaTypeOptions.map((type) => (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => setVisaFilter(type)}
+                      className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all ${
+                        visaFilter === type
+                          ? "bg-gradient-brand text-white border-transparent shadow-soft"
+                          : "bg-white border-border text-foreground/80 hover:border-primary/40"
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex items-end justify-between gap-4 flex-wrap">
               <div>
-                <Eyebrow label="Pick destinations" />
+                <Eyebrow label="Step 2 — Pick destinations" />
                 <h2 className="mt-3 font-display text-2xl sm:text-3xl font-bold">
                   Select up to {MAX_SLOTS} countries
                 </h2>
+                {visaFilter !== "all" && (
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Showing {eligibleCountries.length} destinations offering{" "}
+                    <span className="font-semibold text-foreground">{visaFilter}</span>.
+                  </p>
+                )}
               </div>
               <div className="text-sm text-muted-foreground">
-                {selected.length} / {MAX_SLOTS} selected
+                {effectiveSelected.length} / {MAX_SLOTS} selected
               </div>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {COUNTRIES.map((c) => {
-                const isOn = selected.includes(c.slug);
+              {eligibleCountries.map((c) => {
+                const isOn = effectiveSelected.includes(c.slug);
                 return (
                   <button
                     key={c.slug}
@@ -115,9 +189,15 @@ function ComparePage() {
                   </button>
                 );
               })}
+              {eligibleCountries.length === 0 && (
+                <p className="text-sm text-muted-foreground">
+                  No destinations currently list this visa type.
+                </p>
+              )}
             </div>
           </div>
         </section>
+
 
         {/* Comparison table */}
         <section className="py-16 px-5 lg:px-8">
