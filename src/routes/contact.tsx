@@ -20,12 +20,55 @@ import {
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Travel Links Solution" },
-      { name: "description", content: "Speak with a senior UK visa consultant. Office in Northampton — call, email or send an enquiry." },
-      { property: "og:title", content: "Contact — Travel Links Solution" },
-      { property: "og:description", content: "Reach the Travel Links Solution team for a free 20-minute visa consultation." },
+      { title: "Contact Us — Travel Links Solution | UK Visa Consultancy in Northampton" },
+      { name: "description", content: "Contact Travel Links Solution for a free visa consultation. Call +44 787 946 5341, WhatsApp, email info@travellinks.uk or visit our Northampton office." },
+      { name: "keywords", content: "contact visa consultant UK, Northampton visa office, free visa consultation, visa enquiry, Travel Links Solution contact" },
+      { property: "og:title", content: "Contact Us — Travel Links Solution" },
+      { property: "og:description", content: "Reach the Travel Links Solution team for a free 20-minute visa consultation — call, WhatsApp, email or visit our Northampton office." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://travelslinkuk.lovable.app/contact" },
+      { property: "og:site_name", content: "Travel Links Solution" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Contact Us — Travel Links Solution" },
+      { name: "twitter:description", content: "Free 20-minute visa consultation with a senior UK consultant. Reply within 24 hours." },
     ],
     links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/contact" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: "Contact Travel Links Solution",
+          url: "https://travelslinkuk.lovable.app/contact",
+          mainEntity: {
+            "@type": "Organization",
+            name: "Travel Links Solution",
+            url: "https://travelslinkuk.lovable.app",
+            telephone: "+44 787 946 5341",
+            email: "info@travellinks.uk",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "138 Milton Street",
+              addressLocality: "Northampton",
+              postalCode: "NN2 7DE",
+              addressCountry: "GB",
+            },
+            contactPoint: [{
+              "@type": "ContactPoint",
+              telephone: "+44 787 946 5341",
+              contactType: "customer service",
+              areaServed: "Worldwide",
+              availableLanguage: ["English"],
+            }],
+            openingHoursSpecification: [
+              { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "09:00", closes: "19:00" },
+              { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "17:00" },
+            ],
+          },
+        }),
+      },
+    ],
   }),
   component: ContactPage,
 });
