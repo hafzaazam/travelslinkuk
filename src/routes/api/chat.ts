@@ -67,32 +67,50 @@ const MODELS = [
   "google/gemini-3-flash-preview",
 ];
 
+const ALLOWED_ORIGINS = [
+  "https://travelslinkuk.lovable.app",
+  "https://travellinks.uk",
+  "https://www.travellinks.uk",
+];
+
+function corsHeaders(request: Request): Record<string, string> {
+  const origin = request.headers.get("origin") ?? "";
+  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allow,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "content-type",
+    "Vary": "Origin",
+  };
+}
+
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
+      OPTIONS: async ({ request }) => new Response(null, { status: 204, headers: corsHeaders(request) }),
       POST: async ({ request }) => {
+        const cors = corsHeaders(request);
         const key = process.env.LOVABLE_API_KEY;
-        if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+        if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500, headers: cors });
 
         let raw: unknown;
         try {
           raw = await request.json();
         } catch {
-          return new Response("Invalid JSON", { status: 400 });
+          return new Response("Invalid JSON", { status: 400, headers: cors });
         }
         const parsed = bodySchema.safeParse(raw);
         if (!parsed.success) {
-          return new Response(parsed.error.issues[0]?.message ?? "Invalid body", { status: 400 });
+          return new Response(parsed.error.issues[0]?.message ?? "Invalid body", { status: 400, headers: cors });
         }
         const messages = parsed.data.messages as UIMessage[];
 
-        // Cap per-message text length to prevent abuse / runaway cost
         const totalChars = messages.reduce((sum, m) => {
           const parts = (m as { parts?: Array<{ type: string; text?: string }> }).parts ?? [];
           return sum + parts.reduce((s, p) => s + (p.type === "text" ? (p.text ?? "").length : 0), 0);
         }, 0);
         if (totalChars > MAX_TEXT_CHARS * MAX_MESSAGES) {
-          return new Response("Conversation too long", { status: 413 });
+          return new Response("Conversation too long", { status: 413, headers: cors });
         }
 
         const gateway = createLovableAiGatewayProvider(key);
@@ -106,15 +124,14 @@ export const Route = createFileRoute("/api/chat")({
               system: SYSTEM_PROMPT,
               messages: modelMessages,
             });
-            return result.toUIMessageStreamResponse({ originalMessages: messages });
+            return result.toUIMessageStreamResponse({ originalMessages: messages, headers: cors });
           } catch (err) {
             lastErr = err;
-            // try next model
           }
         }
 
         console.error("All AI models failed", lastErr);
-        return new Response("AI service unavailable", { status: 502 });
+        return new Response("AI service unavailable", { status: 502, headers: cors });
       },
     },
   },
