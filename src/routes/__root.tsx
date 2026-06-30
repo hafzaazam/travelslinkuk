@@ -108,6 +108,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@type": ["Organization", "TravelAgency", "LocalBusiness"],
               "@id": "https://travellinks.uk/#organization",
               name: "Travel Links Solution",
+              alternateName: ["Travel Links", "Travellinks", "Travellinks Solution", "Travel Links UK", "Travellinks UK", "Travel Links Consultancy", "Travel Links UK Visa"],
               url: "https://travellinks.uk",
               logo: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
               image: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
