@@ -24,11 +24,15 @@ function formatValue(n: number, target: number) {
 }
 
 function Counter({ to, suffix }: { to: number; suffix: string }) {
-  const [n, setN] = useState(0);
+  // Initialise with the FINAL value so SSR / crawlers see real numbers,
+  // not "0+" / "0.0K+". On client mount we reset to 0 and animate up
+  // once the element enters the viewport.
+  const [n, setN] = useState(to);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
   useEffect(() => {
     if (!ref.current) return;
+    setN(0);
     const io = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && !started.current) {
         started.current = true;
@@ -39,6 +43,7 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
           const eased = 1 - Math.pow(1 - p, 3);
           setN(Math.floor(eased * to));
           if (p < 1) requestAnimationFrame(tick);
+          else setN(to);
         };
         requestAnimationFrame(tick);
       }

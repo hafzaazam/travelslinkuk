@@ -128,6 +128,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
                 ratingValue: "4.9",
                 reviewCount: "320",
               },
+              sameAs: [
+                "https://www.facebook.com/travellinksuk",
+                "https://www.instagram.com/travellinksuk",
+                "https://www.linkedin.com/company/travel-links-solution",
+                "https://twitter.com/travellinksuk",
+                "https://www.youtube.com/@travellinksuk",
+                "https://uk.trustpilot.com/review/travellinks.uk",
+                "https://www.yell.com/biz/travel-links-solution-northampton",
+                "https://www.bing.com/maps?q=Travel+Links+Solution+Northampton",
+                "https://g.page/travel-links-solution-northampton",
+              ],
             },
             {
               "@type": "WebSite",
