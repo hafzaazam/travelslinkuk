@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DVpe7PXp.js";var t=e();function n({label:e}){return(0,t.jsx)(`span`,{className:`inline-flex items-center px-1 py-1`,children:(0,t.jsx)(`span`,{className:`text-[11px] font-black uppercase tracking-[0.3em] leading-none bg-gradient-brand bg-clip-text text-transparent`,children:e})})}export{n as t};
