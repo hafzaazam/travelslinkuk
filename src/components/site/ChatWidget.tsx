@@ -40,7 +40,9 @@ export function ChatWidget() {
   const { messages, sendMessage, status, error, setMessages } = useChat({
     id: "travel-links-consultant",
     messages: initialMessages,
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    transport: new DefaultChatTransport({
+      api: import.meta.env.VITE_CHAT_API_URL || "/api/chat",
+    }),
   });
 
   const isLoading = status === "submitted" || status === "streaming";
