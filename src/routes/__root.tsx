@@ -83,8 +83,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:locale", content: "en_GB" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@travellinksuk" },
-      { name: "google-site-verification", content: "yLSIOyjrsKv5GcTpyqe3cbK37JDHHdYiSQAvtsKZFgY" },
       { name: "google-site-verification", content: "K0dQ87TuPor7iozdaUVqcpUvexmsiIujw_zsS4ozfAc" },
+      { name: "google-site-verification", content: "yLSIOyjrsKv5GcTpyqe3cbK37JDHHdYiSQAvtsKZFgY" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
