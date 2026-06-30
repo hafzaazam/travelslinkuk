@@ -187,6 +187,9 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        {/* Second Google Search Console verification — TanStack head merges meta by `name`,
+            so emit the extra verification tag here as raw HTML so both render. */}
+        <meta name="google-site-verification" content="K0dQ87TuPor7iozdaUVqcpUvexmsiIujw_zsS4ozfAc" />
       </head>
       <body>
         {children}
