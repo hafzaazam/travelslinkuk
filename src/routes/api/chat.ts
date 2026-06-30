@@ -97,21 +97,20 @@ export const Route = createFileRoute("/api/chat")({
         try {
           raw = await request.json();
         } catch {
-          return new Response("Invalid JSON", { status: 400 });
+          return new Response("Invalid JSON", { status: 400, headers: cors });
         }
         const parsed = bodySchema.safeParse(raw);
         if (!parsed.success) {
-          return new Response(parsed.error.issues[0]?.message ?? "Invalid body", { status: 400 });
+          return new Response(parsed.error.issues[0]?.message ?? "Invalid body", { status: 400, headers: cors });
         }
         const messages = parsed.data.messages as UIMessage[];
 
-        // Cap per-message text length to prevent abuse / runaway cost
         const totalChars = messages.reduce((sum, m) => {
           const parts = (m as { parts?: Array<{ type: string; text?: string }> }).parts ?? [];
           return sum + parts.reduce((s, p) => s + (p.type === "text" ? (p.text ?? "").length : 0), 0);
         }, 0);
         if (totalChars > MAX_TEXT_CHARS * MAX_MESSAGES) {
-          return new Response("Conversation too long", { status: 413 });
+          return new Response("Conversation too long", { status: 413, headers: cors });
         }
 
         const gateway = createLovableAiGatewayProvider(key);
@@ -125,15 +124,14 @@ export const Route = createFileRoute("/api/chat")({
               system: SYSTEM_PROMPT,
               messages: modelMessages,
             });
-            return result.toUIMessageStreamResponse({ originalMessages: messages });
+            return result.toUIMessageStreamResponse({ originalMessages: messages, headers: cors });
           } catch (err) {
             lastErr = err;
-            // try next model
           }
         }
 
         console.error("All AI models failed", lastErr);
-        return new Response("AI service unavailable", { status: 502 });
+        return new Response("AI service unavailable", { status: 502, headers: cors });
       },
     },
   },
