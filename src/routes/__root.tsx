@@ -149,7 +149,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@id": "https://travellinks.uk/#website",
               url: "https://travellinks.uk",
               name: "Travel Links Solution",
+              alternateName: ["Travel Links", "Travellinks", "Travel Links UK", "Travellinks UK"],
               publisher: { "@id": "https://travellinks.uk/#organization" },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://travellinks.uk/?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
             },
           ],
         }),
