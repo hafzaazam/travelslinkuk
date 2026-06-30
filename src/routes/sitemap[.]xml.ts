@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { COUNTRIES } from "@/data/countries";
 
-const BASE_URL = "https://travelslinkuk.lovable.app";
+const BASE_URL = "https://travellinks.uk";
 
 interface SitemapEntry {
   path: string;
