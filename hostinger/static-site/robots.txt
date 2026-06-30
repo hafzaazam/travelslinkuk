@@ -1,0 +1,42 @@
+# robots.txt — Travel Links Solution (UK Visa Consultancy)
+# https://travellinks.uk
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /auth
+Disallow: /auth/
+Disallow: /api/
+Disallow: /_authenticated/
+
+# Major search engines — explicit allow
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /auth
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /auth
+Disallow: /api/
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Block aggressive AI crawlers (optional — comment out to allow)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Host directive
+Host: https://travellinks.uk
+
+Sitemap: https://travellinks.uk/sitemap.xml
