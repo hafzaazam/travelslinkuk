@@ -123,6 +123,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
                 postalCode: "NN2 7DE",
                 addressCountry: "GB",
               },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 52.2405,
+                longitude: -0.9027,
+              },
+              hasMap: "https://www.google.com/maps?q=Travel+Links+Solution+Northampton",
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+44-787-946-5341",
+                  email: "info@travellinks.uk",
+                  contactType: "customer service",
+                  areaServed: "GB",
+                  availableLanguage: ["English"],
+                },
+              ],
               openingHoursSpecification: [
                 { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "09:00", closes: "19:00" },
                 { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "17:00" },
@@ -130,6 +146,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.9",
+                bestRating: "5",
+                worstRating: "1",
                 reviewCount: "320",
               },
               sameAs: [
@@ -150,12 +168,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               url: "https://travellinks.uk",
               name: "Travel Links Solution",
               alternateName: ["Travel Links", "Travellinks", "Travel Links UK", "Travellinks UK"],
+              inLanguage: "en-GB",
               publisher: { "@id": "https://travellinks.uk/#organization" },
-              potentialAction: {
-                "@type": "SearchAction",
-                target: "https://travellinks.uk/?q={search_term_string}",
-                "query-input": "required name=search_term_string",
-              },
             },
           ],
         }),
