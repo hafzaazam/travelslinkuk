@@ -25,10 +25,15 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "UK Visa Consultancy in Northampton | Travel Links Solution" },
-      { name: "description", content: "Trusted UK visa consultancy in Northampton. Tourist, family, business & student visa help for 25+ countries — fast, transparent, embassy-ready." },
+      { name: "description", content: "Trusted UK visa consultancy in Northampton. Tourist, family, business & student visa help for 25+ countries — fast, transparent, embassy-ready with a 98% approval rate." },
+      { name: "keywords", content: "UK visa consultant, visa consultancy Northampton, Travel Links Solution, tourist visa UK, business visa UK, family visa UK, student visa UK, Schengen visa UK, USA visa from UK, Canada visa UK, Australia visa UK, visa refusal appeal, visa application help UK" },
       { property: "og:title", content: "UK Visa Consultancy in Northampton | Travel Links Solution" },
       { property: "og:description", content: "Trusted UK visa consultancy. Tourist, family, business & student visa help for 25+ countries — fast, transparent, embassy-ready." },
       { property: "og:url", content: "https://travellinks.uk/" },
+      { property: "og:image", content: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png" },
+      { name: "twitter:title", content: "UK Visa Consultancy in Northampton | Travel Links Solution" },
+      { name: "twitter:description", content: "Tourist, family, business & student visa help for 25+ countries — 98% approval rate." },
+      { name: "twitter:image", content: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png" },
     ],
     links: [
       { rel: "canonical", href: "https://travellinks.uk/" },
