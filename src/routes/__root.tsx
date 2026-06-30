@@ -139,6 +139,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
                 "https://www.bing.com/maps?q=Travel+Links+Solution+Northampton",
                 "https://g.page/travel-links-solution-northampton",
               ],
+            },
             {
               "@type": "WebSite",
               "@id": "https://travellinks.uk/#website",
