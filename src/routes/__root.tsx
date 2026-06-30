@@ -83,8 +83,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:locale", content: "en_GB" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@travellinksuk" },
-      { name: "google-site-verification", content: "yLSIOyjrsKv5GcTpyqe3cbK37JDHHdYiSQAvtsKZFgY" },
       { name: "google-site-verification", content: "K0dQ87TuPor7iozdaUVqcpUvexmsiIujw_zsS4ozfAc" },
+      { name: "google-site-verification", content: "yLSIOyjrsKv5GcTpyqe3cbK37JDHHdYiSQAvtsKZFgY" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -187,6 +187,9 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        {/* Second Google Search Console verification — TanStack head merges meta by `name`,
+            so emit the extra verification tag here as raw HTML so both render. */}
+        <meta name="google-site-verification" content="K0dQ87TuPor7iozdaUVqcpUvexmsiIujw_zsS4ozfAc" />
       </head>
       <body>
         {children}
