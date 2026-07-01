@@ -1,7 +1,8 @@
-import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2, ArrowRight, ArrowDown } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { SectionHeading } from "./Section";
+
 
 const STEPS = [
   { icon: MessageSquare, title: "Free Consultation", text: "Tell us your goal and we'll outline your options." },
