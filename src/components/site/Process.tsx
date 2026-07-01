@@ -1,7 +1,8 @@
-import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2, ArrowRight, ArrowDown } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { SectionHeading } from "./Section";
+
 
 const STEPS = [
   { icon: MessageSquare, title: "Free Consultation", text: "Tell us your goal and we'll outline your options." },
@@ -132,7 +133,49 @@ export function Process() {
               transition={{ type: "spring", stiffness: 120, damping: 22 }}
               className="absolute left-0 top-10 hidden lg:block h-0.5 bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua"
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+            {/* Mobile / tablet: 2-per-row flow with arrows */}
+            <div className="lg:hidden">
+              {Array.from({ length: Math.ceil(STEPS.length / 2) }).map((_, rowIdx) => {
+                const a = rowIdx * 2;
+                const b = a + 1;
+                const isLastRow = b >= STEPS.length - 1;
+                return (
+                  <Fragment key={`row-${rowIdx}`}>
+                    <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3 sm:gap-6">
+                      <StepCard
+                        step={STEPS[a]}
+                        index={a}
+                        active={a === activeIndex}
+                        passed={a < activeIndex}
+                        onHover={() => setActiveIndex(a)}
+                      />
+                      <div className="pt-6 sm:pt-7 text-muted-foreground">
+                        <ArrowRight className={`h-5 w-5 sm:h-6 sm:w-6 transition-colors ${activeIndex >= b ? "text-primary" : ""}`} />
+                      </div>
+                      {STEPS[b] ? (
+                        <StepCard
+                          step={STEPS[b]}
+                          index={b}
+                          active={b === activeIndex}
+                          passed={b < activeIndex}
+                          onHover={() => setActiveIndex(b)}
+                        />
+                      ) : (
+                        <div />
+                      )}
+                    </div>
+                    {!isLastRow && STEPS[b + 1] && (
+                      <div className="flex justify-center py-4">
+                        <ArrowDown className={`h-5 w-5 sm:h-6 sm:w-6 transition-colors ${activeIndex >= b + 1 ? "text-primary" : "text-muted-foreground"}`} />
+                      </div>
+                    )}
+                  </Fragment>
+                );
+              })}
+            </div>
+
+            {/* Desktop: single row */}
+            <div className="hidden lg:grid grid-cols-6 gap-6">
               {STEPS.map((s, i) => (
                 <StepCard
                   key={s.title}
@@ -144,6 +187,7 @@ export function Process() {
                 />
               ))}
             </div>
+
 
             <div className="mt-12 flex items-center justify-center gap-2">
               {STEPS.map((_, i) => (
