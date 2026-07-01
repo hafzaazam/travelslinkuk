@@ -48,16 +48,16 @@ export function Countries() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[var(--surface-soft)] to-transparent z-10" />
 
         <div className="group/marquee overflow-hidden">
-          <div className="flex gap-5 w-max marquee-track px-6 lg:px-12 pb-6">
+          <div className="flex gap-4 sm:gap-5 w-max marquee-track px-4 sm:px-6 lg:px-12 pb-6">
             {[...COUNTRIES, ...COUNTRIES].map(([name, code, types], i) => (
               <Link
                 key={`${name}-${i}`}
                 to="/countries/$slug"
                 params={{ slug: toSlug(name) }}
                 aria-label={`${name} visa services`}
-                className="group relative shrink-0 w-[260px] overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow transition-all hover:-translate-y-1"
+                className="group relative shrink-0 w-[calc((100vw-2.5rem)/2)] sm:w-[220px] lg:w-[260px] max-w-[260px] overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow transition-all hover:-translate-y-1"
               >
-                <div className="relative h-32 overflow-hidden">
+                <div className="relative h-24 sm:h-32 overflow-hidden">
                   <BlurImage
                     src={`https://flagcdn.com/w640/${code}.png`}
                     srcSet={`https://flagcdn.com/w640/${code}.png 1x, https://flagcdn.com/w1280/${code}.png 2x`}
