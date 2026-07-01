@@ -39,10 +39,10 @@ export function Destinations() {
             title={<>Where will your <span className="text-gradient-brand">next journey</span> begin?</>}
           />
         </Reveal>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" style={{ perspective: "1200px" }}>
+        <div className="mt-10 sm:mt-14 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5" style={{ perspective: "1200px" }}>
           {DEST.map((d, idx) => {
             const className =
-              "group relative block h-72 overflow-hidden rounded-3xl shadow-card hover:shadow-glow transition-shadow tilt-3d will-change-transform";
+              "group relative block h-40 sm:h-64 lg:h-72 overflow-hidden rounded-2xl sm:rounded-3xl shadow-card hover:shadow-glow transition-shadow tilt-3d will-change-transform";
             const inner = (
               <>
                 <BlurImage
@@ -52,9 +52,9 @@ export function Destinations() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/90 via-brand-deep/30 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-white" style={{ transform: "translateZ(40px)" }}>
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-aqua">{d.tag}</span>
-                  <h3 className="mt-1 font-display text-2xl font-bold">{d.name}</h3>
+                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-6 text-white" style={{ transform: "translateZ(40px)" }}>
+                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em] text-brand-aqua">{d.tag}</span>
+                  <h3 className="mt-0.5 sm:mt-1 font-display text-base sm:text-2xl font-bold">{d.name}</h3>
                 </div>
               </>
             );
