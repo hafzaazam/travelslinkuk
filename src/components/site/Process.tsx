@@ -1,6 +1,6 @@
 import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2 } from "lucide-react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "motion/react";
-import { useRef, useState } from "react";
+import { motion } from "motion/react";
+import { useState } from "react";
 import { SectionHeading } from "./Section";
 
 const STEPS = [
@@ -17,22 +17,27 @@ function StepCard({
   index,
   active,
   passed,
+  onHover,
 }: {
   step: typeof STEPS[number];
   index: number;
   active: boolean;
   passed: boolean;
+  onHover: () => void;
 }) {
   const Icon = step.icon;
   return (
     <motion.div
+      onMouseEnter={onHover}
+      onFocus={onHover}
+      tabIndex={0}
       animate={{
-        scale: active ? 1.15 : passed ? 1 : 0.92,
-        opacity: active ? 1 : passed ? 0.85 : 0.45,
+        scale: active ? 1.15 : passed ? 1 : 0.94,
+        opacity: active ? 1 : passed ? 0.9 : 0.6,
         y: active ? -8 : 0,
       }}
       transition={{ type: "spring", stiffness: 180, damping: 20 }}
-      className="relative text-center"
+      className="relative text-center cursor-pointer outline-none"
     >
       <motion.div
         animate={{
@@ -82,38 +87,12 @@ function StepCard({
 }
 
 export function Process() {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ["start start", "end end"],
-  });
-
-  const lineWidth = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [`${100 / (STEPS.length * 2)}%`, "100%"]
-  );
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(STEPS.length - 1, Math.max(0, Math.floor(v * STEPS.length)));
-    setActiveIndex(idx);
-  });
+  const progress = STEPS.length > 1 ? activeIndex / (STEPS.length - 1) : 0;
 
   return (
-    <section id="process" ref={scrollRef} className="relative process-snap" style={{ height: `${STEPS.length * 90}vh` }}>
-      {/* Snap sentinels — each one viewport tall, drives proximity snapping */}
-      {STEPS.map((s, i) => (
-        <div
-          key={`snap-${s.title}`}
-          aria-hidden
-          className="process-snap-stop absolute left-0 right-0 h-screen pointer-events-none"
-          style={{ top: `${i * 90}vh` }}
-        />
-      ))}
-      {/* Sticky stage — pins while user scrolls through the step track */}
-      <div className="sticky top-0 h-screen flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft overflow-hidden">
+    <section id="process" className="relative">
+      <div className="relative flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft overflow-hidden py-24">
         {/* dot pattern */}
         <div
           aria-hidden
@@ -143,11 +122,14 @@ export function Process() {
             </span>
           </div>
 
-
-          <div className="mt-16 relative">
+          <div
+            className="mt-16 relative"
+            onMouseLeave={() => setActiveIndex(0)}
+          >
             <div className="absolute left-0 right-0 top-10 hidden lg:block h-0.5 bg-border" />
             <motion.div
-              style={{ width: lineWidth }}
+              animate={{ width: `${progress * 100}%` }}
+              transition={{ type: "spring", stiffness: 120, damping: 22 }}
               className="absolute left-0 top-10 hidden lg:block h-0.5 bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua"
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
@@ -158,6 +140,7 @@ export function Process() {
                   index={i}
                   active={i === activeIndex}
                   passed={i < activeIndex}
+                  onHover={() => setActiveIndex(i)}
                 />
               ))}
             </div>
@@ -170,11 +153,11 @@ export function Process() {
                     width: i === activeIndex ? 32 : 8,
                     backgroundColor: i <= activeIndex ? "var(--brand-deep)" : "var(--border)",
                   }}
-                  className="h-2 rounded-full"
+                  className="h-2 rounded-full cursor-pointer"
+                  onMouseEnter={() => setActiveIndex(i)}
                 />
               ))}
             </div>
-
           </div>
         </div>
       </div>
