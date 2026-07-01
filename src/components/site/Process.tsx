@@ -1,6 +1,7 @@
-import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2, ArrowRight, ArrowDown } from "lucide-react";
+import { MessageSquare, ClipboardList, FileText, Send, Loader2, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
+
 import { SectionHeading } from "./Section";
 
 
