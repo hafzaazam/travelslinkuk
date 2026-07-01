@@ -100,7 +100,7 @@ function Index() {
               <img
                 src={aboutVisa.url}
                 alt="Approved visa document illustration"
-                className="relative w-full max-w-sm h-auto drop-shadow-[0_30px_60px_rgba(33,87,243,0.35)] animate-float"
+                className="relative w-2/3 max-w-[220px] sm:w-full sm:max-w-sm h-auto drop-shadow-[0_30px_60px_rgba(33,87,243,0.35)] animate-float"
                 loading="lazy" decoding="async"
               />
             </Reveal>
