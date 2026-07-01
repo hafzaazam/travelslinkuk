@@ -57,7 +57,7 @@ export function Countries() {
                 aria-label={`${name} visa services`}
                 className="group relative shrink-0 w-[calc((100vw-2.5rem)/2)] sm:w-[220px] lg:w-[260px] max-w-[260px] overflow-hidden rounded-2xl bg-white border border-border shadow-card hover:shadow-glow transition-all hover:-translate-y-1"
               >
-                <div className="relative h-32 overflow-hidden">
+                <div className="relative h-24 sm:h-32 overflow-hidden">
                   <BlurImage
                     src={`https://flagcdn.com/w640/${code}.png`}
                     srcSet={`https://flagcdn.com/w640/${code}.png 1x, https://flagcdn.com/w1280/${code}.png 2x`}
