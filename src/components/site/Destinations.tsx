@@ -39,7 +39,7 @@ export function Destinations() {
             title={<>Where will your <span className="text-gradient-brand">next journey</span> begin?</>}
           />
         </Reveal>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" style={{ perspective: "1200px" }}>
+        <div className="mt-10 sm:mt-14 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5" style={{ perspective: "1200px" }}>
           {DEST.map((d, idx) => {
             const className =
               "group relative block h-72 overflow-hidden rounded-3xl shadow-card hover:shadow-glow transition-shadow tilt-3d will-change-transform";
