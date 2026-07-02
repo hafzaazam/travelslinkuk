@@ -56,7 +56,7 @@ export const Route = createFileRoute("/about")({
               addressCountry: "GB",
             },
             telephone: "+44 787 946 5341",
-            email: "info@travellinks.uk",
+            email: "contact@travellinks.uk",
           },
         }),
       },

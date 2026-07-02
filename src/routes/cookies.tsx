@@ -77,7 +77,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <p>
         Questions about how we use cookies? Email us at{" "}
-        <a className="text-primary hover:underline" href="mailto:info@travellinks.uk">info@travellinks.uk</a>.
+        <a className="text-primary hover:underline" href="mailto:contact@travellinks.uk">contact@travellinks.uk</a>.
       </p>
     ),
   },
