@@ -21,7 +21,7 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — UK Visa Consultancy, Northampton | Travel Links" },
-      { name: "description", content: "Contact Travel Links Solution for a free visa consultation. Call +44 787 946 5341, WhatsApp, email info@travellinks.uk or visit our Northampton office." },
+      { name: "description", content: "Contact Travel Links Solution for a free visa consultation. Call +44 787 946 5341, WhatsApp, email contact@travellinks.uk or visit our Northampton office." },
       { name: "keywords", content: "contact visa consultant UK, Northampton visa office, free visa consultation, visa enquiry, Travel Links Solution contact" },
       { property: "og:title", content: "Contact Us — Travel Links Solution" },
       { property: "og:description", content: "Reach the Travel Links Solution team for a free 20-minute visa consultation — call, WhatsApp, email or visit our Northampton office." },
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/contact")({
             name: "Travel Links Solution",
             url: "https://travellinks.uk",
             telephone: "+44 787 946 5341",
-            email: "info@travellinks.uk",
+            email: "contact@travellinks.uk",
             address: {
               "@type": "PostalAddress",
               streetAddress: "138 Milton Street",
@@ -92,9 +92,9 @@ const QUICK = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@travellinks.uk",
+    value: "contact@travellinks.uk",
     sub: "We reply within 24 hours",
-    href: "mailto:info@travellinks.uk",
+    href: "mailto:contact@travellinks.uk",
   },
   {
     icon: MapPin,

@@ -82,7 +82,7 @@ const SECTIONS: LegalSection[] = [
           <strong>A visa refusal does not entitle you to a refund of our
           consultancy fee</strong>, as our fee covers preparation and submission
           support, not the visa outcome. Refund requests should be sent to
-          {" "}<a className="text-primary hover:underline" href="mailto:info@travellinks.uk">info@travellinks.uk</a>.
+          {" "}<a className="text-primary hover:underline" href="mailto:contact@travellinks.uk">contact@travellinks.uk</a>.
         </p>
       </>
     ),
@@ -159,7 +159,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <p>
         Travel Links Solution · 138 Milton Street, Northampton, NN2 7DE, United
-        Kingdom · <a className="text-primary hover:underline" href="mailto:info@travellinks.uk">info@travellinks.uk</a> · +44 787 946 5341.
+        Kingdom · <a className="text-primary hover:underline" href="mailto:contact@travellinks.uk">contact@travellinks.uk</a> · +44 787 946 5341.
       </p>
     ),
   },

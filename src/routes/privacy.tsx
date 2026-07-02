@@ -19,7 +19,7 @@ const SECTIONS: LegalSection[] = [
         <p>
           We are the "data controller" of the personal information you provide
           to us. If you have any questions about this policy, please contact us
-          at <a className="text-primary hover:underline" href="mailto:info@travellinks.uk">info@travellinks.uk</a>.
+          at <a className="text-primary hover:underline" href="mailto:contact@travellinks.uk">contact@travellinks.uk</a>.
         </p>
       </>
     ),
@@ -110,7 +110,7 @@ const SECTIONS: LegalSection[] = [
           <li>Withdraw consent at any time where we rely on consent.</li>
           <li>Lodge a complaint with the UK Information Commissioner's Office (ICO) at <a className="text-primary hover:underline" href="https://ico.org.uk" target="_blank" rel="noreferrer">ico.org.uk</a>.</li>
         </ul>
-        <p>To exercise any of these rights, email us at <a className="text-primary hover:underline" href="mailto:info@travellinks.uk">info@travellinks.uk</a>.</p>
+        <p>To exercise any of these rights, email us at <a className="text-primary hover:underline" href="mailto:contact@travellinks.uk">contact@travellinks.uk</a>.</p>
       </>
     ),
   },
@@ -143,7 +143,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <p>
         Travel Links Solution · 138 Milton Street, Northampton, NN2 7DE, United
-        Kingdom · <a className="text-primary hover:underline" href="mailto:info@travellinks.uk">info@travellinks.uk</a> · +44 787 946 5341.
+        Kingdom · <a className="text-primary hover:underline" href="mailto:contact@travellinks.uk">contact@travellinks.uk</a> · +44 787 946 5341.
       </p>
     ),
   },

@@ -112,7 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               url: "https://travellinks.uk",
               logo: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
               image: "https://travellinks.uk/__l5e/assets-v1/86d58950-39c0-4ea4-b8dd-f0dbead6bc05/travel-links-logo.png",
-              email: "info@travellinks.uk",
+              email: "contact@travellinks.uk",
               telephone: "+44-787-946-5341",
               priceRange: "££",
               areaServed: "Worldwide",
@@ -133,7 +133,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
                 {
                   "@type": "ContactPoint",
                   telephone: "+44-787-946-5341",
-                  email: "info@travellinks.uk",
+                  email: "contact@travellinks.uk",
                   contactType: "customer service",
                   areaServed: "GB",
                   availableLanguage: ["English"],

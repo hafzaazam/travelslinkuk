@@ -180,9 +180,9 @@ export function Contact() {
                 {
                   icon: Mail,
                   label: "Email",
-                  value: "info@travellinks.uk",
+                  value: "contact@travellinks.uk",
                   href:
-                    "mailto:info@travellinks.uk" +
+                    "mailto:contact@travellinks.uk" +
                     "?subject=" +
                     encodeURIComponent("Visa enquiry — Travel Links Solution") +
                     "&body=" +
