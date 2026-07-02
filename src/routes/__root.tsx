@@ -13,7 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SplashScreen } from "@/components/site/SplashScreen";
 import { ApplyDialog } from "@/components/site/ApplyDialog";
-import { ChatWidget } from "@/components/site/ChatWidget";
+
 import { NotFound } from "@/components/site/NotFound";
 import { CookieConsent } from "@/components/site/CookieConsent";
 
@@ -208,7 +208,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <ApplyDialog />
-      <ChatWidget />
+      
       <CookieConsent />
     </QueryClientProvider>
   );
