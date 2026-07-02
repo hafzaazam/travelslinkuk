@@ -106,6 +106,9 @@
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 @utility shadow-glow { box-shadow: var(--shadow-glow); }
 @utility shadow-card { box-shadow: var(--shadow-card); }
+@utility bg-whatsapp {
+  background: linear-gradient(135deg, var(--whatsapp) 0%, var(--whatsapp-dark) 100%);
+}
 @utility glass {
   background: color-mix(in oklab, white 70%, transparent);
   backdrop-filter: blur(16px) saturate(160%);
