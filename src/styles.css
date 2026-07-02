@@ -49,6 +49,10 @@
   --brand-aqua: oklch(0.85 0.13 175);   /* #34E5C5 */
   --surface-soft: oklch(0.98 0.012 245);/* #F5F9FF */
 
+  /* WhatsApp */
+  --whatsapp: #25D366;
+  --whatsapp-dark: #128C7E;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.18 0.04 260);
   --card: oklch(1 0 0);
