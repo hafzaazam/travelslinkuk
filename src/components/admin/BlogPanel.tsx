@@ -22,11 +22,19 @@ type BlogPost = {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  meta_title: string | null;
+  meta_description: string | null;
+  meta_keywords: string | null;
+  og_image: string | null;
+  canonical_url: string | null;
+  noindex: boolean;
 };
 
 const emptyForm = (): Partial<BlogPost> => ({
   slug: "", title: "", excerpt: "", content: "", cover_image: "",
   author: "Travel Links Solution", tags: [], published: false, published_at: null,
+  meta_title: "", meta_description: "", meta_keywords: "",
+  og_image: "", canonical_url: "", noindex: false,
 });
 
 function slugify(s: string) {
