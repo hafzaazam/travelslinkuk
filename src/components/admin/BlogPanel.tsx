@@ -7,6 +7,7 @@ import {
   Bold, Italic, Heading1, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon,
   List, ListOrdered, Quote, Code, Minus, Lock, Unlock, Clock, Copy, Upload, Loader2,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const SIGNED_URL_TTL = 60 * 60 * 24 * 365 * 10; // 10 years
 
@@ -25,7 +26,6 @@ async function uploadBlogImage(file: File): Promise<string> {
   if (error || !data?.signedUrl) throw error ?? new Error("Failed to create signed URL");
   return data.signedUrl;
 }
-import { supabase } from "@/integrations/supabase/client";
 
 type BlogPost = {
   id: string;
