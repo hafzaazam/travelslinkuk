@@ -575,11 +575,29 @@ function PostEditor({
               <ToolBtn onClick={() => {
                 const url = prompt("Link URL"); if (url) insertMd("[", `](${url})`, "link text");
               }} title="Link (Ctrl+K)"><LinkIcon className="h-4 w-4" /></ToolBtn>
+              <ToolBtn
+                onClick={() => inlineInputRef.current?.click()}
+                title="Upload image"
+                disabled={uploadingInline}
+              >
+                {uploadingInline ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
+              </ToolBtn>
               <ToolBtn onClick={() => {
                 const url = prompt("Image URL"); if (!url) return;
                 const alt = prompt("Alt text (optional)") ?? "";
                 insertBlock(`![${alt}](${url})`);
-              }} title="Image"><ImageIcon className="h-4 w-4" /></ToolBtn>
+              }} title="Insert image by URL"><LinkIcon className="h-4 w-4 opacity-60" /></ToolBtn>
+              <input
+                ref={inlineInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  handleInlineUpload(f);
+                  e.currentTarget.value = "";
+                }}
+              />
               <Divider />
               <ToolBtn onClick={() => insertMd("- ", "", "item")} title="Bullet list"><List className="h-4 w-4" /></ToolBtn>
               <ToolBtn onClick={() => insertMd("1. ", "", "item")} title="Numbered list"><ListOrdered className="h-4 w-4" /></ToolBtn>
