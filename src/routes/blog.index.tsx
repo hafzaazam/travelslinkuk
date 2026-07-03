@@ -252,7 +252,7 @@ function BlogIndex() {
                 <Link
                   to="/blog/$slug"
                   params={{ slug: featured.slug }}
-                  className="md:col-span-8 md:row-span-2 group cursor-pointer relative overflow-hidden bg-[#0c2340] min-h-[420px] md:min-h-[560px]"
+                  className="md:col-span-8 md:row-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-primary min-h-[420px] md:min-h-[560px] shadow-lg"
                 >
                   <div className="absolute inset-0 z-0">
                     {featured.cover_image ? (
@@ -263,22 +263,19 @@ function BlogIndex() {
                         className="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#1a4a6e] to-[#0c2340]" />
+                      <div className="w-full h-full bg-gradient-to-br from-primary/80 to-primary" />
                     )}
                   </div>
-                  <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-12 text-white bg-gradient-to-t from-[#0c2340] via-[#0c2340]/40 to-transparent">
-                    <span className="text-[10px] uppercase tracking-widest mb-4 inline-block px-2 py-1 bg-teal-600 w-fit">
+                  <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-12 text-primary-foreground bg-gradient-to-t from-primary via-primary/50 to-transparent">
+                    <span className="text-[10px] uppercase tracking-widest font-semibold mb-4 inline-block px-2.5 py-1 rounded-full bg-primary-foreground text-primary w-fit">
                       Featured Article
                     </span>
-                    <h2
-                      className="text-3xl md:text-5xl lg:text-6xl leading-[0.95] mb-6 max-w-2xl"
-                      style={{ fontFamily: "'Instrument Serif', 'Cormorant Garamond', Georgia, serif" }}
-                    >
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6 max-w-2xl">
                       {featured.title}
                     </h2>
-                    <div className="flex items-center gap-4 text-xs font-light opacity-80">
+                    <div className="flex items-center gap-3 text-xs opacity-85">
                       {featured.author && <span>By {featured.author}</span>}
-                      {featured.author && <span className="w-1 h-1 bg-teal-500 rounded-full" />}
+                      {featured.author && <span className="w-1 h-1 bg-primary-foreground/60 rounded-full" />}
                       <span>{formatDate(featured.published_at ?? featured.created_at)}</span>
                     </div>
                   </div>
@@ -290,21 +287,18 @@ function BlogIndex() {
                 <Link
                   to="/blog/$slug"
                   params={{ slug: secondary[0].slug }}
-                  className="md:col-span-4 md:row-span-1 border border-[#0c2340]/10 p-8 flex flex-col justify-between hover:bg-white hover:shadow-xl transition-all group"
+                  className="md:col-span-4 md:row-span-1 rounded-2xl border border-border bg-card p-8 flex flex-col justify-between hover:shadow-lg hover:border-primary/30 transition-all group"
                 >
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest text-[#0c2340]/40 mb-4 block">
+                    <span className="text-[10px] uppercase tracking-widest font-semibold text-primary mb-4 block">
                       {secondary[0].tags?.[0] ?? "Insight"}
                     </span>
-                    <h3
-                      className="text-2xl leading-tight group-hover:text-teal-600 transition-colors"
-                      style={{ fontFamily: "'Instrument Serif', serif" }}
-                    >
+                    <h3 className="text-xl md:text-2xl font-semibold leading-tight text-foreground group-hover:text-primary transition-colors">
                       {secondary[0].title}
                     </h3>
                   </div>
                   {secondary[0].excerpt && (
-                    <p className="text-sm text-[#0c2340]/60 mt-4 line-clamp-2 font-light">
+                    <p className="text-sm text-muted-foreground mt-4 line-clamp-2">
                       {secondary[0].excerpt}
                     </p>
                   )}
@@ -316,7 +310,7 @@ function BlogIndex() {
                 <Link
                   to="/blog/$slug"
                   params={{ slug: secondary[1].slug }}
-                  className="md:col-span-4 md:row-span-1 border border-[#0c2340]/10 overflow-hidden group relative min-h-[220px]"
+                  className="md:col-span-4 md:row-span-1 rounded-2xl border border-border overflow-hidden group relative min-h-[220px]"
                 >
                   <div className="absolute inset-0">
                     {secondary[1].cover_image ? (
@@ -327,17 +321,14 @@ function BlogIndex() {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-teal-100 to-[#0c2340]/10" />
+                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
                     )}
                   </div>
-                  <div className="relative z-10 p-8 h-full flex flex-col justify-end bg-white/90 backdrop-blur-sm group-hover:bg-[#0c2340]/90 group-hover:text-white transition-all">
-                    <h3
-                      className="text-xl mb-2 italic"
-                      style={{ fontFamily: "'Instrument Serif', serif" }}
-                    >
+                  <div className="relative z-10 p-6 h-full flex flex-col justify-end bg-gradient-to-t from-primary/95 via-primary/70 to-transparent text-primary-foreground">
+                    <h3 className="text-lg md:text-xl font-semibold mb-2 leading-snug">
                       {secondary[1].title}
                     </h3>
-                    <span className="text-[10px] uppercase tracking-widest opacity-60 inline-flex items-center gap-1">
+                    <span className="text-[10px] uppercase tracking-widest font-semibold inline-flex items-center gap-1 opacity-90">
                       Read Article <ArrowRight className="h-3 w-3" />
                     </span>
                   </div>
@@ -346,7 +337,6 @@ function BlogIndex() {
 
               {/* SUPPORTING GRID */}
               {rest.map((p, i) => {
-                // Alternate tile widths: two small (3/12) then one wide (6/12) with image
                 const pattern = i % 3;
                 if (pattern === 2 && p.cover_image) {
                   return (
@@ -354,9 +344,9 @@ function BlogIndex() {
                       key={p.id}
                       to="/blog/$slug"
                       params={{ slug: p.slug }}
-                      className="md:col-span-6 border border-[#0c2340]/10 bg-white p-6 flex items-center gap-6 group hover:shadow-lg transition-shadow"
+                      className="md:col-span-6 rounded-2xl border border-border bg-card p-6 flex items-center gap-6 group hover:shadow-lg hover:border-primary/30 transition-all"
                     >
-                      <div className="w-32 h-32 flex-shrink-0 overflow-hidden">
+                      <div className="w-28 h-28 md:w-32 md:h-32 flex-shrink-0 overflow-hidden rounded-xl">
                         <img
                           src={p.cover_image}
                           alt={p.title}
@@ -365,13 +355,10 @@ function BlogIndex() {
                         />
                       </div>
                       <div className="min-w-0">
-                        <span className="text-[10px] uppercase tracking-widest text-teal-600 mb-2 block">
+                        <span className="text-[10px] uppercase tracking-widest font-semibold text-primary mb-2 block">
                           {p.tags?.[0] ?? "Article"}
                         </span>
-                        <h4
-                          className="text-xl md:text-2xl leading-tight group-hover:text-teal-700 transition-colors"
-                          style={{ fontFamily: "'Instrument Serif', serif" }}
-                        >
+                        <h4 className="text-lg md:text-xl font-semibold leading-tight text-foreground group-hover:text-primary transition-colors">
                           {p.title}
                         </h4>
                       </div>
@@ -383,19 +370,16 @@ function BlogIndex() {
                     key={p.id}
                     to="/blog/$slug"
                     params={{ slug: p.slug }}
-                    className="md:col-span-3 border border-[#0c2340]/10 p-6 flex flex-col justify-between group hover:bg-white hover:shadow-md transition-all min-h-[200px]"
+                    className="md:col-span-3 rounded-2xl border border-border bg-card p-6 flex flex-col justify-between group hover:shadow-md hover:border-primary/30 transition-all min-h-[200px]"
                   >
-                    <h4
-                      className="text-lg leading-snug group-hover:text-teal-700 transition-colors"
-                      style={{ fontFamily: "'Instrument Serif', serif" }}
-                    >
+                    <h4 className="text-base md:text-lg font-semibold leading-snug text-foreground group-hover:text-primary transition-colors">
                       {p.title}
                     </h4>
-                    <div className="mt-8 flex justify-between items-center border-t border-[#0c2340]/10 pt-4">
-                      <span className="text-[10px] uppercase font-bold text-teal-600 truncate max-w-[70%]">
+                    <div className="mt-6 flex justify-between items-center border-t border-border pt-4">
+                      <span className="text-[10px] uppercase font-semibold tracking-widest text-primary truncate max-w-[70%]">
                         {p.tags?.[0] ?? "Article"}
                       </span>
-                      <span className="text-[10px] opacity-40 shrink-0">
+                      <span className="text-[10px] text-muted-foreground shrink-0">
                         {formatDate(p.published_at ?? p.created_at)}
                       </span>
                     </div>
@@ -408,7 +392,7 @@ function BlogIndex() {
             {totalPages > 1 && (
               <nav
                 aria-label="Blog pagination"
-                className="mt-20 flex items-center justify-between border-t border-[#0c2340]/10 pt-10"
+                className="mt-20 flex items-center justify-between border-t border-border pt-10"
               >
                 <div className="flex gap-2">
                   <button
@@ -416,7 +400,7 @@ function BlogIndex() {
                     onClick={() => goToPage(currentPage - 1)}
                     disabled={currentPage === 1}
                     aria-label="Previous page"
-                    className="w-10 h-10 flex items-center justify-center border border-[#0c2340]/10 hover:border-[#0c2340] transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-[#0c2340]/10"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-border hover:border-primary hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -427,10 +411,10 @@ function BlogIndex() {
                       onClick={() => goToPage(n)}
                       aria-label={`Page ${n}`}
                       aria-current={n === currentPage ? "page" : undefined}
-                      className={`w-10 h-10 flex items-center justify-center text-xs font-bold transition-colors ${
+                      className={`w-10 h-10 flex items-center justify-center rounded-full text-xs font-semibold transition-colors ${
                         n === currentPage
-                          ? "bg-[#0c2340] text-white"
-                          : "border border-[#0c2340]/10 hover:bg-[#0c2340]/5"
+                          ? "bg-primary text-primary-foreground"
+                          : "border border-border hover:bg-muted"
                       }`}
                     >
                       {n}
@@ -441,12 +425,12 @@ function BlogIndex() {
                     onClick={() => goToPage(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     aria-label="Next page"
-                    className="w-10 h-10 flex items-center justify-center border border-[#0c2340]/10 hover:border-[#0c2340] transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-[#0c2340]/10"
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-border hover:border-primary hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
-                <span className="text-[10px] uppercase tracking-widest font-bold opacity-40">
+                <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground">
                   Page {currentPage} of {totalPages}
                 </span>
               </nav>
