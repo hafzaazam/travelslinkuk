@@ -18,7 +18,15 @@ type Post = {
   tags: string[];
   published_at: string | null;
   created_at: string;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  meta_keywords?: string | null;
+  og_image?: string | null;
+  canonical_url?: string | null;
+  noindex?: boolean | null;
 };
+
+const SITE = "https://travellinks.uk";
 
 async function fetchPost(slug: string): Promise<Post | null> {
   const { data } = await supabase
@@ -36,7 +44,7 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!post) throw notFound();
     return { post };
   },
-  head: ({ loaderData }) => {
+  head: ({ params, loaderData }) => {
     if (!loaderData) {
       return {
         meta: [
@@ -46,23 +54,61 @@ export const Route = createFileRoute("/blog/$slug")({
       };
     }
     const { post } = loaderData;
+    const title = post.meta_title?.trim() || `${post.title} — Travel Links Solution Blog`;
     const desc =
-      post.excerpt ??
-      (post.content ? post.content.replace(/<[^>]+>/g, "").slice(0, 155) : "");
+      post.meta_description?.trim() ||
+      post.excerpt ||
+      (post.content ? post.content.replace(/[#*_`>[\]()!-]|<[^>]+>/g, "").trim().slice(0, 155) : "");
+    const image = post.og_image?.trim() || post.cover_image || undefined;
+    const url = post.canonical_url?.trim() || `${SITE}/blog/${params.slug}`;
+
     return {
       meta: [
-        { title: `${post.title} — Travel Links Solution Blog` },
+        { title },
         { name: "description", content: desc },
-        { property: "og:title", content: post.title },
+        ...(post.meta_keywords ? [{ name: "keywords", content: post.meta_keywords }] : []),
+        ...(post.noindex ? [{ name: "robots", content: "noindex, nofollow" }] : []),
+        { property: "og:title", content: post.meta_title?.trim() || post.title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
-        ...(post.cover_image
+        { property: "og:url", content: url },
+        { property: "og:site_name", content: "Travel Links Solution" },
+        ...(post.published_at
+          ? [{ property: "article:published_time", content: post.published_at }]
+          : []),
+        ...(post.author ? [{ property: "article:author", content: post.author }] : []),
+        ...(post.tags ?? []).map((t) => ({ property: "article:tag", content: t })),
+        ...(image
           ? [
-              { property: "og:image", content: post.cover_image },
-              { name: "twitter:image", content: post.cover_image },
+              { property: "og:image", content: image },
+              { name: "twitter:image", content: image },
             ]
           : []),
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: post.meta_title?.trim() || post.title },
+        { name: "twitter:description", content: desc },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: desc,
+            image: image ? [image] : undefined,
+            datePublished: post.published_at ?? undefined,
+            author: post.author ? { "@type": "Person", name: post.author } : undefined,
+            publisher: {
+              "@type": "Organization",
+              name: "Travel Links Solution",
+              logo: { "@type": "ImageObject", url: `${SITE}/favicon.ico` },
+            },
+            mainEntityOfPage: { "@type": "WebPage", "@id": url },
+            keywords: post.meta_keywords || (post.tags ?? []).join(", ") || undefined,
+          }),
+        },
       ],
     };
   },
