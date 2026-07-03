@@ -966,7 +966,7 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
 
 
           {/* Live preview */}
-          <div className="overflow-y-auto bg-slate-100 p-6">
+          <div className="overflow-y-auto bg-slate-100 p-6 order-2">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Live preview</span>
               <span className="text-[10px] text-muted-foreground">Updates as you type</span>
