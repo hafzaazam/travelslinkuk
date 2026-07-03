@@ -169,19 +169,33 @@ function AboutPage() {
                   <div aria-hidden className="absolute -top-4 -left-4 h-24 w-24 rounded-2xl border-2 border-primary/40" />
                   <div aria-hidden className="absolute -bottom-4 -right-4 h-24 w-24 rounded-2xl bg-gradient-brand opacity-20" />
                   <div className="relative overflow-hidden rounded-[2rem] border border-border bg-white shadow-card">
-                    <img
-                      src={ceoPortrait}
-                      alt="Dua Asif, CEO and Founder of Travel Links Solution"
-                      width={896}
-                      height={1088}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-5">
-                      <div className="text-white">
-                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/80">Chief Executive Officer</div>
-                        <div className="mt-1 font-display text-2xl font-bold">Dua Asif</div>
+                    <div className="relative aspect-[4/5] bg-gradient-brand p-8 flex flex-col justify-between text-white">
+                      <div aria-hidden className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:22px_22px]" />
+                      <div aria-hidden className="absolute -top-16 -right-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
+                      <div aria-hidden className="absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+
+                      <div className="relative flex items-center justify-between">
+                        <span className="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Founder & CEO</span>
+                        <ShieldCheck className="h-5 w-5 text-white/80" aria-hidden />
+                      </div>
+
+                      <div className="relative flex flex-1 items-center justify-center">
+                        <div className="relative">
+                          <div aria-hidden className="absolute inset-0 rounded-full bg-white/10 blur-2xl" />
+                          <div className="relative grid h-40 w-40 sm:h-48 sm:w-48 place-items-center rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-sm shadow-glow">
+                            <span className="font-display text-6xl sm:text-7xl font-bold tracking-tight">DA</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="relative">
+                        <div className="font-display text-3xl font-bold leading-tight">Dua Asif</div>
+                        <div className="mt-1 text-sm text-white/80">Travel Links Solution</div>
+                        <div className="mt-4 h-px w-full bg-white/20" />
+                        <div className="mt-3 flex items-center gap-2 text-xs font-medium text-white/80">
+                          <Compass className="h-3.5 w-3.5" aria-hidden />
+                          <span>Northampton, United Kingdom</span>
+                        </div>
                       </div>
                     </div>
                   </div>
