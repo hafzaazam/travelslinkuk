@@ -31,9 +31,42 @@ export const DEFAULT_BOOKING_SETTINGS: BookingSettings = {
 };
 
 let cache: BookingSettings | null = null;
+const listeners = new Set<(v: BookingSettings) => void>();
+
+function setCache(next: BookingSettings) {
+  cache = next;
+  listeners.forEach((fn) => fn(next));
+}
 
 export function invalidateBookingSettingsCache() {
   cache = null;
+}
+
+async function fetchSettings() {
+  const { data: row } = await supabase
+    .from("booking_settings" as never)
+    .select("*")
+    .limit(1)
+    .maybeSingle();
+  const merged = { ...DEFAULT_BOOKING_SETTINGS, ...(row as object | null ?? {}) } as BookingSettings;
+  setCache(merged);
+  return merged;
+}
+
+let realtimeStarted = false;
+function ensureRealtime() {
+  if (realtimeStarted) return;
+  realtimeStarted = true;
+  supabase
+    .channel("booking_settings-changes")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "booking_settings" },
+      () => {
+        fetchSettings();
+      },
+    )
+    .subscribe();
 }
 
 export function useBookingSettings() {
@@ -42,20 +75,21 @@ export function useBookingSettings() {
 
   useEffect(() => {
     let alive = true;
+    const listener = (next: BookingSettings) => {
+      if (alive) setData(next);
+    };
+    listeners.add(listener);
+    ensureRealtime();
+
     (async () => {
-      const { data: row } = await supabase
-        .from("booking_settings" as never)
-        .select("*")
-        .limit(1)
-        .maybeSingle();
-      if (!alive) return;
-      const merged = { ...DEFAULT_BOOKING_SETTINGS, ...(row as object | null ?? {}) } as BookingSettings;
-      cache = merged;
-      setData(merged);
-      setLoading(false);
+      // Always refetch on mount so freshly-toggled values propagate.
+      await fetchSettings();
+      if (alive) setLoading(false);
     })();
+
     return () => {
       alive = false;
+      listeners.delete(listener);
     };
   }, []);
 
