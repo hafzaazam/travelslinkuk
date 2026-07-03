@@ -642,16 +642,51 @@ function PostEditor({
                   </button>
                 </div>
               ) : (
-                <div className="aspect-[16/9] w-full rounded-lg border border-dashed border-border grid place-items-center text-muted-foreground">
-                  <ImageIcon className="h-6 w-6" />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => coverInputRef.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => { e.preventDefault(); handleCoverUpload(e.dataTransfer.files?.[0]); }}
+                  className="aspect-[16/9] w-full rounded-lg border border-dashed border-border grid place-items-center text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition"
+                >
+                  {uploadingCover ? (
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  ) : (
+                    <div className="flex flex-col items-center gap-1 text-xs font-semibold">
+                      <Upload className="h-5 w-5" />
+                      Click or drop image
+                    </div>
+                  )}
+                </button>
               )}
               <input
-                value={form.cover_image ?? ""}
-                onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
-                placeholder="https://images.unsplash.com/…"
-                className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-1.5 text-xs"
+                ref={coverInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  handleCoverUpload(f);
+                  e.currentTarget.value = "";
+                }}
               />
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => coverInputRef.current?.click()}
+                  disabled={uploadingCover}
+                  className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2.5 py-1.5 text-[11px] font-semibold hover:bg-secondary disabled:opacity-60"
+                >
+                  {uploadingCover ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
+                  {form.cover_image ? "Replace" : "Upload"}
+                </button>
+                <input
+                  value={form.cover_image ?? ""}
+                  onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
+                  placeholder="…or paste URL"
+                  className="flex-1 min-w-0 rounded-lg border border-border bg-white px-2 py-1.5 text-[11px]"
+                />
+              </div>
             </Section>
 
             <Section title="Excerpt" hint={`${excerptLen}/160`}>
