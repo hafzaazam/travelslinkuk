@@ -58,7 +58,7 @@ function BlogIndex() {
       <Header />
       <main className="mx-auto max-w-6xl px-5 pt-28 pb-16 lg:px-8 lg:pt-32">
         <div className="mx-auto max-w-2xl text-center">
-          <Eyebrow>The Journal</Eyebrow>
+          <Eyebrow label="The Journal" />
           <h1 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
             Visa tips, destination guides, and travel stories
           </h1>
