@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, FileText } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, Calendar, FileText, Search, X } from "lucide-react";
+
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
