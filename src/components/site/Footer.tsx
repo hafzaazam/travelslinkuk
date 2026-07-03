@@ -147,9 +147,12 @@ export function Footer() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <p className="max-w-2xl">
               Travel Links Solution is a UK-registered visa consultancy based in Northampton. We provide
-              advisory and documentation support; for OISC-regulated immigration advice we work with
-              registered partners. Find us across the web:
+              advisory and documentation support; for regulated immigration advice we work with{" "}
+              <a href="https://www.gov.uk/find-an-immigration-adviser" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">OISC-registered partners</a>.
+              Official guidance: <a href="https://www.gov.uk/browse/visas-immigration" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">GOV.UK Visas & Immigration</a>.
+              Find us across the web:
             </p>
+
             <ul className="flex flex-wrap gap-x-4 gap-y-2 font-medium">
               <li><a href="https://g.page/travel-links-solution-northampton" target="_blank" rel="noopener noreferrer" className="hover:text-white">Google Business</a></li>
               <li><a href="https://uk.trustpilot.com/review/travellinks.uk" target="_blank" rel="noopener noreferrer" className="hover:text-white">Trustpilot</a></li>

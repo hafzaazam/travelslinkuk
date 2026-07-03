@@ -91,9 +91,9 @@ export const Route = createFileRoute("/cookies")({
       { property: "og:title", content: "Cookie Policy — Travel Links Solution" },
       { property: "og:description", content: "Details of the cookies set by travellinks.uk and how to control them." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/cookies" },
+      { property: "og:url", content: "https://travellinks.uk/cookies" },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/cookies" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/cookies" }],
   }),
   component: CookiesPage,
 });
