@@ -120,6 +120,7 @@ function AdminPage() {
             {([
               ["dashboard", LayoutDashboard, "Dashboard"],
               ["bookings", Calendar, "Bookings"],
+              ["blog", FileText, "Blog"],
               ["contacts", MessageSquare, "Contacts"],
               ["reviews", Star, "Reviews"],
               ["subscribers", Users, "Subscribers"],
