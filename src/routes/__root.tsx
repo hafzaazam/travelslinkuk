@@ -216,7 +216,9 @@ function RootComponent() {
       <CookieConsent />
       <WhatsAppButton />
       <SitePopup />
+      <ChatWidget />
     </QueryClientProvider>
+
   );
 }
 
