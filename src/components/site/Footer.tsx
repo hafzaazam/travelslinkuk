@@ -4,10 +4,12 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Logo } from "./Logo";
 import { supabase } from "@/integrations/supabase/client";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 const emailSchema = z.string().trim().email("Enter a valid email").max(255);
 
 export function Footer() {
+  const contact = useContactInfo();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
