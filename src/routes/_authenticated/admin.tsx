@@ -692,3 +692,285 @@ function SiteInfoPanel() {
     </div>
   );
 }
+
+/* ----------- Popups ----------- */
+type Popup = {
+  id: string;
+  title: string;
+  body: string | null;
+  image_url: string | null;
+  cta_label: string | null;
+  cta_url: string | null;
+  placement: string;
+  active: boolean;
+  start_at: string | null;
+  end_at: string | null;
+  frequency: string;
+  dismissible: boolean;
+  priority: number;
+  created_at: string;
+};
+
+const EMPTY_POPUP: Omit<Popup, "id" | "created_at"> = {
+  title: "",
+  body: "",
+  image_url: "",
+  cta_label: "",
+  cta_url: "",
+  placement: "center",
+  active: true,
+  start_at: null,
+  end_at: null,
+  frequency: "session",
+  dismissible: true,
+  priority: 0,
+};
+
+function PopupsPanel() {
+  const [items, setItems] = useState<Popup[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<Popup | null>(null);
+  const [creating, setCreating] = useState(false);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("site_popups")
+      .select("*")
+      .order("priority", { ascending: false })
+      .order("created_at", { ascending: false });
+    setLoading(false);
+    if (error) return toast.error("Failed to load popups");
+    setItems((data ?? []) as Popup[]);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const remove = async (id: string) => {
+    if (!confirm("Delete this popup?")) return;
+    const { error } = await supabase.from("site_popups").delete().eq("id", id);
+    if (error) return toast.error("Delete failed");
+    toast.success("Popup deleted");
+    load();
+  };
+
+  const toggleActive = async (p: Popup) => {
+    const { error } = await supabase.from("site_popups").update({ active: !p.active }).eq("id", p.id);
+    if (error) return toast.error("Update failed");
+    load();
+  };
+
+  return (
+    <div>
+      <PanelHeader title="Popups" onRefresh={load} count={items.length}>
+        <button
+          onClick={() => setCreating(true)}
+          className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-brand px-4 py-2 text-xs font-semibold text-white shadow-glow hover:-translate-y-0.5 transition"
+        >
+          <Plus className="h-3.5 w-3.5" /> New popup
+        </button>
+      </PanelHeader>
+
+      {loading ? <SkeletonRows /> : items.length === 0 ? (
+        <EmptyState icon={Megaphone} title="No popups yet" hint="Create one to announce offers, updates, or seasonal messages on your public site." />
+      ) : (
+        <div className="grid gap-3">
+          {items.map((p) => (
+            <div key={p.id} className="rounded-2xl border border-border bg-white p-4 shadow-soft flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${p.active ? "bg-emerald-100 text-emerald-700" : "bg-muted text-muted-foreground"}`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${p.active ? "bg-emerald-500" : "bg-muted-foreground/60"}`} />
+                    {p.active ? "Live" : "Paused"}
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    {p.placement} · {p.frequency}
+                  </span>
+                  {p.priority > 0 && <span className="text-[10px] text-muted-foreground">priority {p.priority}</span>}
+                </div>
+                <h4 className="mt-1 font-display font-semibold text-foreground truncate">{p.title}</h4>
+                {p.body && <p className="text-xs text-muted-foreground line-clamp-2">{p.body}</p>}
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button onClick={() => toggleActive(p)} className="rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold hover:bg-secondary">
+                  {p.active ? "Pause" : "Activate"}
+                </button>
+                <button onClick={() => setEditing(p)} className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold hover:bg-secondary">
+                  <Pencil className="h-3 w-3" /> Edit
+                </button>
+                <button onClick={() => remove(p.id)} aria-label="Delete popup" className="inline-flex items-center rounded-lg border border-destructive/30 bg-white px-2.5 py-1.5 text-destructive hover:bg-destructive/10">
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {(editing || creating) && (
+        <PopupEditor
+          initial={editing ?? undefined}
+          onClose={() => { setEditing(null); setCreating(false); }}
+          onSaved={() => { setEditing(null); setCreating(false); load(); }}
+        />
+      )}
+    </div>
+  );
+}
+
+function toLocalInput(iso: string | null): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  const off = d.getTimezoneOffset();
+  const local = new Date(d.getTime() - off * 60000);
+  return local.toISOString().slice(0, 16);
+}
+function fromLocalInput(v: string): string | null {
+  if (!v) return null;
+  return new Date(v).toISOString();
+}
+
+function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: () => void; onSaved: () => void }) {
+  const [form, setForm] = useState({
+    ...EMPTY_POPUP,
+    ...(initial ?? {}),
+    body: initial?.body ?? "",
+    image_url: initial?.image_url ?? "",
+    cta_label: initial?.cta_label ?? "",
+    cta_url: initial?.cta_url ?? "",
+  });
+  const [saving, setSaving] = useState(false);
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.title.trim()) return toast.error("Title is required");
+    setSaving(true);
+    const payload = {
+      title: form.title.trim(),
+      body: form.body?.trim() || null,
+      image_url: form.image_url?.trim() || null,
+      cta_label: form.cta_label?.trim() || null,
+      cta_url: form.cta_url?.trim() || null,
+      placement: form.placement,
+      active: form.active,
+      start_at: form.start_at,
+      end_at: form.end_at,
+      frequency: form.frequency,
+      dismissible: form.dismissible,
+      priority: Number(form.priority) || 0,
+    };
+    const { error } = initial
+      ? await supabase.from("site_popups").update(payload).eq("id", initial.id)
+      : await supabase.from("site_popups").insert(payload);
+    setSaving(false);
+    if (error) return toast.error(error.message || "Save failed");
+    toast.success(initial ? "Popup updated" : "Popup created");
+    onSaved();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={onClose}>
+      <form
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={save}
+        className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl"
+      >
+        <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
+          <h3 className="font-display text-lg font-bold">{initial ? "Edit popup" : "New popup"}</h3>
+          <button type="button" onClick={onClose} aria-label="Close" className="rounded-lg p-1.5 hover:bg-secondary">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="sm:col-span-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Title *</span>
+            <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+
+          <label className="sm:col-span-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Body</span>
+            <textarea rows={3} value={form.body ?? ""} onChange={(e) => setForm({ ...form, body: e.target.value })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+
+          <label className="sm:col-span-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Image URL</span>
+            <input value={form.image_url ?? ""} onChange={(e) => setForm({ ...form, image_url: e.target.value })}
+              placeholder="https://…" className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">CTA label</span>
+            <input value={form.cta_label ?? ""} onChange={(e) => setForm({ ...form, cta_label: e.target.value })}
+              placeholder="Book a consultation" className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">CTA URL</span>
+            <input value={form.cta_url ?? ""} onChange={(e) => setForm({ ...form, cta_url: e.target.value })}
+              placeholder="/contact" className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Placement</span>
+            <select value={form.placement} onChange={(e) => setForm({ ...form, placement: e.target.value })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30">
+              <option value="center">Center modal</option>
+              <option value="bottom-right">Bottom right</option>
+              <option value="bottom-left">Bottom left</option>
+            </select>
+          </label>
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Frequency</span>
+            <select value={form.frequency} onChange={(e) => setForm({ ...form, frequency: e.target.value })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30">
+              <option value="session">Once per session</option>
+              <option value="once">Once ever (per device)</option>
+              <option value="always">Every visit</option>
+            </select>
+          </label>
+
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Start (optional)</span>
+            <input type="datetime-local" value={toLocalInput(form.start_at)}
+              onChange={(e) => setForm({ ...form, start_at: fromLocalInput(e.target.value) })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">End (optional)</span>
+            <input type="datetime-local" value={toLocalInput(form.end_at)}
+              onChange={(e) => setForm({ ...form, end_at: fromLocalInput(e.target.value) })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+
+          <label>
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Priority</span>
+            <input type="number" value={form.priority} onChange={(e) => setForm({ ...form, priority: Number(e.target.value) })}
+              className="mt-1.5 w-full rounded-xl border border-border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+          </label>
+          <div className="flex items-end gap-4">
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} />
+              <span>Active</span>
+            </label>
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={form.dismissible} onChange={(e) => setForm({ ...form, dismissible: e.target.checked })} />
+              <span>Dismissible</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="mt-6 flex items-center justify-end gap-2 border-t border-border pt-4">
+          <button type="button" onClick={onClose} className="rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold hover:bg-secondary">
+            Cancel
+          </button>
+          <button type="submit" disabled={saving}
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-glow hover:-translate-y-0.5 transition disabled:opacity-60">
+            <Save className="h-4 w-4" /> {saving ? "Saving…" : "Save popup"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
