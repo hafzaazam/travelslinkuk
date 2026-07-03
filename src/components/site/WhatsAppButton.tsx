@@ -1,13 +1,14 @@
 import { MessageCircle } from "lucide-react";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
-const WHATSAPP_NUMBER = "447879465341";
 const WHATSAPP_MESSAGE =
   "Hi Travel Links Solution, I'm interested in a visa consultation. Can you help?";
 
 export function WhatsAppButton() {
+  const { whatsapp_e164 } = useContactInfo();
   return (
     <a
-      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
+      href={`https://wa.me/${whatsapp_e164}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with Travel Links on WhatsApp"
