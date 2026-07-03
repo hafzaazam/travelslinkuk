@@ -72,7 +72,7 @@ function BlogIndex() {
     if (queryInput === q) return;
     const t = setTimeout(() => {
       navigate({
-        search: (prev) => ({ ...prev, q: queryInput, page: 1 }),
+        search: (prev: BlogSearch) => ({ ...prev, q: queryInput, page: 1 }),
         replace: true,
       });
     }, 250);
@@ -121,7 +121,7 @@ function BlogIndex() {
   }, [filtered, currentPage]);
 
   const goToPage = (n: number) => {
-    navigate({ search: (prev) => ({ ...prev, page: n }) });
+    navigate({ search: (prev: BlogSearch) => ({ ...prev, page: n }) });
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -129,14 +129,14 @@ function BlogIndex() {
 
   const setTag = (next: string) => {
     navigate({
-      search: (prev) => ({ ...prev, tag: next, page: 1 }),
+      search: (prev: BlogSearch) => ({ ...prev, tag: next, page: 1 }),
       replace: true,
     });
   };
 
   const clearSearch = () => {
     setQueryInput("");
-    navigate({ search: (prev) => ({ ...prev, q: "", page: 1 }), replace: true });
+    navigate({ search: (prev: BlogSearch) => ({ ...prev, q: "", page: 1 }), replace: true });
   };
 
   const resetAll = () => {
