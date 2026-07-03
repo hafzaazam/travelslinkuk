@@ -14,6 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_settings: {
+        Row: {
+          account_name: string | null
+          account_number: string | null
+          active: boolean
+          bank_name: string | null
+          consultation_fee: number
+          created_at: string
+          currency: string
+          iban: string | null
+          id: string
+          payment_notes: string | null
+          reference_prefix: string | null
+          singleton: boolean
+          sort_code: string | null
+          swift: string | null
+          updated_at: string
+        }
+        Insert: {
+          account_name?: string | null
+          account_number?: string | null
+          active?: boolean
+          bank_name?: string | null
+          consultation_fee?: number
+          created_at?: string
+          currency?: string
+          iban?: string | null
+          id?: string
+          payment_notes?: string | null
+          reference_prefix?: string | null
+          singleton?: boolean
+          sort_code?: string | null
+          swift?: string | null
+          updated_at?: string
+        }
+        Update: {
+          account_name?: string | null
+          account_number?: string | null
+          active?: boolean
+          bank_name?: string | null
+          consultation_fee?: number
+          created_at?: string
+          currency?: string
+          iban?: string | null
+          id?: string
+          payment_notes?: string | null
+          reference_prefix?: string | null
+          singleton?: boolean
+          sort_code?: string | null
+          swift?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          admin_notes: string | null
+          amount: number | null
+          booking_status: string
+          created_at: string
+          currency: string | null
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          payment_method: string
+          payment_status: string
+          phone: string | null
+          preferred_date: string | null
+          preferred_time: string | null
+          service: string | null
+          transaction_date: string | null
+          transaction_reference: string | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount?: number | null
+          booking_status?: string
+          created_at?: string
+          currency?: string | null
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          payment_method?: string
+          payment_status?: string
+          phone?: string | null
+          preferred_date?: string | null
+          preferred_time?: string | null
+          service?: string | null
+          transaction_date?: string | null
+          transaction_reference?: string | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number | null
+          booking_status?: string
+          created_at?: string
+          currency?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          payment_method?: string
+          payment_status?: string
+          phone?: string | null
+          preferred_date?: string | null
+          preferred_time?: string | null
+          service?: string | null
+          transaction_date?: string | null
+          transaction_reference?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_info: {
         Row: {
           address: string
