@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DVpe7PXp.js";import{Q as t}from"./index-COnAiPvx.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as component};

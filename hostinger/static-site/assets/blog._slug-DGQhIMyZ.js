@@ -1,0 +1,1 @@
+import{t as e}from"./blog._slug-B98O4u55.js";export{e as errorComponent};
