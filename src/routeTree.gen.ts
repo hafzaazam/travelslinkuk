@@ -16,6 +16,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -58,6 +59,11 @@ const ContactRoute = ContactRouteImport.update({
 const CompareRoute = CompareRouteImport.update({
   id: '/compare',
   path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/book': typeof BookRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/book': typeof BookRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/book': typeof BookRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/book'
     | '/compare'
     | '/contact'
     | '/cookies'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/book'
     | '/compare'
     | '/contact'
     | '/cookies'
@@ -189,6 +200,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/book'
     | '/compare'
     | '/contact'
     | '/cookies'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  BookRoute: typeof BookRoute
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
@@ -268,6 +281,13 @@ declare module '@tanstack/react-router' {
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -345,6 +365,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  BookRoute: BookRoute,
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
