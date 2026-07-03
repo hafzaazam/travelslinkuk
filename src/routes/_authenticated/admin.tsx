@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Tab = "dashboard" | "contacts" | "reviews" | "subscribers";
+type Tab = "dashboard" | "contacts" | "reviews" | "subscribers" | "site";
 
 type Contact = {
   id: string; name: string; email: string; phone: string | null;
