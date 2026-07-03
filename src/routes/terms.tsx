@@ -173,9 +173,9 @@ export const Route = createFileRoute("/terms")({
       { property: "og:title", content: "Terms & Conditions — Travel Links Solution" },
       { property: "og:description", content: "Read the terms that govern our visa consultancy services and the use of travellinks.uk." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/terms" },
+      { property: "og:url", content: "https://travellinks.uk/terms" },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/terms" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/terms" }],
   }),
   component: TermsPage,
 });

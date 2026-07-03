@@ -157,9 +157,9 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:title", content: "Privacy Policy — Travel Links Solution" },
       { property: "og:description", content: "Our UK GDPR-aligned privacy notice for visa consultancy clients and website visitors." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://travelslinkuk.lovable.app/privacy" },
+      { property: "og:url", content: "https://travellinks.uk/privacy" },
     ],
-    links: [{ rel: "canonical", href: "https://travelslinkuk.lovable.app/privacy" }],
+    links: [{ rel: "canonical", href: "https://travellinks.uk/privacy" }],
   }),
   component: PrivacyPage,
 });
