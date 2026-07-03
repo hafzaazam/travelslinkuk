@@ -120,6 +120,7 @@ function AdminPage() {
               ["contacts", MessageSquare, "Contacts"],
               ["reviews", Star, "Reviews"],
               ["subscribers", Users, "Subscribers"],
+              ["site", MapPin, "Site info"],
             ] as const).map(([key, Icon, label]) => (
               <button
                 key={key}
@@ -142,6 +143,7 @@ function AdminPage() {
         {tab === "contacts" && <ContactsPanel />}
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "subscribers" && <SubscribersPanel />}
+        {tab === "site" && <SiteInfoPanel />}
       </main>
     </div>
   );
