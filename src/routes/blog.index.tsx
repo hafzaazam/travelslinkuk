@@ -41,6 +41,8 @@ type PostRow = {
 
 function BlogIndex() {
   const [posts, setPosts] = useState<PostRow[] | null>(null);
+  const [query, setQuery] = useState("");
+  const [activeTag, setActiveTag] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -53,6 +55,27 @@ function BlogIndex() {
       setPosts((data as PostRow[]) ?? []);
     })();
   }, []);
+
+  const allTags = useMemo(() => {
+    if (!posts) return [];
+    const set = new Set<string>();
+    posts.forEach((p) => p.tags?.forEach((t) => set.add(t)));
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  }, [posts]);
+
+  const filtered = useMemo(() => {
+    if (!posts) return null;
+    const q = query.trim().toLowerCase();
+    return posts.filter((p) => {
+      if (activeTag && !p.tags?.includes(activeTag)) return false;
+      if (!q) return true;
+      return (
+        p.title.toLowerCase().includes(q) ||
+        (p.excerpt ?? "").toLowerCase().includes(q) ||
+        p.tags?.some((t) => t.toLowerCase().includes(q))
+      );
+    });
+  }, [posts, query, activeTag]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -68,7 +91,63 @@ function BlogIndex() {
           </p>
         </div>
 
-        <section className="mt-12">
+        {posts && posts.length > 0 && (
+          <div className="mx-auto mt-10 max-w-3xl">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search articles by title, tag, or keyword…"
+                aria-label="Search articles"
+                className="w-full rounded-full border border-border bg-white py-3 pl-11 pr-11 text-sm shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            {allTags.length > 0 && (
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setActiveTag(null)}
+                  className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                    activeTag === null
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-muted-foreground hover:bg-secondary/70"
+                  }`}
+                >
+                  All
+                </button>
+                {allTags.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setActiveTag(activeTag === t ? null : t)}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                      activeTag === t
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-primary/10 text-primary hover:bg-primary/20"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        <section className="mt-10">
           {posts === null ? (
             <div className="py-16 text-center text-sm text-muted-foreground">Loading articles…</div>
           ) : posts.length === 0 ? (
@@ -79,9 +158,28 @@ function BlogIndex() {
                 We're preparing our first guides — check back soon.
               </p>
             </div>
+          ) : filtered && filtered.length === 0 ? (
+            <div className="mx-auto max-w-md rounded-2xl border border-dashed border-border bg-secondary/40 p-10 text-center">
+              <Search className="mx-auto h-10 w-10 text-muted-foreground/50" />
+              <p className="mt-4 font-semibold">No matching articles</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Try a different keyword or clear the filters.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setActiveTag(null);
+                }}
+                className="mt-4 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition hover:bg-primary/90"
+              >
+                Reset filters
+              </button>
+            </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((p) => (
+              {filtered!.map((p) => (
+
                 <Link
                   key={p.id}
                   to="/blog/$slug"
