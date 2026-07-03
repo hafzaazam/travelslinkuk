@@ -22,6 +22,8 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/contact", changefreq: "monthly", priority: "0.8" },
           { path: "/countries", changefreq: "weekly", priority: "0.9" },
           { path: "/compare", changefreq: "monthly", priority: "0.7" },
+          { path: "/blog", changefreq: "daily", priority: "0.9" },
+          { path: "/book", changefreq: "monthly", priority: "0.7" },
           { path: "/privacy", changefreq: "yearly", priority: "0.3" },
           { path: "/terms", changefreq: "yearly", priority: "0.3" },
           { path: "/cookies", changefreq: "yearly", priority: "0.3" },
@@ -31,6 +33,29 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.7",
           })),
         ];
+
+        try {
+          const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+          const { data } = await supabaseAdmin
+            .from("blog_posts")
+            .select("slug, updated_at, published_at, noindex, published")
+            .eq("published", true)
+            .order("published_at", { ascending: false });
+          if (data) {
+            for (const post of data) {
+              if (post.noindex) continue;
+              entries.push({
+                path: `/blog/${post.slug}`,
+                lastmod: (post.updated_at ?? post.published_at ?? new Date().toISOString()).slice(0, 10),
+                changefreq: "weekly",
+                priority: "0.8",
+              });
+            }
+          }
+        } catch (err) {
+          console.error("[sitemap] failed to load blog posts", err);
+        }
+
 
         const urls = entries.map((e) =>
           [
