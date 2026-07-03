@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Calendar, ChevronLeft, ChevronRight, FileText, Search, X } from "lucide-react";
 
@@ -7,7 +7,21 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Eyebrow } from "@/components/site/Eyebrow";
 
+type BlogSearch = {
+  q: string;
+  tag: string;
+  page: number;
+};
+
 export const Route = createFileRoute("/blog/")({
+  validateSearch: (search: Record<string, unknown>): BlogSearch => {
+    const rawPage = Number(search.page);
+    return {
+      q: typeof search.q === "string" ? search.q : "",
+      tag: typeof search.tag === "string" ? search.tag : "",
+      page: Number.isFinite(rawPage) && rawPage > 0 ? Math.floor(rawPage) : 1,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Blog — Travel Links Solution | Visa Tips & Destination Guides" },
@@ -42,10 +56,28 @@ type PostRow = {
 const PAGE_SIZE = 9;
 
 function BlogIndex() {
+  const { q, tag: activeTag, page } = Route.useSearch();
+  const navigate = useNavigate({ from: "/blog" });
+
   const [posts, setPosts] = useState<PostRow[] | null>(null);
-  const [query, setQuery] = useState("");
-  const [activeTag, setActiveTag] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
+  const [queryInput, setQueryInput] = useState(q);
+
+  // Sync local input when URL changes (e.g. back/forward, external link)
+  useEffect(() => {
+    setQueryInput(q);
+  }, [q]);
+
+  // Debounce input → URL
+  useEffect(() => {
+    if (queryInput === q) return;
+    const t = setTimeout(() => {
+      navigate({
+        search: (prev: BlogSearch) => ({ ...prev, q: queryInput, page: 1 }),
+        replace: true,
+      });
+    }, 250);
+    return () => clearTimeout(t);
+  }, [queryInput, q, navigate]);
 
   useEffect(() => {
     (async () => {
@@ -68,21 +100,17 @@ function BlogIndex() {
 
   const filtered = useMemo(() => {
     if (!posts) return null;
-    const q = query.trim().toLowerCase();
+    const needle = q.trim().toLowerCase();
     return posts.filter((p) => {
       if (activeTag && !p.tags?.includes(activeTag)) return false;
-      if (!q) return true;
+      if (!needle) return true;
       return (
-        p.title.toLowerCase().includes(q) ||
-        (p.excerpt ?? "").toLowerCase().includes(q) ||
-        p.tags?.some((t) => t.toLowerCase().includes(q))
+        p.title.toLowerCase().includes(needle) ||
+        (p.excerpt ?? "").toLowerCase().includes(needle) ||
+        p.tags?.some((t) => t.toLowerCase().includes(needle))
       );
     });
-  }, [posts, query, activeTag]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [query, activeTag]);
+  }, [posts, q, activeTag]);
 
   const totalPages = filtered ? Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)) : 1;
   const currentPage = Math.min(page, totalPages);
@@ -93,12 +121,28 @@ function BlogIndex() {
   }, [filtered, currentPage]);
 
   const goToPage = (n: number) => {
-    setPage(n);
+    navigate({ search: (prev: BlogSearch) => ({ ...prev, page: n }) });
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
+  const setTag = (next: string) => {
+    navigate({
+      search: (prev: BlogSearch) => ({ ...prev, tag: next, page: 1 }),
+      replace: true,
+    });
+  };
+
+  const clearSearch = () => {
+    setQueryInput("");
+    navigate({ search: (prev: BlogSearch) => ({ ...prev, q: "", page: 1 }), replace: true });
+  };
+
+  const resetAll = () => {
+    setQueryInput("");
+    navigate({ search: () => ({ q: "", tag: "", page: 1 }), replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -120,16 +164,16 @@ function BlogIndex() {
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                value={queryInput}
+                onChange={(e) => setQueryInput(e.target.value)}
                 placeholder="Search articles by title, tag, or keyword…"
                 aria-label="Search articles"
                 className="w-full rounded-full border border-border bg-white py-3 pl-11 pr-11 text-sm shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
-              {query && (
+              {queryInput && (
                 <button
                   type="button"
-                  onClick={() => setQuery("")}
+                  onClick={clearSearch}
                   aria-label="Clear search"
                   className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-muted-foreground transition hover:bg-secondary hover:text-foreground"
                 >
@@ -142,9 +186,9 @@ function BlogIndex() {
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setActiveTag(null)}
+                  onClick={() => setTag("")}
                   className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-                    activeTag === null
+                    !activeTag
                       ? "bg-primary text-primary-foreground"
                       : "bg-secondary text-muted-foreground hover:bg-secondary/70"
                   }`}
@@ -155,7 +199,7 @@ function BlogIndex() {
                   <button
                     key={t}
                     type="button"
-                    onClick={() => setActiveTag(activeTag === t ? null : t)}
+                    onClick={() => setTag(activeTag === t ? "" : t)}
                     className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
                       activeTag === t
                         ? "bg-primary text-primary-foreground"
@@ -190,10 +234,7 @@ function BlogIndex() {
               </p>
               <button
                 type="button"
-                onClick={() => {
-                  setQuery("");
-                  setActiveTag(null);
-                }}
+                onClick={resetAll}
                 className="mt-4 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
                 Reset filters
@@ -309,7 +350,6 @@ function BlogIndex() {
               )}
             </>
           )}
-
         </section>
       </main>
       <Footer />
