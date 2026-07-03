@@ -5,12 +5,13 @@ import { SectionHeading } from "./Section";
 import { toast } from "sonner";
 import { useForm } from "@formspree/react";
 import { supabase } from "@/integrations/supabase/client";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
-function MapEmbed() {
+function MapEmbed({ query }: { query: string }) {
   return (
     <iframe
       title="Office location"
-      src="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE&output=embed"
+      src={`https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`}
       className="h-full w-full"
       loading="lazy"
       referrerPolicy="no-referrer-when-downgrade"
