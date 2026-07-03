@@ -11,6 +11,7 @@ import { Services } from "@/components/site/Services";
 import { WhyUs } from "@/components/site/WhyUs";
 import { Process } from "@/components/site/Process";
 import { Destinations } from "@/components/site/Destinations";
+import { BlogPreview } from "@/components/site/BlogPreview";
 import { Testimonials } from "@/components/site/Testimonials";
 import { ReviewForm } from "@/components/site/ReviewForm";
 import { FAQ, FAQS } from "@/components/site/FAQ";
