@@ -44,8 +44,12 @@ export const Route = createFileRoute("/countries/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
+        { property: "og:site_name", content: "Travel Links Solution" },
         ...(canonical ? [{ property: "og:url", content: canonical }] : []),
         ...(ogImage ? [{ property: "og:image", content: ogImage }, { name: "twitter:image", content: ogImage }] : []),
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
       links: canonical ? [{ rel: "canonical", href: canonical }] : [],
       scripts: c
