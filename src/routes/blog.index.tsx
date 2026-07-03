@@ -39,10 +39,13 @@ type PostRow = {
   created_at: string;
 };
 
+const PAGE_SIZE = 9;
+
 function BlogIndex() {
   const [posts, setPosts] = useState<PostRow[] | null>(null);
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     (async () => {
@@ -76,6 +79,26 @@ function BlogIndex() {
       );
     });
   }, [posts, query, activeTag]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [query, activeTag]);
+
+  const totalPages = filtered ? Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)) : 1;
+  const currentPage = Math.min(page, totalPages);
+  const paginated = useMemo(() => {
+    if (!filtered) return null;
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, currentPage]);
+
+  const goToPage = (n: number) => {
+    setPage(n);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-white">
