@@ -163,20 +163,6 @@ export function Process() {
               ))}
             </div>
 
-
-            <div className="mt-12 flex items-center justify-center gap-2">
-              {STEPS.map((_, i) => (
-                <motion.span
-                  key={i}
-                  animate={{
-                    width: i === activeIndex ? 32 : 8,
-                    backgroundColor: i <= activeIndex ? "var(--brand-deep)" : "var(--border)",
-                  }}
-                  className="h-2 rounded-full cursor-pointer"
-                  onMouseEnter={() => setActiveIndex(i)}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>
