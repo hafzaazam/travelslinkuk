@@ -17,6 +17,7 @@ import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as BlogSitemapDotxmlRouteImport } from './routes/blog-sitemap[.]xml'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -66,6 +67,11 @@ const CompareRoute = CompareRouteImport.update({
 const BookRoute = BookRouteImport.update({
   id: '/book',
   path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSitemapDotxmlRoute = BlogSitemapDotxmlRouteImport.update({
+  id: '/blog-sitemap.xml',
+  path: '/blog-sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/blog-sitemap.xml': typeof BlogSitemapDotxmlRoute
   '/book': typeof BookRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/blog-sitemap.xml': typeof BlogSitemapDotxmlRoute
   '/book': typeof BookRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/blog-sitemap.xml': typeof BlogSitemapDotxmlRoute
   '/book': typeof BookRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/blog-sitemap.xml'
     | '/book'
     | '/compare'
     | '/contact'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/blog-sitemap.xml'
     | '/book'
     | '/compare'
     | '/contact'
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/blog-sitemap.xml'
     | '/book'
     | '/compare'
     | '/contact'
@@ -243,6 +255,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  BlogSitemapDotxmlRoute: typeof BlogSitemapDotxmlRoute
   BookRoute: typeof BookRoute
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
@@ -314,6 +327,13 @@ declare module '@tanstack/react-router' {
       path: '/book'
       fullPath: '/book'
       preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog-sitemap.xml': {
+      id: '/blog-sitemap.xml'
+      path: '/blog-sitemap.xml'
+      fullPath: '/blog-sitemap.xml'
+      preLoaderRoute: typeof BlogSitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -405,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  BlogSitemapDotxmlRoute: BlogSitemapDotxmlRoute,
   BookRoute: BookRoute,
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
