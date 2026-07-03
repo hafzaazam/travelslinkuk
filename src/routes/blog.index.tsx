@@ -200,66 +200,116 @@ function BlogIndex() {
               </button>
             </div>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filtered!.map((p) => (
-
-                <Link
-                  key={p.id}
-                  to="/blog/$slug"
-                  params={{ slug: p.slug }}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-card transition hover:-translate-y-1 hover:shadow-xl"
-                >
-                  <div className="aspect-[16/10] overflow-hidden bg-secondary">
-                    {p.cover_image ? (
-                      <img
-                        src={p.cover_image}
-                        alt={p.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="grid h-full w-full place-items-center text-muted-foreground/40">
-                        <FileText className="h-10 w-10" />
+            <>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {paginated!.map((p) => (
+                  <Link
+                    key={p.id}
+                    to="/blog/$slug"
+                    params={{ slug: p.slug }}
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-card transition hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                      {p.cover_image ? (
+                        <img
+                          src={p.cover_image}
+                          alt={p.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="grid h-full w-full place-items-center text-muted-foreground/40">
+                          <FileText className="h-10 w-10" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="mb-2 flex flex-wrap gap-1.5">
+                        {p.tags.slice(0, 3).map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary"
+                          >
+                            {t}
+                          </span>
+                        ))}
                       </div>
-                    )}
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="mb-2 flex flex-wrap gap-1.5">
-                      {p.tags.slice(0, 3).map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary"
-                        >
-                          {t}
+                      <h2 className="font-display text-lg font-bold leading-snug group-hover:text-primary">
+                        {p.title}
+                      </h2>
+                      {p.excerpt && (
+                        <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
+                          {p.excerpt}
+                        </p>
+                      )}
+                      <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar className="h-3.5 w-3.5" />
+                          {new Date(p.published_at ?? p.created_at).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
                         </span>
-                      ))}
+                        <span className="inline-flex items-center gap-1 font-semibold text-primary">
+                          Read <ArrowRight className="h-3.5 w-3.5" />
+                        </span>
+                      </div>
                     </div>
-                    <h2 className="font-display text-lg font-bold leading-snug group-hover:text-primary">
-                      {p.title}
-                    </h2>
-                    {p.excerpt && (
-                      <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
-                        {p.excerpt}
-                      </p>
-                    )}
-                    <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                      <span className="inline-flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {new Date(p.published_at ?? p.created_at).toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </span>
-                      <span className="inline-flex items-center gap-1 font-semibold text-primary">
-                        Read <ArrowRight className="h-3.5 w-3.5" />
-                      </span>
-                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <nav
+                  aria-label="Blog pagination"
+                  className="mt-12 flex flex-col items-center gap-3"
+                >
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => goToPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      aria-label="Previous page"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => goToPage(n)}
+                        aria-label={`Page ${n}`}
+                        aria-current={n === currentPage ? "page" : undefined}
+                        className={`inline-flex h-9 min-w-9 items-center justify-center rounded-full px-3 text-sm font-semibold transition ${
+                          n === currentPage
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-white text-muted-foreground border border-border hover:border-primary hover:text-primary"
+                        }`}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => goToPage(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      aria-label="Next page"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
                   </div>
-                </Link>
-              ))}
-            </div>
+                  <p className="text-xs text-muted-foreground">
+                    Showing {(currentPage - 1) * PAGE_SIZE + 1}–
+                    {Math.min(currentPage * PAGE_SIZE, filtered!.length)} of {filtered!.length}
+                  </p>
+                </nav>
+              )}
+            </>
           )}
+
         </section>
       </main>
       <Footer />
