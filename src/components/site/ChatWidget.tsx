@@ -4,16 +4,12 @@ import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import { cn } from "@/lib/utils";
+import { LINA_PERSONA } from "@/lib/lina-persona";
 
 const WELCOME: UIMessage = {
   id: "welcome",
   role: "assistant",
-  parts: [
-    {
-      type: "text",
-      text: "Hey there 👋 I'm Lina from Travel Links. What can I help you with today?",
-    },
-  ],
+  parts: [{ type: "text", text: LINA_PERSONA.intro }],
 };
 
 const STORAGE_KEY = "tls-chat-history-v1";
@@ -88,7 +84,7 @@ export function ChatWidget() {
       {/* Launcher */}
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Close chat" : "Open chat with Lina"}
+        aria-label={open ? "Close chat" : `Open chat with ${LINA_PERSONA.name}`}
         className={cn(
           "fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-105",
           open && "rotate-90",
@@ -103,13 +99,13 @@ export function ChatWidget() {
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-border bg-gradient-to-r from-primary to-primary/80 px-4 py-3 text-primary-foreground">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-lg font-semibold">
-              L
+              {LINA_PERSONA.avatarInitial}
             </div>
             <div className="flex-1">
-              <div className="text-sm font-semibold">Lina · Visa Consultant</div>
+              <div className="text-sm font-semibold">{LINA_PERSONA.name} · {LINA_PERSONA.role}</div>
               <div className="flex items-center gap-1.5 text-xs opacity-90">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                Online · replies instantly
+                {LINA_PERSONA.status}
               </div>
             </div>
             <button
@@ -153,11 +149,26 @@ export function ChatWidget() {
                 </div>
               );
             })}
+            {messages.length === 1 && messages[0]?.id === "welcome" && LINA_PERSONA.quickReplies.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {LINA_PERSONA.quickReplies.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => void sendMessage({ text: q })}
+                    disabled={isLoading}
+                    className="rounded-full border border-primary/30 bg-background px-3 py-1 text-xs text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground disabled:opacity-50"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
             {status === "submitted" && (
               <div className="flex justify-start">
                 <div className="flex items-center gap-2 rounded-2xl rounded-bl-sm bg-background px-3.5 py-2.5 text-sm text-muted-foreground shadow-sm">
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  Lina is typing…
+                  {LINA_PERSONA.typingLabel}
                 </div>
               </div>
             )}
@@ -183,7 +194,7 @@ export function ChatWidget() {
                   void onSubmit(e as unknown as FormEvent);
                 }
               }}
-              placeholder="Ask about a visa…"
+              placeholder={LINA_PERSONA.inputPlaceholder}
               rows={1}
               className="max-h-32 min-h-[40px] flex-1 resize-none rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
