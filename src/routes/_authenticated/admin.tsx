@@ -873,16 +873,18 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
       <form
         onClick={(e) => e.stopPropagation()}
         onSubmit={save}
-        className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl"
+        className="w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl bg-white shadow-2xl flex flex-col"
       >
-        <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <h3 className="font-display text-lg font-bold">{initial ? "Edit popup" : "New popup"}</h3>
           <button type="button" onClick={onClose} aria-label="Close" className="rounded-lg p-1.5 hover:bg-secondary">
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] flex-1 overflow-hidden">
+          <div className="overflow-y-auto p-6 border-b lg:border-b-0 lg:border-r border-border">
+            <div className="grid gap-4 sm:grid-cols-2">
           <label className="sm:col-span-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Title *</span>
             <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
