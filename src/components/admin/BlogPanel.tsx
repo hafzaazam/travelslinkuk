@@ -588,6 +588,87 @@ function PostEditor({
               />
             </Section>
 
+            {/* SEO */}
+            <div className="rounded-xl border border-border bg-white p-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">SEO & social</span>
+                <span className="text-[10px] text-muted-foreground">Overrides defaults</span>
+              </div>
+
+              <Section title="Meta title" hint={`${(form.meta_title ?? "").length}/60`}>
+                <input
+                  value={form.meta_title ?? ""}
+                  onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
+                  placeholder={form.title || "Falls back to post title"}
+                  className="w-full rounded-lg border border-border bg-white px-3 py-1.5 text-xs"
+                />
+              </Section>
+
+              <Section title="Meta description" hint={`${(form.meta_description ?? "").length}/160`}>
+                <textarea
+                  rows={3}
+                  value={form.meta_description ?? ""}
+                  onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                  placeholder={form.excerpt || "Falls back to excerpt"}
+                  className="w-full rounded-lg border border-border bg-white px-3 py-2 text-xs"
+                />
+              </Section>
+
+              <Section title="Keywords" hint="Comma separated">
+                <input
+                  value={form.meta_keywords ?? ""}
+                  onChange={(e) => setForm({ ...form, meta_keywords: e.target.value })}
+                  placeholder="uk visa, immigration, study visa"
+                  className="w-full rounded-lg border border-border bg-white px-3 py-1.5 text-xs"
+                />
+              </Section>
+
+              <Section title="Social share image">
+                {(form.og_image || form.cover_image) && (
+                  <img src={form.og_image || form.cover_image!} alt=""
+                    className="mb-2 aspect-[1.91/1] w-full rounded-lg object-cover" />
+                )}
+                <input
+                  value={form.og_image ?? ""}
+                  onChange={(e) => setForm({ ...form, og_image: e.target.value })}
+                  placeholder="Optional — defaults to cover image"
+                  className="w-full rounded-lg border border-border bg-white px-3 py-1.5 text-xs"
+                />
+              </Section>
+
+              <Section title="Canonical URL">
+                <input
+                  value={form.canonical_url ?? ""}
+                  onChange={(e) => setForm({ ...form, canonical_url: e.target.value })}
+                  placeholder={`https://travellinks.uk/blog/${form.slug || "…"}`}
+                  className="w-full rounded-lg border border-border bg-white px-3 py-1.5 text-xs"
+                />
+              </Section>
+
+              <label className="flex items-start gap-2 text-xs">
+                <input type="checkbox" checked={!!form.noindex} className="mt-0.5"
+                  onChange={(e) => setForm({ ...form, noindex: e.target.checked })} />
+                <span>
+                  <span className="font-semibold">Hide from search engines</span>
+                  <span className="block text-[11px] text-muted-foreground">Adds noindex, nofollow meta tag.</span>
+                </span>
+              </label>
+
+              {/* Google preview */}
+              <div className="rounded-lg border border-border bg-secondary/20 p-3">
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Google preview</p>
+                <p className="truncate text-[11px] text-emerald-800">
+                  travellinks.uk › blog › {form.slug || "…"}
+                </p>
+                <p className="truncate text-sm text-blue-700 hover:underline cursor-default">
+                  {form.meta_title || form.title || "Post title"}
+                </p>
+                <p className="line-clamp-2 text-xs text-neutral-700">
+                  {form.meta_description || form.excerpt || "Add a meta description to control how this post looks in search results."}
+                </p>
+              </div>
+            </div>
+
             {isEdit && (
               <Section title="Draft">
                 <button onClick={discardDraft}
