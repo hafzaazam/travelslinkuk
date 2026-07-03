@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import aboutVisa from "@/assets/about-visa.png.asset.json";
+import ceoPortrait from "@/assets/ceo-dua-asif.jpg";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -18,6 +19,9 @@ import {
   Award,
   Users,
   CheckCircle2,
+  Quote,
+  Linkedin,
+  Mail,
 } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
@@ -145,6 +149,92 @@ function AboutPage() {
                 ))}
               </div>
             </Reveal>
+          </div>
+        </section>
+
+        {/* CEO / Leadership */}
+        <section className="py-20 px-5 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Leadership"
+                title={<>Meet our <span className="text-gradient-brand">CEO</span></>}
+                description="The vision and expertise behind Travel Links Solution."
+              />
+            </Reveal>
+            <div className="mt-14 grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              <Reveal direction="right" className="lg:col-span-5">
+                <div className="relative mx-auto max-w-sm">
+                  <div aria-hidden className="absolute -inset-6 rounded-[2.5rem] bg-gradient-brand opacity-25 blur-3xl" />
+                  <div aria-hidden className="absolute -top-4 -left-4 h-24 w-24 rounded-2xl border-2 border-primary/40" />
+                  <div aria-hidden className="absolute -bottom-4 -right-4 h-24 w-24 rounded-2xl bg-gradient-brand opacity-20" />
+                  <div className="relative overflow-hidden rounded-[2rem] border border-border bg-white shadow-card">
+                    <img
+                      src={ceoPortrait}
+                      alt="Dua Asif, CEO and Founder of Travel Links Solution"
+                      width={896}
+                      height={1088}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-5">
+                      <div className="text-white">
+                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/80">Chief Executive Officer</div>
+                        <div className="mt-1 font-display text-2xl font-bold">Dua Asif</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+              <Reveal direction="left" delay={150} className="lg:col-span-7">
+                <div className="rounded-3xl border border-border bg-white p-7 sm:p-9 shadow-soft">
+                  <Quote className="h-8 w-8 text-primary/70" aria-hidden />
+                  <blockquote className="mt-3 font-display text-xl sm:text-2xl leading-snug text-foreground">
+                    “Every visa is more than paperwork — it's someone's opportunity, reunion or adventure. We treat it that way.”
+                  </blockquote>
+                  <p className="mt-5 text-muted-foreground leading-relaxed">
+                    Dua Asif founded Travel Links Solution with a simple belief: world-class visa guidance shouldn't
+                    be reserved for the few. With over a decade in UK immigration advisory and a background in
+                    international relations, she leads a team of senior consultants dedicated to turning complex
+                    embassy requirements into clear, confident applications.
+                  </p>
+                  <p className="mt-3 text-muted-foreground leading-relaxed">
+                    Under her leadership, Travel Links Solution has grown from a two-person Northampton office into
+                    a trusted consultancy serving 10,000+ travellers across 25+ destinations — with a 98% approval
+                    rate that speaks for itself.
+                  </p>
+                  <dl className="mt-6 grid grid-cols-3 gap-3">
+                    {[
+                      { k: "10+", v: "Years experience" },
+                      { k: "25+", v: "Countries covered" },
+                      { k: "98%", v: "Approval rate" },
+                    ].map(({ k, v }) => (
+                      <div key={v} className="rounded-2xl border border-border bg-gradient-soft p-3 text-center">
+                        <dt className="font-display text-xl font-bold text-gradient-brand">{k}</dt>
+                        <dd className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <a
+                      href="mailto:contact@travellinks.uk"
+                      className="inline-flex items-center gap-2 rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-transform hover:-translate-y-0.5 hover:shadow-glow"
+                    >
+                      <Mail className="h-4 w-4" /> Email the CEO
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/company/travel-links-solution"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-5 py-2.5 text-sm font-semibold transition-colors hover:border-primary/40 hover:text-primary"
+                    >
+                      <Linkedin className="h-4 w-4" /> Connect on LinkedIn
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </section>
 
