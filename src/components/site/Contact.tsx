@@ -30,6 +30,7 @@ const schema = z.object({
 });
 
 export function Contact() {
+  const contact = useContactInfo();
   const [state, handleFormspreeSubmit] = useForm("xvzjreol");
   const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
