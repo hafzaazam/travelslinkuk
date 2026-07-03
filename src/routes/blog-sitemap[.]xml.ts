@@ -26,9 +26,16 @@ export const Route = createFileRoute("/blog-sitemap.xml")({
             .order("published_at", { ascending: false });
 
           if (data) {
+            const now = Date.now();
+            const DAY = 86_400_000;
             for (const post of data) {
               if (post.noindex) continue;
-              const lastmod = (post.updated_at ?? post.published_at ?? new Date().toISOString()).slice(0, 10);
+              const lastmodSource = post.updated_at ?? post.published_at ?? new Date().toISOString();
+              const lastmodDate = new Date(lastmodSource);
+              const ageDays = (now - lastmodDate.getTime()) / DAY;
+              const changefreq =
+                ageDays < 7 ? "daily" : ageDays < 30 ? "weekly" : ageDays < 180 ? "monthly" : "yearly";
+              const priority = ageDays < 30 ? "0.9" : "0.7";
               const image = post.cover_image
                 ? [
                     `    <image:image>`,
@@ -41,9 +48,9 @@ export const Route = createFileRoute("/blog-sitemap.xml")({
                 [
                   `  <url>`,
                   `    <loc>${BASE_URL}/blog/${post.slug}</loc>`,
-                  `    <lastmod>${lastmod}</lastmod>`,
-                  `    <changefreq>weekly</changefreq>`,
-                  `    <priority>0.8</priority>`,
+                  `    <lastmod>${lastmodDate.toISOString()}</lastmod>`,
+                  `    <changefreq>${changefreq}</changefreq>`,
+                  `    <priority>${priority}</priority>`,
                   image,
                   `  </url>`,
                 ]
