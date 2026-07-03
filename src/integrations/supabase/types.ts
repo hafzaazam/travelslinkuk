@@ -391,10 +391,49 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      booking_settings_public: {
+        Row: {
+          active: boolean | null
+          consultation_fee: number | null
+          currency: string | null
+          id: string | null
+          payment_notes: string | null
+          reference_prefix: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          consultation_fee?: number | null
+          currency?: string | null
+          id?: string | null
+          payment_notes?: string | null
+          reference_prefix?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          consultation_fee?: number | null
+          currency?: string | null
+          id?: string | null
+          payment_notes?: string | null
+          reference_prefix?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      get_active_bank_details: {
+        Args: never
+        Returns: {
+          account_name: string
+          account_number: string
+          bank_name: string
+          iban: string
+          sort_code: string
+          swift: string
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
