@@ -59,7 +59,11 @@ export const Route = createFileRoute("/blog/$slug")({
       post.meta_description?.trim() ||
       post.excerpt ||
       (post.content ? post.content.replace(/[#*_`>[\]()!-]|<[^>]+>/g, "").trim().slice(0, 155) : "");
-    const image = post.og_image?.trim() || post.cover_image || undefined;
+    const FALLBACK_OG = "https://travellinks.uk/__l5e/assets-v1/3c87610d-e03b-4302-b077-b7b31f0027e7/why-us-plane.png";
+    const rawImage = post.og_image?.trim() || post.cover_image || undefined;
+    const image = rawImage
+      ? (rawImage.startsWith("http") ? rawImage : `${SITE}${rawImage.startsWith("/") ? "" : "/"}${rawImage}`)
+      : FALLBACK_OG;
     const url = post.canonical_url?.trim() || `${SITE}/blog/${params.slug}`;
 
     return {
