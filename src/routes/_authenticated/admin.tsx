@@ -961,10 +961,9 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
               <span>Dismissible</span>
             </label>
           </div>
-        </div>
-
             </div>
           </div>
+
 
           {/* Live preview */}
           <div className="overflow-y-auto bg-slate-100 p-6">
