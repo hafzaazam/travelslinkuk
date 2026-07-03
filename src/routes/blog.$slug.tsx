@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Calendar, User } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -139,10 +141,22 @@ function PostPage() {
             <p className="mt-8 text-lg leading-relaxed text-muted-foreground">{post.excerpt}</p>
           )}
 
-          <div
-            className="prose prose-lg mt-8 max-w-none whitespace-pre-wrap prose-headings:font-display prose-a:text-primary"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <div className="prose prose-lg mt-8 max-w-none prose-headings:font-display prose-a:text-primary prose-img:rounded-xl prose-img:shadow-card">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                img: ({ node, ...props }) => (
+                  <img
+                    {...props}
+                    loading="lazy"
+                    className="my-8 aspect-[16/9] w-full rounded-xl object-cover shadow-card"
+                  />
+                ),
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </div>
         </article>
 
         {related.length > 0 && (
