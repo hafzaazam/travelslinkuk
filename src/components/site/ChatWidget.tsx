@@ -84,7 +84,7 @@ export function ChatWidget() {
       {/* Launcher */}
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Close chat" : "Open chat with Lina"}
+        aria-label={open ? "Close chat" : `Open chat with ${LINA_PERSONA.name}`}
         className={cn(
           "fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-105",
           open && "rotate-90",
