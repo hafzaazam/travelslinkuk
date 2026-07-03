@@ -963,7 +963,20 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-end gap-2 border-t border-border pt-4">
+            </div>
+          </div>
+
+          {/* Live preview */}
+          <div className="overflow-y-auto bg-slate-100 p-6">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Live preview</span>
+              <span className="text-[10px] text-muted-foreground">Updates as you type</span>
+            </div>
+            <PopupPreview form={form} />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-2 border-t border-border px-6 py-4 bg-white">
           <button type="button" onClick={onClose} className="rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold hover:bg-secondary">
             Cancel
           </button>
@@ -973,6 +986,56 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
           </button>
         </div>
       </form>
+    </div>
+  );
+}
+
+function PopupPreview({ form }: { form: { title: string; body?: string | null; image_url?: string | null; cta_label?: string | null; cta_url?: string | null; placement: string; dismissible: boolean } }) {
+  const positionClass =
+    form.placement === "bottom-right" ? "items-end justify-end p-4"
+    : form.placement === "bottom-left" ? "items-end justify-start p-4"
+    : "items-center justify-center p-4";
+
+  return (
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-slate-200 to-slate-300 shadow-inner">
+      {/* fake browser chrome */}
+      <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 border-b border-border">
+        <span className="h-2 w-2 rounded-full bg-red-400" />
+        <span className="h-2 w-2 rounded-full bg-yellow-400" />
+        <span className="h-2 w-2 rounded-full bg-green-400" />
+        <span className="ml-2 text-[9px] text-muted-foreground truncate">travellinks.uk</span>
+      </div>
+      {/* fake page hint */}
+      <div className="absolute inset-x-0 top-8 bottom-0 opacity-40 [background-image:linear-gradient(#94a3b8_1px,transparent_1px),linear-gradient(90deg,#94a3b8_1px,transparent_1px)] [background-size:24px_24px]" />
+      {/* overlay */}
+      <div className={`absolute inset-x-0 top-8 bottom-0 flex ${positionClass} bg-black/40 backdrop-blur-[2px]`}>
+        <div className="relative w-full max-w-[240px] overflow-hidden rounded-xl bg-white shadow-xl">
+          {form.dismissible && (
+            <div className="absolute right-1.5 top-1.5 z-10 grid h-5 w-5 place-items-center rounded-full bg-white/90 shadow">
+              <X className="h-3 w-3" />
+            </div>
+          )}
+          {form.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={form.image_url} alt="" className="h-20 w-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+          ) : null}
+          <div className="p-3">
+            <h4 className="font-display text-sm font-bold text-foreground line-clamp-2">
+              {form.title || "Popup title"}
+            </h4>
+            {form.body && (
+              <p className="mt-1 text-[10px] leading-snug text-muted-foreground line-clamp-3 whitespace-pre-line">
+                {form.body}
+              </p>
+            )}
+            {form.cta_label && (
+              <div className="mt-2 inline-flex w-full items-center justify-center rounded-md bg-gradient-brand px-3 py-1.5 text-[10px] font-semibold text-white shadow">
+                {form.cta_label}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
