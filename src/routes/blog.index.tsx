@@ -152,7 +152,7 @@ function BlogIndex() {
       <Header />
       <main className="mx-auto max-w-7xl px-5 pt-28 pb-20 lg:px-12 lg:pt-32">
         {/* Themed header */}
-        <header className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground p-8 md:p-12 mb-12 shadow-lg">
+        <header className="relative overflow-hidden rounded-2xl border border-border bg-gradient-hero text-primary-foreground p-8 md:p-12 mb-12 shadow-[var(--shadow-glow)]">
           <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_top_right,white,transparent_60%)]" />
           <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-10">
             <div className="space-y-4 max-w-2xl">
