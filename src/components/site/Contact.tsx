@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useForm } from "@formspree/react";
 import { supabase } from "@/integrations/supabase/client";
 import { useContactInfo } from "@/hooks/useContactInfo";
+import { useBookingSettings } from "@/hooks/useBookingSettings";
+import { BookingFormCompact } from "./BookingFormCompact";
 
 function MapEmbed({ query }: { query: string }) {
   return (
@@ -31,6 +33,8 @@ const schema = z.object({
 
 export function Contact() {
   const contact = useContactInfo();
+  const { data: bookingSettings } = useBookingSettings();
+  const bookingActive = !!bookingSettings?.active;
   const [state, handleFormspreeSubmit] = useForm("xvzjreol");
   const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -102,9 +106,13 @@ export function Contact() {
     <section id="contact" className="py-24 px-5 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          eyebrow="Get in Touch"
-          title={<>Start your visa journey <span className="text-gradient-brand">today</span></>}
-          description="Tell us about your goals and we'll get back within 24 hours with a tailored plan."
+          eyebrow={bookingActive ? "Book a Consultation" : "Get in Touch"}
+          title={bookingActive
+            ? <>Reserve your consultation <span className="text-gradient-brand">slot</span></>
+            : <>Start your visa journey <span className="text-gradient-brand">today</span></>}
+          description={bookingActive
+            ? "Pick a time, choose how you'd like to pay, and our advisors will confirm your booking within one business day."
+            : "Tell us about your goals and we'll get back within 24 hours with a tailored plan."}
         />
 
         <div className="mt-14 grid lg:grid-cols-2 gap-8 lg:gap-12">
@@ -180,72 +188,79 @@ export function Contact() {
 
           {/* Form */}
           <div className="relative">
-            <form
-              ref={formRef}
-              onSubmit={onSubmit}
-              onInput={() => submitted && setSubmitted(false)}
-              className={`rounded-3xl glass shadow-glow p-6 sm:p-8 space-y-4 transition-opacity ${submitted ? "opacity-40 pointer-events-none" : ""}`}
-              aria-hidden={submitted}
-            >
-              <div className="grid sm:grid-cols-2 gap-4">
-                <Field name="name" label="Full Name" placeholder="Jane Doe" />
-                <Field name="phone" label="Phone" placeholder="+44 ..." />
-              </div>
-              <Field name="email" type="email" label="Email" placeholder="you@example.com" />
-              <div className="grid sm:grid-cols-2 gap-4">
-                <Field name="country" label="Country Interested" placeholder="e.g. Canada" />
-                <Field name="visa" label="Visa Type" placeholder="e.g. Tourist" />
-              </div>
-              <div>
-                <label htmlFor="contact-message" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  rows={4}
-                  placeholder="Tell us briefly about your goal…"
-                  className="mt-1.5 w-full rounded-xl border border-border bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/40"
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={lockSubmit}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:translate-y-[-1px] transition disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {loading ? "Sending…" : submitted ? "Submitted" : "Consult Now"} <Send className="h-4 w-4" />
-              </button>
-            </form>
-
-            {submitted && (
-              <div
-                role="status"
-                aria-live="polite"
-                className="absolute inset-0 grid place-items-center rounded-3xl bg-white/95 backdrop-blur-md border border-border shadow-glow p-8 animate-fade-up"
-              >
-                <div className="text-center max-w-sm">
-                  <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gradient-brand text-white shadow-glow">
-                    <CheckCircle2 className="h-8 w-8" />
+            {bookingActive && bookingSettings ? (
+              <BookingFormCompact settings={bookingSettings} />
+            ) : (
+              <>
+                <form
+                  ref={formRef}
+                  onSubmit={onSubmit}
+                  onInput={() => submitted && setSubmitted(false)}
+                  className={`rounded-3xl glass shadow-glow p-6 sm:p-8 space-y-4 transition-opacity ${submitted ? "opacity-40 pointer-events-none" : ""}`}
+                  aria-hidden={submitted}
+                >
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <Field name="name" label="Full Name" placeholder="Jane Doe" />
+                    <Field name="phone" label="Phone" placeholder="+44 ..." />
                   </div>
-                  <h3 className="mt-5 font-display text-2xl font-bold">Application received</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Thanks — our visa team will review your details and reach out within 24 hours.
-                  </p>
+                  <Field name="email" type="email" label="Email" placeholder="you@example.com" />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <Field name="country" label="Country Interested" placeholder="e.g. Canada" />
+                    <Field name="visa" label="Visa Type" placeholder="e.g. Tourist" />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-message" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={4}
+                      placeholder="Tell us briefly about your goal…"
+                      className="mt-1.5 w-full rounded-xl border border-border bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/40"
+                    />
+                  </div>
                   <button
-                    type="button"
-                    onClick={() => {
-                      setSubmitted(false);
-                      formRef.current?.reset();
-                      requestAnimationFrame(() =>
-                        formRef.current?.querySelector<HTMLInputElement>("input[name=name]")?.focus()
-                      );
-                    }}
-                    className="mt-6 inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-primary/5 transition"
+                    type="submit"
+                    disabled={lockSubmit}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-brand px-6 py-3.5 text-sm font-semibold text-white shadow-glow hover:translate-y-[-1px] transition disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Submit another enquiry
+                    {loading ? "Sending…" : submitted ? "Submitted" : "Consult Now"} <Send className="h-4 w-4" />
                   </button>
-                </div>
-              </div>
+                </form>
+
+                {submitted && (
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className="absolute inset-0 grid place-items-center rounded-3xl bg-white/95 backdrop-blur-md border border-border shadow-glow p-8 animate-fade-up"
+                  >
+                    <div className="text-center max-w-sm">
+                      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gradient-brand text-white shadow-glow">
+                        <CheckCircle2 className="h-8 w-8" />
+                      </div>
+                      <h3 className="mt-5 font-display text-2xl font-bold">Application received</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Thanks — our visa team will review your details and reach out within 24 hours.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSubmitted(false);
+                          formRef.current?.reset();
+                          requestAnimationFrame(() =>
+                            formRef.current?.querySelector<HTMLInputElement>("input[name=name]")?.focus()
+                          );
+                        }}
+                        className="mt-6 inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-primary/5 transition"
+                      >
+                        Submit another enquiry
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
+
         </div>
       </div>
     </section>
