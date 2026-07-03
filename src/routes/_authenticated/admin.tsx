@@ -4,12 +4,13 @@ import { toast } from "sonner";
 import {
   Star, Mail, Phone, Trash2, Check, X, LogOut, RefreshCw,
   Download, Search, MessageSquare, Users, ShieldCheck, Home,
-  LayoutDashboard, ArrowRight, Save, MapPin, Megaphone, Plus, Pencil, Calendar,
+  LayoutDashboard, ArrowRight, Save, MapPin, Megaphone, Plus, Pencil, Calendar, FileText,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
 import { DEFAULT_CONTACT_INFO, invalidateContactInfoCache, type ContactInfo } from "@/hooks/useContactInfo";
 import { BookingsPanel } from "@/components/admin/BookingsPanel";
+import { BlogPanel } from "@/components/admin/BlogPanel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
