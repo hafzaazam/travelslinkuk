@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import {
   Star, Mail, Phone, Trash2, Check, X, LogOut, RefreshCw,
   Download, Search, MessageSquare, Users, ShieldCheck, Home,
-  LayoutDashboard, ArrowRight, Save, MapPin,
+  LayoutDashboard, ArrowRight, Save, MapPin, Megaphone, Plus, Pencil,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Tab = "dashboard" | "contacts" | "reviews" | "subscribers" | "site";
+type Tab = "dashboard" | "contacts" | "reviews" | "subscribers" | "site" | "popups";
 
 type Contact = {
   id: string; name: string; email: string; phone: string | null;
@@ -120,6 +120,7 @@ function AdminPage() {
               ["contacts", MessageSquare, "Contacts"],
               ["reviews", Star, "Reviews"],
               ["subscribers", Users, "Subscribers"],
+              ["popups", Megaphone, "Popups"],
               ["site", MapPin, "Site info"],
             ] as const).map(([key, Icon, label]) => (
               <button
@@ -143,6 +144,7 @@ function AdminPage() {
         {tab === "contacts" && <ContactsPanel />}
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "subscribers" && <SubscribersPanel />}
+        {tab === "popups" && <PopupsPanel />}
         {tab === "site" && <SiteInfoPanel />}
       </main>
     </div>
