@@ -882,8 +882,8 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
           </button>
         </div>
 
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] flex-1 overflow-hidden">
-          <div className="overflow-y-auto p-6 border-b lg:border-b-0 lg:border-r border-border">
+        <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] flex-1 overflow-hidden">
+          <div className="overflow-y-auto p-6 border-b md:border-b-0 md:border-r border-border order-1">
             <div className="grid gap-4 sm:grid-cols-2">
           <label className="sm:col-span-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Title *</span>
@@ -966,7 +966,7 @@ function PopupEditor({ initial, onClose, onSaved }: { initial?: Popup; onClose: 
 
 
           {/* Live preview */}
-          <div className="overflow-y-auto bg-slate-100 p-6">
+          <div className="overflow-y-auto bg-slate-100 p-6 order-2">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Live preview</span>
               <span className="text-[10px] text-muted-foreground">Updates as you type</span>
