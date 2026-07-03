@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useForm } from "@formspree/react";
 import { supabase } from "@/integrations/supabase/client";
 import { useContactInfo } from "@/hooks/useContactInfo";
+import { useBookingSettings } from "@/hooks/useBookingSettings";
+import { BookingFormCompact } from "./BookingFormCompact";
 
 function MapEmbed({ query }: { query: string }) {
   return (
