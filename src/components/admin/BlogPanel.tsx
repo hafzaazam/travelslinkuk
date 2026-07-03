@@ -5,9 +5,27 @@ import remarkGfm from "remark-gfm";
 import {
   Plus, Pencil, Trash2, Save, X, Eye, EyeOff, Search, FileText, ExternalLink,
   Bold, Italic, Heading1, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon,
-  List, ListOrdered, Quote, Code, Minus, Lock, Unlock, Clock, Copy,
+  List, ListOrdered, Quote, Code, Minus, Lock, Unlock, Clock, Copy, Upload, Loader2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+const SIGNED_URL_TTL = 60 * 60 * 24 * 365 * 10; // 10 years
+
+async function uploadBlogImage(file: File): Promise<string> {
+  if (!file.type.startsWith("image/")) throw new Error("Only image files are allowed");
+  if (file.size > 8 * 1024 * 1024) throw new Error("Image must be under 8 MB");
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+  const path = `${new Date().getFullYear()}/${crypto.randomUUID()}.${ext}`;
+  const { error: upErr } = await supabase.storage.from("blog-images").upload(path, file, {
+    cacheControl: "31536000",
+    contentType: file.type,
+    upsert: false,
+  });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage.from("blog-images").createSignedUrl(path, SIGNED_URL_TTL);
+  if (error || !data?.signedUrl) throw error ?? new Error("Failed to create signed URL");
+  return data.signedUrl;
+}
 
 type BlogPost = {
   id: string;
@@ -275,7 +293,73 @@ function PostEditor({
   const [slugLocked, setSlugLocked] = useState(isEdit);
   const [tab, setTab] = useState<"write" | "preview">("write");
   const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingInline, setUploadingInline] = useState(false);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
+  const inlineInputRef = useRef<HTMLInputElement>(null);
+
+  const insertAtCursor = useCallback((text: string) => {
+    const ta = contentRef.current;
+    if (!ta) {
+      setForm((f) => ({ ...f, content: (f.content ?? "") + `\n${text}\n` }));
+      return;
+    }
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const value = ta.value;
+    const needsNl = start > 0 && value[start - 1] !== "\n" ? "\n" : "";
+    const next = value.slice(0, start) + needsNl + text + "\n" + value.slice(end);
+    setForm((f) => ({ ...f, content: next }));
+    requestAnimationFrame(() => {
+      ta.focus();
+      const pos = start + needsNl.length + text.length + 1;
+      ta.setSelectionRange(pos, pos);
+    });
+  }, []);
+
+  const handleCoverUpload = async (file: File | null | undefined) => {
+    if (!file) return;
+    setUploadingCover(true);
+    try {
+      const url = await uploadBlogImage(file);
+      setForm((f) => ({ ...f, cover_image: url }));
+      toast.success("Cover image uploaded");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploadingCover(false);
+    }
+  };
+
+  const handleInlineUpload = async (file: File | null | undefined, alt = "") => {
+    if (!file) return;
+    setUploadingInline(true);
+    try {
+      const url = await uploadBlogImage(file);
+      const altText = alt || file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+      insertAtCursor(`![${altText}](${url})`);
+      toast.success("Image inserted");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploadingInline(false);
+    }
+  };
+
+  const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const file = Array.from(e.clipboardData.files).find((f) => f.type.startsWith("image/"));
+    if (!file) return;
+    e.preventDefault();
+    await handleInlineUpload(file, "pasted image");
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLTextAreaElement>) => {
+    const file = Array.from(e.dataTransfer.files).find((f) => f.type.startsWith("image/"));
+    if (!file) return;
+    e.preventDefault();
+    await handleInlineUpload(file);
+  };
 
   // Autosave draft to localStorage
   useEffect(() => {
@@ -491,11 +575,29 @@ function PostEditor({
               <ToolBtn onClick={() => {
                 const url = prompt("Link URL"); if (url) insertMd("[", `](${url})`, "link text");
               }} title="Link (Ctrl+K)"><LinkIcon className="h-4 w-4" /></ToolBtn>
+              <ToolBtn
+                onClick={() => inlineInputRef.current?.click()}
+                title="Upload image"
+                disabled={uploadingInline}
+              >
+                {uploadingInline ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
+              </ToolBtn>
               <ToolBtn onClick={() => {
                 const url = prompt("Image URL"); if (!url) return;
                 const alt = prompt("Alt text (optional)") ?? "";
                 insertBlock(`![${alt}](${url})`);
-              }} title="Image"><ImageIcon className="h-4 w-4" /></ToolBtn>
+              }} title="Insert image by URL"><LinkIcon className="h-4 w-4 opacity-60" /></ToolBtn>
+              <input
+                ref={inlineInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  handleInlineUpload(f);
+                  e.currentTarget.value = "";
+                }}
+              />
               <Divider />
               <ToolBtn onClick={() => insertMd("- ", "", "item")} title="Bullet list"><List className="h-4 w-4" /></ToolBtn>
               <ToolBtn onClick={() => insertMd("1. ", "", "item")} title="Numbered list"><ListOrdered className="h-4 w-4" /></ToolBtn>
@@ -510,7 +612,10 @@ function PostEditor({
                 rows={22}
                 value={form.content ?? ""}
                 onChange={(e) => setForm({ ...form, content: e.target.value })}
-                placeholder="Write your story in Markdown…&#10;&#10;## Heading&#10;- Bullet&#10;**Bold** *italic* [link](https://…) ![image](https://…)"
+                onPaste={handlePaste}
+                onDrop={handleDrop}
+                onDragOver={(e) => e.preventDefault()}
+                placeholder="Write your story in Markdown…&#10;&#10;Tip: paste or drag-drop an image here to upload it inline.&#10;&#10;## Heading&#10;**Bold** *italic* [link](https://…) ![image](https://…)"
                 className="w-full rounded-xl border border-border bg-white px-4 py-3 font-mono text-[13px] leading-relaxed focus:outline-2 focus:outline-primary/40"
               />
             ) : (
@@ -537,16 +642,51 @@ function PostEditor({
                   </button>
                 </div>
               ) : (
-                <div className="aspect-[16/9] w-full rounded-lg border border-dashed border-border grid place-items-center text-muted-foreground">
-                  <ImageIcon className="h-6 w-6" />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => coverInputRef.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => { e.preventDefault(); handleCoverUpload(e.dataTransfer.files?.[0]); }}
+                  className="aspect-[16/9] w-full rounded-lg border border-dashed border-border grid place-items-center text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition"
+                >
+                  {uploadingCover ? (
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                  ) : (
+                    <div className="flex flex-col items-center gap-1 text-xs font-semibold">
+                      <Upload className="h-5 w-5" />
+                      Click or drop image
+                    </div>
+                  )}
+                </button>
               )}
               <input
-                value={form.cover_image ?? ""}
-                onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
-                placeholder="https://images.unsplash.com/…"
-                className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-1.5 text-xs"
+                ref={coverInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  handleCoverUpload(f);
+                  e.currentTarget.value = "";
+                }}
               />
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => coverInputRef.current?.click()}
+                  disabled={uploadingCover}
+                  className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2.5 py-1.5 text-[11px] font-semibold hover:bg-secondary disabled:opacity-60"
+                >
+                  {uploadingCover ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
+                  {form.cover_image ? "Replace" : "Upload"}
+                </button>
+                <input
+                  value={form.cover_image ?? ""}
+                  onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
+                  placeholder="…or paste URL"
+                  className="flex-1 min-w-0 rounded-lg border border-border bg-white px-2 py-1.5 text-[11px]"
+                />
+              </div>
             </Section>
 
             <Section title="Excerpt" hint={`${excerptLen}/160`}>
@@ -689,10 +829,10 @@ function confirmRestore(cached: Partial<BlogPost>) {
   return confirm("Restore your unsaved draft for this post?");
 }
 
-function ToolBtn({ onClick, title, children }: { onClick: () => void; title: string; children: React.ReactNode }) {
+function ToolBtn({ onClick, title, children, disabled }: { onClick: () => void; title: string; children: React.ReactNode; disabled?: boolean }) {
   return (
-    <button type="button" onClick={onClick} title={title}
-      className="rounded p-1.5 text-muted-foreground hover:bg-white hover:text-foreground hover:shadow-sm">
+    <button type="button" onClick={onClick} title={title} disabled={disabled}
+      className="rounded p-1.5 text-muted-foreground hover:bg-white hover:text-foreground hover:shadow-sm disabled:opacity-50 disabled:cursor-wait">
       {children}
     </button>
   );
