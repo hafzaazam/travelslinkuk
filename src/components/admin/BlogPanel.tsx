@@ -791,10 +791,10 @@ function confirmRestore(cached: Partial<BlogPost>) {
   return confirm("Restore your unsaved draft for this post?");
 }
 
-function ToolBtn({ onClick, title, children }: { onClick: () => void; title: string; children: React.ReactNode }) {
+function ToolBtn({ onClick, title, children, disabled }: { onClick: () => void; title: string; children: React.ReactNode; disabled?: boolean }) {
   return (
-    <button type="button" onClick={onClick} title={title}
-      className="rounded p-1.5 text-muted-foreground hover:bg-white hover:text-foreground hover:shadow-sm">
+    <button type="button" onClick={onClick} title={title} disabled={disabled}
+      className="rounded p-1.5 text-muted-foreground hover:bg-white hover:text-foreground hover:shadow-sm disabled:opacity-50 disabled:cursor-wait">
       {children}
     </button>
   );
