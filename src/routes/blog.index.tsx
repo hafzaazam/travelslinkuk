@@ -169,14 +169,14 @@ function BlogIndex() {
 
             <div className="w-full md:w-auto flex flex-col md:items-end gap-5">
               <div className="relative w-full md:w-80">
-                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary-foreground/60" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <input
                   type="search"
                   value={queryInput}
                   onChange={(e) => setQueryInput(e.target.value)}
                   placeholder="Search articles..."
                   aria-label="Search articles"
-                  className="w-full bg-primary-foreground/10 border border-primary-foreground/20 rounded-full py-2.5 pl-10 pr-10 text-sm text-primary-foreground placeholder:text-primary-foreground/50 focus:bg-primary-foreground/15 focus:border-primary-foreground/40 focus:outline-none transition"
+                  className="w-full bg-white text-foreground border border-white/40 rounded-full py-2.5 pl-10 pr-10 text-sm placeholder:text-muted-foreground shadow-md focus:outline-none focus:ring-2 focus:ring-primary-foreground/60 transition"
                 />
                 {queryInput && (
                   <button
