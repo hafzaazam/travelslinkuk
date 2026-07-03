@@ -239,7 +239,7 @@ function AboutPage() {
         </section>
 
         {/* Values */}
-        <section className="py-20 px-5 lg:px-8 bg-gradient-soft">
+        <section className="py-20 px-5 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <Reveal>
               <SectionHeading
