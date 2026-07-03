@@ -44,3 +44,4 @@ Disallow: /
 Host: https://travellinks.uk
 
 Sitemap: https://travellinks.uk/sitemap.xml
+Sitemap: https://travellinks.uk/blog-sitemap.xml
