@@ -5,8 +5,26 @@ import remarkGfm from "remark-gfm";
 import {
   Plus, Pencil, Trash2, Save, X, Eye, EyeOff, Search, FileText, ExternalLink,
   Bold, Italic, Heading1, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon,
-  List, ListOrdered, Quote, Code, Minus, Lock, Unlock, Clock, Copy,
+  List, ListOrdered, Quote, Code, Minus, Lock, Unlock, Clock, Copy, Upload, Loader2,
 } from "lucide-react";
+
+const SIGNED_URL_TTL = 60 * 60 * 24 * 365 * 10; // 10 years
+
+async function uploadBlogImage(file: File): Promise<string> {
+  if (!file.type.startsWith("image/")) throw new Error("Only image files are allowed");
+  if (file.size > 8 * 1024 * 1024) throw new Error("Image must be under 8 MB");
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+  const path = `${new Date().getFullYear()}/${crypto.randomUUID()}.${ext}`;
+  const { error: upErr } = await supabase.storage.from("blog-images").upload(path, file, {
+    cacheControl: "31536000",
+    contentType: file.type,
+    upsert: false,
+  });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage.from("blog-images").createSignedUrl(path, SIGNED_URL_TTL);
+  if (error || !data?.signedUrl) throw error ?? new Error("Failed to create signed URL");
+  return data.signedUrl;
+}
 import { supabase } from "@/integrations/supabase/client";
 
 type BlogPost = {
