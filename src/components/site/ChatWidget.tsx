@@ -149,11 +149,26 @@ export function ChatWidget() {
                 </div>
               );
             })}
+            {messages.length === 1 && messages[0]?.id === "welcome" && LINA_PERSONA.quickReplies.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {LINA_PERSONA.quickReplies.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => void sendMessage({ text: q })}
+                    disabled={isLoading}
+                    className="rounded-full border border-primary/30 bg-background px-3 py-1 text-xs text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground disabled:opacity-50"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            )}
             {status === "submitted" && (
               <div className="flex justify-start">
                 <div className="flex items-center gap-2 rounded-2xl rounded-bl-sm bg-background px-3.5 py-2.5 text-sm text-muted-foreground shadow-sm">
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  Lina is typing…
+                  {LINA_PERSONA.typingLabel}
                 </div>
               </div>
             )}
