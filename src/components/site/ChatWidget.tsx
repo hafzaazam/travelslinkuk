@@ -99,13 +99,13 @@ export function ChatWidget() {
           {/* Header */}
           <div className="flex items-center gap-3 border-b border-border bg-gradient-to-r from-primary to-primary/80 px-4 py-3 text-primary-foreground">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-lg font-semibold">
-              L
+              {LINA_PERSONA.avatarInitial}
             </div>
             <div className="flex-1">
-              <div className="text-sm font-semibold">Lina · Visa Consultant</div>
+              <div className="text-sm font-semibold">{LINA_PERSONA.name} · {LINA_PERSONA.role}</div>
               <div className="flex items-center gap-1.5 text-xs opacity-90">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                Online · replies instantly
+                {LINA_PERSONA.status}
               </div>
             </div>
             <button
