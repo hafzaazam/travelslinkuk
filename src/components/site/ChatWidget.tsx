@@ -4,16 +4,12 @@ import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import { cn } from "@/lib/utils";
+import { LINA_PERSONA } from "@/lib/lina-persona";
 
 const WELCOME: UIMessage = {
   id: "welcome",
   role: "assistant",
-  parts: [
-    {
-      type: "text",
-      text: "Hey there 👋 I'm Lina from Travel Links. What can I help you with today?",
-    },
-  ],
+  parts: [{ type: "text", text: LINA_PERSONA.intro }],
 };
 
 const STORAGE_KEY = "tls-chat-history-v1";
