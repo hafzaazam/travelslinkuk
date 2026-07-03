@@ -19,6 +19,9 @@ import {
   Award,
   Users,
   CheckCircle2,
+  Quote,
+  Linkedin,
+  Mail,
 } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
