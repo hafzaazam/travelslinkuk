@@ -772,7 +772,7 @@ function PopupsPanel() {
       </PanelHeader>
 
       {loading ? <SkeletonRows /> : items.length === 0 ? (
-        <EmptyState icon={Megaphone} title="No popups yet" hint="Create one to announce offers, updates, or seasonal messages on your public site." />
+        <EmptyState label="No popups yet — create one to announce offers, updates, or seasonal messages on your public site." />
       ) : (
         <div className="grid gap-3">
           {items.map((p) => (
