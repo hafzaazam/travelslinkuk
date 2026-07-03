@@ -3,10 +3,14 @@
 
 User-agent: *
 Allow: /
+Allow: /blog
+Allow: /blog/
 Disallow: /admin
 Disallow: /admin/
 Disallow: /auth
 Disallow: /auth/
+Disallow: /api/
+Disallow: /_authenticated/
 Disallow: /api/
 Disallow: /_authenticated/
 
@@ -40,3 +44,4 @@ Disallow: /
 Host: https://travellinks.uk
 
 Sitemap: https://travellinks.uk/sitemap.xml
+Sitemap: https://travellinks.uk/blog-sitemap.xml
