@@ -43,12 +43,26 @@ export function invalidateBookingSettingsCache() {
 }
 
 async function fetchSettings() {
-  const { data: row } = await supabase
-    .from("booking_settings" as never)
+  // Public-safe fields via view (bank details are admin-only on the base table).
+  const { data: publicRow } = await supabase
+    .from("booking_settings_public" as never)
     .select("*")
     .limit(1)
     .maybeSingle();
-  const merged = { ...DEFAULT_BOOKING_SETTINGS, ...(row as object | null ?? {}) } as BookingSettings;
+
+  // Bank details via SECURITY DEFINER RPC; returns rows only when booking is active.
+  let bank: Partial<BookingSettings> = {};
+  if ((publicRow as { active?: boolean } | null)?.active) {
+    const { data: bankRow } = await supabase.rpc("get_active_bank_details" as never);
+    const row = Array.isArray(bankRow) ? bankRow[0] : bankRow;
+    if (row) bank = row as Partial<BookingSettings>;
+  }
+
+  const merged = {
+    ...DEFAULT_BOOKING_SETTINGS,
+    ...(publicRow as object | null ?? {}),
+    ...bank,
+  } as BookingSettings;
   setCache(merged);
   return merged;
 }
@@ -57,16 +71,13 @@ let realtimeStarted = false;
 function ensureRealtime() {
   if (realtimeStarted) return;
   realtimeStarted = true;
-  supabase
-    .channel("booking_settings-changes")
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "public", table: "booking_settings" },
-      () => {
-        fetchSettings();
-      },
-    )
-    .subscribe();
+  // The base table is admin-only, so anon clients can't receive postgres_changes.
+  // Refetch on tab focus instead.
+  if (typeof document !== "undefined") {
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") fetchSettings();
+    });
+  }
 }
 
 export function useBookingSettings() {
