@@ -13,6 +13,7 @@ const NAV: { label: string; href: string; route?: boolean }[] = [
   { label: "Process", href: "#process" },
   { label: "Reviews", href: "#testimonials" },
   { label: "FAQ", href: "#faq" },
+  { label: "Book", href: "/book", route: true },
   { label: "Contact", href: "/contact", route: true },
 ];
 
