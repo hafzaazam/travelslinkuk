@@ -612,7 +612,10 @@ function PostEditor({
                 rows={22}
                 value={form.content ?? ""}
                 onChange={(e) => setForm({ ...form, content: e.target.value })}
-                placeholder="Write your story in Markdown…&#10;&#10;## Heading&#10;- Bullet&#10;**Bold** *italic* [link](https://…) ![image](https://…)"
+                onPaste={handlePaste}
+                onDrop={handleDrop}
+                onDragOver={(e) => e.preventDefault()}
+                placeholder="Write your story in Markdown…&#10;&#10;Tip: paste or drag-drop an image here to upload it inline.&#10;&#10;## Heading&#10;**Bold** *italic* [link](https://…) ![image](https://…)"
                 className="w-full rounded-xl border border-border bg-white px-4 py-3 font-mono text-[13px] leading-relaxed focus:outline-2 focus:outline-primary/40"
               />
             ) : (
