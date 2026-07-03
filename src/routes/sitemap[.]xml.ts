@@ -42,13 +42,21 @@ export const Route = createFileRoute("/sitemap.xml")({
             .eq("published", true)
             .order("published_at", { ascending: false });
           if (data) {
+            const now = Date.now();
+            const DAY = 86_400_000;
             for (const post of data) {
               if (post.noindex) continue;
+              const lastmodSource = post.updated_at ?? post.published_at ?? new Date().toISOString();
+              const lastmodDate = new Date(lastmodSource);
+              const ageDays = (now - lastmodDate.getTime()) / DAY;
+              // Fresher posts change more often; older evergreen posts less often.
+              const changefreq: SitemapEntry["changefreq"] =
+                ageDays < 7 ? "daily" : ageDays < 30 ? "weekly" : ageDays < 180 ? "monthly" : "yearly";
               entries.push({
                 path: `/blog/${post.slug}`,
-                lastmod: (post.updated_at ?? post.published_at ?? new Date().toISOString()).slice(0, 10),
-                changefreq: "weekly",
-                priority: "0.8",
+                lastmod: lastmodDate.toISOString(), // full W3C datetime
+                changefreq,
+                priority: ageDays < 30 ? "0.9" : "0.7",
               });
             }
           }
