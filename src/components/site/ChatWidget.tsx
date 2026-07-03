@@ -194,7 +194,7 @@ export function ChatWidget() {
                   void onSubmit(e as unknown as FormEvent);
                 }
               }}
-              placeholder="Ask about a visa…"
+              placeholder={LINA_PERSONA.inputPlaceholder}
               rows={1}
               className="max-h-32 min-h-[40px] flex-1 resize-none rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
