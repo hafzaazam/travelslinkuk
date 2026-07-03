@@ -99,7 +99,7 @@ function PostPage() {
 
         <article className="mt-6">
           <div className="mb-3 flex flex-wrap gap-1.5">
-            {post.tags.map((t) => (
+            {post.tags.map((t: string) => (
               <span
                 key={t}
                 className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary"
