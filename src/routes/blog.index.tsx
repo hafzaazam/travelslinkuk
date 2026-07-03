@@ -148,78 +148,79 @@ function BlogIndex() {
   const rest = paginated?.slice(3) ?? [];
 
   return (
-    <div className="min-h-screen bg-[#fdfbf7] text-[#0c2340]" style={{ fontFamily: "'Work Sans', system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
       <main className="mx-auto max-w-7xl px-5 pt-28 pb-20 lg:px-12 lg:pt-32">
-        {/* Editorial header */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-10 border-b border-[#0c2340]/10 pb-10 mb-12">
-          <div className="space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-teal-600">The Journal</span>
-            <h1
-              className="text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight leading-none"
-              style={{ fontFamily: "'Instrument Serif', 'Cormorant Garamond', Georgia, serif" }}
-            >
-              Perspectives
-            </h1>
-            <p className="max-w-md text-sm text-[#0c2340]/60 pt-2">
-              Visa insights, embassy updates and destination guides from our senior consultants.
-            </p>
-          </div>
-
-          <div className="w-full md:w-auto flex flex-col md:items-end gap-6">
-            <div className="relative w-full md:w-72">
-              <input
-                type="search"
-                value={queryInput}
-                onChange={(e) => setQueryInput(e.target.value)}
-                placeholder="Search archives..."
-                aria-label="Search articles"
-                className="w-full bg-transparent border-b border-[#0c2340]/20 py-2 pr-8 focus:border-[#0c2340] focus:outline-none placeholder:text-[#0c2340]/40 text-sm transition-colors"
-              />
-              {queryInput ? (
-                <button
-                  type="button"
-                  onClick={clearSearch}
-                  aria-label="Clear search"
-                  className="absolute right-0 top-1.5 grid h-7 w-7 place-items-center text-[#0c2340]/50 hover:text-[#0c2340]"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              ) : (
-                <Search className="pointer-events-none absolute right-0 top-3 h-4 w-4 opacity-40" />
-              )}
+        {/* Themed header */}
+        <header className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground p-8 md:p-12 mb-12 shadow-lg">
+          <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_top_right,white,transparent_60%)]" />
+          <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-10">
+            <div className="space-y-4 max-w-2xl">
+              <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-semibold text-primary-foreground/80">
+                <span className="h-px w-8 bg-primary-foreground/60" /> The Journal
+              </span>
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">
+                Perspectives
+              </h1>
+              <p className="text-sm md:text-base text-primary-foreground/75 leading-relaxed">
+                Visa insights, embassy updates and destination guides from our senior consultants.
+              </p>
             </div>
 
-            {allTags.length > 0 && (
-              <nav className="flex flex-wrap gap-x-6 gap-y-3 text-[11px] font-bold uppercase tracking-widest">
+            <div className="w-full md:w-auto flex flex-col md:items-end gap-5">
+              <div className="relative w-full md:w-80">
+                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary-foreground/60" />
+                <input
+                  type="search"
+                  value={queryInput}
+                  onChange={(e) => setQueryInput(e.target.value)}
+                  placeholder="Search articles..."
+                  aria-label="Search articles"
+                  className="w-full bg-primary-foreground/10 border border-primary-foreground/20 rounded-full py-2.5 pl-10 pr-10 text-sm text-primary-foreground placeholder:text-primary-foreground/50 focus:bg-primary-foreground/15 focus:border-primary-foreground/40 focus:outline-none transition"
+                />
+                {queryInput && (
+                  <button
+                    type="button"
+                    onClick={clearSearch}
+                    aria-label="Clear search"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 grid h-7 w-7 place-items-center rounded-full text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {allTags.length > 0 && (
+            <nav className="relative mt-8 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setTag("")}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition ${
+                  !activeTag
+                    ? "bg-primary-foreground text-primary"
+                    : "bg-primary-foreground/10 text-primary-foreground/80 hover:bg-primary-foreground/20"
+                }`}
+              >
+                All Posts
+              </button>
+              {allTags.slice(0, 8).map((t) => (
                 <button
+                  key={t}
                   type="button"
-                  onClick={() => setTag("")}
-                  className={`pb-1 transition ${
-                    !activeTag
-                      ? "text-teal-600 border-b border-teal-600"
-                      : "text-[#0c2340]/40 hover:text-[#0c2340]"
+                  onClick={() => setTag(activeTag === t ? "" : t)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition ${
+                    activeTag === t
+                      ? "bg-primary-foreground text-primary"
+                      : "bg-primary-foreground/10 text-primary-foreground/80 hover:bg-primary-foreground/20"
                   }`}
                 >
-                  All Posts
+                  {t}
                 </button>
-                {allTags.slice(0, 6).map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setTag(activeTag === t ? "" : t)}
-                    className={`pb-1 transition ${
-                      activeTag === t
-                        ? "text-teal-600 border-b border-teal-600"
-                        : "text-[#0c2340]/40 hover:text-[#0c2340]"
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </nav>
-            )}
-          </div>
+              ))}
+            </nav>
+          )}
         </header>
 
         {posts === null ? (
