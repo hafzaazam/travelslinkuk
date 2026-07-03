@@ -371,6 +371,12 @@ function PostEditor({
       published: !!form.published,
       published_at:
         form.published && !form.published_at ? new Date().toISOString() : form.published_at ?? null,
+      meta_title: form.meta_title?.trim() || null,
+      meta_description: form.meta_description?.trim() || null,
+      meta_keywords: form.meta_keywords?.trim() || null,
+      og_image: form.og_image?.trim() || null,
+      canonical_url: form.canonical_url?.trim() || null,
+      noindex: !!form.noindex,
     };
 
     const { error } = isEdit
