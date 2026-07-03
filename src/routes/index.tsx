@@ -113,6 +113,7 @@ function Index() {
         <WhyUs />
         <Process />
         <Destinations />
+        <BlogPreview />
         <Testimonials />
         <ReviewForm />
         <FAQ />
