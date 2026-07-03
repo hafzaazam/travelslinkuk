@@ -82,7 +82,7 @@ export function Footer() {
             </p>
             <div className="flex gap-2">
               <a
-                href="https://wa.me/447879465341"
+                href={`https://wa.me/${contact.whatsapp_e164}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat with Travel Links on WhatsApp"
@@ -91,14 +91,14 @@ export function Footer() {
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="mailto:contact@travellinks.uk"
+                href={`mailto:${contact.email}`}
                 aria-label="Email Travel Links"
                 className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
               >
                 <Mail className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="tel:+447879465341"
+                href={`tel:${contact.phone_e164}`}
                 aria-label="Call Travel Links"
                 className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
               >
