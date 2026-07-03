@@ -4,10 +4,12 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Logo } from "./Logo";
 import { supabase } from "@/integrations/supabase/client";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 const emailSchema = z.string().trim().email("Enter a valid email").max(255);
 
 export function Footer() {
+  const contact = useContactInfo();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -80,7 +82,7 @@ export function Footer() {
             </p>
             <div className="flex gap-2">
               <a
-                href="https://wa.me/447879465341"
+                href={`https://wa.me/${contact.whatsapp_e164}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat with Travel Links on WhatsApp"
@@ -89,14 +91,14 @@ export function Footer() {
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="mailto:contact@travellinks.uk"
+                href={`mailto:${contact.email}`}
                 aria-label="Email Travel Links"
                 className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
               >
                 <Mail className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="tel:+447879465341"
+                href={`tel:${contact.phone_e164}`}
                 aria-label="Call Travel Links"
                 className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-gradient-brand transition"
               >
@@ -133,9 +135,9 @@ export function Footer() {
           <div>
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-white">Contact</h4>
             <ul className="mt-4 space-y-3 text-sm text-white/75">
-              <li className="flex items-start gap-2.5"><MapPin className="h-4 w-4 mt-0.5 text-brand-aqua shrink-0" /> 138 Milton Street, Northampton, NN2 7DE, United Kingdom</li>
-              <li className="flex items-start gap-2.5"><Mail className="h-4 w-4 mt-0.5 text-brand-aqua" /> contact@travellinks.uk</li>
-              <li className="flex items-start gap-2.5"><Phone className="h-4 w-4 mt-0.5 text-brand-aqua" /> +44 787 946 5341</li>
+              <li className="flex items-start gap-2.5"><MapPin className="h-4 w-4 mt-0.5 text-brand-aqua shrink-0" /> {contact.address}</li>
+              <li className="flex items-start gap-2.5"><Mail className="h-4 w-4 mt-0.5 text-brand-aqua" /> {contact.email}</li>
+              <li className="flex items-start gap-2.5"><Phone className="h-4 w-4 mt-0.5 text-brand-aqua" /> {contact.phone_display}</li>
             </ul>
           </div>
         </div>

@@ -5,12 +5,13 @@ import { SectionHeading } from "./Section";
 import { toast } from "sonner";
 import { useForm } from "@formspree/react";
 import { supabase } from "@/integrations/supabase/client";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
-function MapEmbed() {
+function MapEmbed({ query }: { query: string }) {
   return (
     <iframe
       title="Office location"
-      src="https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE&output=embed"
+      src={`https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`}
       className="h-full w-full"
       loading="lazy"
       referrerPolicy="no-referrer-when-downgrade"
@@ -29,6 +30,7 @@ const schema = z.object({
 });
 
 export function Contact() {
+  const contact = useContactInfo();
   const [state, handleFormspreeSubmit] = useForm("xvzjreol");
   const formRef = useRef<HTMLFormElement>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -109,23 +111,23 @@ export function Contact() {
           {/* Map + info */}
           <div className="space-y-6">
             <div className="overflow-hidden rounded-3xl shadow-card border border-border h-80">
-              <MapEmbed />
+              <MapEmbed query={contact.map_query} />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
                 {
                   icon: MapPin,
                   label: "Office",
-                  value: "138 Milton Street, Northampton, NN2 7DE",
-                  href: "https://www.google.com/maps?q=138%20Milton%20Street%2C%20Northampton%2C%20NN2%207DE",
+                  value: contact.address,
+                  href: `https://www.google.com/maps?q=${encodeURIComponent(contact.map_query)}`,
                   external: true,
                 },
                 {
                   icon: Mail,
                   label: "Email",
-                  value: "contact@travellinks.uk",
+                  value: contact.email,
                   href:
-                    "mailto:contact@travellinks.uk" +
+                    `mailto:${contact.email}` +
                     "?subject=" +
                     encodeURIComponent("Visa enquiry — Travel Links Solution") +
                     "&body=" +
@@ -144,15 +146,15 @@ export function Contact() {
                 {
                   icon: Phone,
                   label: "Phone",
-                  value: "+44 787 946 5341",
-                  href: "tel:+447879465341",
+                  value: contact.phone_display,
+                  href: `tel:${contact.phone_e164}`,
                 },
                 {
                   icon: MessageCircle,
                   label: "WhatsApp",
                   value: "Chat with us",
                   href:
-                    "https://wa.me/447879465341?text=" +
+                    `https://wa.me/${contact.whatsapp_e164}?text=` +
                     encodeURIComponent(
                       "Hi Travel Links Solution, I'd like to enquire about a visa application."
                     ),

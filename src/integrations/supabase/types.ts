@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_info: {
+        Row: {
+          address: string
+          email: string
+          hours: string
+          id: boolean
+          map_query: string
+          phone_display: string
+          phone_e164: string
+          updated_at: string
+          whatsapp_e164: string
+        }
+        Insert: {
+          address?: string
+          email?: string
+          hours?: string
+          id?: boolean
+          map_query?: string
+          phone_display?: string
+          phone_e164?: string
+          updated_at?: string
+          whatsapp_e164?: string
+        }
+        Update: {
+          address?: string
+          email?: string
+          hours?: string
+          id?: boolean
+          map_query?: string
+          phone_display?: string
+          phone_e164?: string
+          updated_at?: string
+          whatsapp_e164?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string

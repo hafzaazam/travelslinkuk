@@ -4,10 +4,11 @@ import { toast } from "sonner";
 import {
   Star, Mail, Phone, Trash2, Check, X, LogOut, RefreshCw,
   Download, Search, MessageSquare, Users, ShieldCheck, Home,
-  LayoutDashboard, ArrowRight,
+  LayoutDashboard, ArrowRight, Save, MapPin,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
+import { DEFAULT_CONTACT_INFO, invalidateContactInfoCache, type ContactInfo } from "@/hooks/useContactInfo";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Tab = "dashboard" | "contacts" | "reviews" | "subscribers";
+type Tab = "dashboard" | "contacts" | "reviews" | "subscribers" | "site";
 
 type Contact = {
   id: string; name: string; email: string; phone: string | null;
@@ -119,6 +120,7 @@ function AdminPage() {
               ["contacts", MessageSquare, "Contacts"],
               ["reviews", Star, "Reviews"],
               ["subscribers", Users, "Subscribers"],
+              ["site", MapPin, "Site info"],
             ] as const).map(([key, Icon, label]) => (
               <button
                 key={key}
@@ -141,6 +143,7 @@ function AdminPage() {
         {tab === "contacts" && <ContactsPanel />}
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "subscribers" && <SubscribersPanel />}
+        {tab === "site" && <SiteInfoPanel />}
       </main>
     </div>
   );
@@ -592,6 +595,98 @@ function EmptyState({ label }: { label: string }) {
   return (
     <div className="rounded-2xl border border-dashed border-border bg-white p-12 text-center text-sm text-muted-foreground">
       {label}
+    </div>
+  );
+}
+
+/* ----------- Site info ----------- */
+const FIELDS: { key: keyof ContactInfo; label: string; hint?: string; textarea?: boolean }[] = [
+  { key: "address", label: "Office address", hint: "Shown in the Contact section and footer." },
+  { key: "map_query", label: "Google Maps query", hint: "Address or plus-code used for the embedded map." },
+  { key: "email", label: "Email" },
+  { key: "phone_display", label: "Phone (display)", hint: "e.g. +44 787 946 5341" },
+  { key: "phone_e164", label: "Phone (dial link)", hint: "E.164 with + prefix, e.g. +447879465341" },
+  { key: "whatsapp_e164", label: "WhatsApp number", hint: "Digits only with country code, e.g. 447879465341" },
+  { key: "hours", label: "Opening hours" },
+];
+
+function SiteInfoPanel() {
+  const [form, setForm] = useState<ContactInfo>(DEFAULT_CONTACT_INFO);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("contact_info")
+      .select("address,map_query,email,phone_display,phone_e164,whatsapp_e164,hours")
+      .maybeSingle();
+    setLoading(false);
+    if (error) return toast.error("Failed to load site info");
+    if (data) setForm({ ...DEFAULT_CONTACT_INFO, ...data });
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    const { error } = await supabase
+      .from("contact_info")
+      .upsert({ id: true, ...form });
+    setSaving(false);
+    if (error) return toast.error("Could not save changes");
+    invalidateContactInfoCache();
+    toast.success("Contact info updated");
+  };
+
+  return (
+    <div>
+      <PanelHeader title="Contact information" onRefresh={load} count={FIELDS.length}>
+        <span className="text-xs text-muted-foreground">Changes appear everywhere on the public site.</span>
+      </PanelHeader>
+
+      {loading ? <SkeletonRows /> : (
+        <form onSubmit={save} className="rounded-3xl border border-border bg-white p-6 shadow-soft grid gap-5 sm:grid-cols-2">
+          {FIELDS.map(({ key, label, hint, textarea }) => (
+            <label key={key} className={textarea ? "sm:col-span-2" : ""}>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</span>
+              {textarea ? (
+                <textarea
+                  rows={3}
+                  value={form[key]}
+                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl border border-border bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                />
+              ) : (
+                <input
+                  value={form[key]}
+                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl border border-border bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                />
+              )}
+              {hint && <span className="mt-1 block text-[11px] text-muted-foreground">{hint}</span>}
+            </label>
+          ))}
+
+          <div className="sm:col-span-2 flex items-center justify-end gap-2 pt-2 border-t border-border">
+            <button
+              type="button"
+              onClick={load}
+              className="rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold hover:bg-secondary"
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              disabled={saving}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-white shadow-glow hover:-translate-y-0.5 transition disabled:opacity-60"
+            >
+              <Save className="h-4 w-4" /> {saving ? "Saving…" : "Save changes"}
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }
