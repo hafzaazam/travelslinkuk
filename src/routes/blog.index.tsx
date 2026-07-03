@@ -1,11 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Calendar, ChevronLeft, ChevronRight, FileText, Search, X } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, FileText, Search, X } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { Eyebrow } from "@/components/site/Eyebrow";
 
 type BlogSearch = {
   q: string;
@@ -24,16 +23,16 @@ export const Route = createFileRoute("/blog/")({
   },
   head: () => ({
     meta: [
-      { title: "Blog — Travel Links Solution | Visa Tips & Destination Guides" },
+      { title: "The Journal — Travel Links Solution | Visa Tips & Destination Guides" },
       {
         name: "description",
         content:
-          "Visa guides, travel tips, and destination inspiration from Travel Links Solution — the UK's trusted visa consultancy.",
+          "Perspectives from the UK's trusted visa consultancy — guides, embassy updates, and destination inspiration from Travel Links Solution.",
       },
-      { property: "og:title", content: "Blog — Travel Links Solution" },
+      { property: "og:title", content: "The Journal — Travel Links Solution" },
       {
         property: "og:description",
-        content: "Visa guides, travel tips, and destination inspiration from the UK's trusted visa consultancy.",
+        content: "Visa guides, embassy updates, and travel inspiration from the UK's trusted visa consultancy.",
       },
       { rel: "canonical", href: "https://travellinks.uk/blog" } as never,
     ],
@@ -55,6 +54,9 @@ type PostRow = {
 
 const PAGE_SIZE = 9;
 
+const formatDate = (d: string) =>
+  new Date(d).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+
 function BlogIndex() {
   const { q, tag: activeTag, page } = Route.useSearch();
   const navigate = useNavigate({ from: "/blog" });
@@ -62,12 +64,10 @@ function BlogIndex() {
   const [posts, setPosts] = useState<PostRow[] | null>(null);
   const [queryInput, setQueryInput] = useState(q);
 
-  // Sync local input when URL changes (e.g. back/forward, external link)
   useEffect(() => {
     setQueryInput(q);
   }, [q]);
 
-  // Debounce input → URL
   useEffect(() => {
     if (queryInput === q) return;
     const t = setTimeout(() => {
@@ -122,9 +122,7 @@ function BlogIndex() {
 
   const goToPage = (n: number) => {
     navigate({ search: (prev: BlogSearch) => ({ ...prev, page: n }) });
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const setTag = (next: string) => {
@@ -144,213 +142,316 @@ function BlogIndex() {
     navigate({ search: () => ({ q: "", tag: "", page: 1 }), replace: true });
   };
 
-  return (
-    <div className="min-h-screen bg-white">
-      <Header />
-      <main className="mx-auto max-w-6xl px-5 pt-28 pb-16 lg:px-8 lg:pt-32">
-        <div className="mx-auto max-w-2xl text-center">
-          <Eyebrow label="The Journal" />
-          <h1 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
-            Visa tips, destination guides, and travel stories
-          </h1>
-          <p className="mt-4 text-muted-foreground">
-            Practical advice from our consultants — updated as embassies change their rules.
-          </p>
-        </div>
+  // Featured + secondary tiles
+  const featured = paginated?.[0];
+  const secondary = paginated?.slice(1, 3) ?? [];
+  const rest = paginated?.slice(3) ?? [];
 
-        {posts && posts.length > 0 && (
-          <div className="mx-auto mt-10 max-w-3xl">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+  return (
+    <div className="min-h-screen bg-[#fdfbf7] text-[#0c2340]" style={{ fontFamily: "'Work Sans', system-ui, sans-serif" }}>
+      <Header />
+      <main className="mx-auto max-w-7xl px-5 pt-28 pb-20 lg:px-12 lg:pt-32">
+        {/* Editorial header */}
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-10 border-b border-[#0c2340]/10 pb-10 mb-12">
+          <div className="space-y-3">
+            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-teal-600">The Journal</span>
+            <h1
+              className="text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight leading-none"
+              style={{ fontFamily: "'Instrument Serif', 'Cormorant Garamond', Georgia, serif" }}
+            >
+              Perspectives
+            </h1>
+            <p className="max-w-md text-sm text-[#0c2340]/60 pt-2">
+              Visa insights, embassy updates and destination guides from our senior consultants.
+            </p>
+          </div>
+
+          <div className="w-full md:w-auto flex flex-col md:items-end gap-6">
+            <div className="relative w-full md:w-72">
               <input
                 type="search"
                 value={queryInput}
                 onChange={(e) => setQueryInput(e.target.value)}
-                placeholder="Search articles by title, tag, or keyword…"
+                placeholder="Search archives..."
                 aria-label="Search articles"
-                className="w-full rounded-full border border-border bg-white py-3 pl-11 pr-11 text-sm shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                className="w-full bg-transparent border-b border-[#0c2340]/20 py-2 pr-8 focus:border-[#0c2340] focus:outline-none placeholder:text-[#0c2340]/40 text-sm transition-colors"
               />
-              {queryInput && (
+              {queryInput ? (
                 <button
                   type="button"
                   onClick={clearSearch}
                   aria-label="Clear search"
-                  className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+                  className="absolute right-0 top-1.5 grid h-7 w-7 place-items-center text-[#0c2340]/50 hover:text-[#0c2340]"
                 >
                   <X className="h-4 w-4" />
                 </button>
+              ) : (
+                <Search className="pointer-events-none absolute right-0 top-3 h-4 w-4 opacity-40" />
               )}
             </div>
 
             {allTags.length > 0 && (
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <nav className="flex flex-wrap gap-x-6 gap-y-3 text-[11px] font-bold uppercase tracking-widest">
                 <button
                   type="button"
                   onClick={() => setTag("")}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                  className={`pb-1 transition ${
                     !activeTag
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-muted-foreground hover:bg-secondary/70"
+                      ? "text-teal-600 border-b border-teal-600"
+                      : "text-[#0c2340]/40 hover:text-[#0c2340]"
                   }`}
                 >
-                  All
+                  All Posts
                 </button>
-                {allTags.map((t) => (
+                {allTags.slice(0, 6).map((t) => (
                   <button
                     key={t}
                     type="button"
                     onClick={() => setTag(activeTag === t ? "" : t)}
-                    className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                    className={`pb-1 transition ${
                       activeTag === t
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-primary/10 text-primary hover:bg-primary/20"
+                        ? "text-teal-600 border-b border-teal-600"
+                        : "text-[#0c2340]/40 hover:text-[#0c2340]"
                     }`}
                   >
                     {t}
                   </button>
                 ))}
-              </div>
+              </nav>
             )}
           </div>
-        )}
+        </header>
 
-        <section className="mt-10">
-          {posts === null ? (
-            <div className="py-16 text-center text-sm text-muted-foreground">Loading articles…</div>
-          ) : posts.length === 0 ? (
-            <div className="mx-auto max-w-md rounded-2xl border border-dashed border-border bg-secondary/40 p-10 text-center">
-              <FileText className="mx-auto h-10 w-10 text-muted-foreground/50" />
-              <p className="mt-4 font-semibold">No articles yet</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                We're preparing our first guides — check back soon.
-              </p>
-            </div>
-          ) : filtered && filtered.length === 0 ? (
-            <div className="mx-auto max-w-md rounded-2xl border border-dashed border-border bg-secondary/40 p-10 text-center">
-              <Search className="mx-auto h-10 w-10 text-muted-foreground/50" />
-              <p className="mt-4 font-semibold">No matching articles</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Try a different keyword or clear the filters.
-              </p>
-              <button
-                type="button"
-                onClick={resetAll}
-                className="mt-4 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition hover:bg-primary/90"
-              >
-                Reset filters
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {paginated!.map((p) => (
-                  <Link
-                    key={p.id}
-                    to="/blog/$slug"
-                    params={{ slug: p.slug }}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-card transition hover:-translate-y-1 hover:shadow-xl"
-                  >
-                    <div className="aspect-[16/10] overflow-hidden bg-secondary">
-                      {p.cover_image ? (
+        {posts === null ? (
+          <div className="py-24 text-center text-sm text-[#0c2340]/60">Loading articles…</div>
+        ) : posts.length === 0 ? (
+          <div className="mx-auto max-w-md border border-dashed border-[#0c2340]/20 bg-white/40 p-10 text-center">
+            <FileText className="mx-auto h-10 w-10 text-[#0c2340]/30" />
+            <p className="mt-4 font-semibold">No articles yet</p>
+            <p className="mt-1 text-sm text-[#0c2340]/60">We're preparing our first guides — check back soon.</p>
+          </div>
+        ) : filtered && filtered.length === 0 ? (
+          <div className="mx-auto max-w-md border border-dashed border-[#0c2340]/20 bg-white/40 p-10 text-center">
+            <Search className="mx-auto h-10 w-10 text-[#0c2340]/30" />
+            <p className="mt-4 font-semibold">No matching articles</p>
+            <p className="mt-1 text-sm text-[#0c2340]/60">Try a different keyword or clear filters.</p>
+            <button
+              type="button"
+              onClick={resetAll}
+              className="mt-5 border border-[#0c2340] px-4 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-[#0c2340] hover:text-white transition-colors"
+            >
+              Reset filters
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(200px,auto)]">
+              {/* FEATURED */}
+              {featured && (
+                <Link
+                  to="/blog/$slug"
+                  params={{ slug: featured.slug }}
+                  className="md:col-span-8 md:row-span-2 group cursor-pointer relative overflow-hidden bg-[#0c2340] min-h-[420px] md:min-h-[560px]"
+                >
+                  <div className="absolute inset-0 z-0">
+                    {featured.cover_image ? (
+                      <img
+                        src={featured.cover_image}
+                        alt={featured.title}
+                        loading="eager"
+                        className="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-1000"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#1a4a6e] to-[#0c2340]" />
+                    )}
+                  </div>
+                  <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-12 text-white bg-gradient-to-t from-[#0c2340] via-[#0c2340]/40 to-transparent">
+                    <span className="text-[10px] uppercase tracking-widest mb-4 inline-block px-2 py-1 bg-teal-600 w-fit">
+                      Featured Article
+                    </span>
+                    <h2
+                      className="text-3xl md:text-5xl lg:text-6xl leading-[0.95] mb-6 max-w-2xl"
+                      style={{ fontFamily: "'Instrument Serif', 'Cormorant Garamond', Georgia, serif" }}
+                    >
+                      {featured.title}
+                    </h2>
+                    <div className="flex items-center gap-4 text-xs font-light opacity-80">
+                      {featured.author && <span>By {featured.author}</span>}
+                      {featured.author && <span className="w-1 h-1 bg-teal-500 rounded-full" />}
+                      <span>{formatDate(featured.published_at ?? featured.created_at)}</span>
+                    </div>
+                  </div>
+                </Link>
+              )}
+
+              {/* SECONDARY SPOTLIGHT 1 (text-only) */}
+              {secondary[0] && (
+                <Link
+                  to="/blog/$slug"
+                  params={{ slug: secondary[0].slug }}
+                  className="md:col-span-4 md:row-span-1 border border-[#0c2340]/10 p-8 flex flex-col justify-between hover:bg-white hover:shadow-xl transition-all group"
+                >
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-[#0c2340]/40 mb-4 block">
+                      {secondary[0].tags?.[0] ?? "Insight"}
+                    </span>
+                    <h3
+                      className="text-2xl leading-tight group-hover:text-teal-600 transition-colors"
+                      style={{ fontFamily: "'Instrument Serif', serif" }}
+                    >
+                      {secondary[0].title}
+                    </h3>
+                  </div>
+                  {secondary[0].excerpt && (
+                    <p className="text-sm text-[#0c2340]/60 mt-4 line-clamp-2 font-light">
+                      {secondary[0].excerpt}
+                    </p>
+                  )}
+                </Link>
+              )}
+
+              {/* SECONDARY SPOTLIGHT 2 (image bg) */}
+              {secondary[1] && (
+                <Link
+                  to="/blog/$slug"
+                  params={{ slug: secondary[1].slug }}
+                  className="md:col-span-4 md:row-span-1 border border-[#0c2340]/10 overflow-hidden group relative min-h-[220px]"
+                >
+                  <div className="absolute inset-0">
+                    {secondary[1].cover_image ? (
+                      <img
+                        src={secondary[1].cover_image}
+                        alt={secondary[1].title}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-teal-100 to-[#0c2340]/10" />
+                    )}
+                  </div>
+                  <div className="relative z-10 p-8 h-full flex flex-col justify-end bg-white/90 backdrop-blur-sm group-hover:bg-[#0c2340]/90 group-hover:text-white transition-all">
+                    <h3
+                      className="text-xl mb-2 italic"
+                      style={{ fontFamily: "'Instrument Serif', serif" }}
+                    >
+                      {secondary[1].title}
+                    </h3>
+                    <span className="text-[10px] uppercase tracking-widest opacity-60 inline-flex items-center gap-1">
+                      Read Article <ArrowRight className="h-3 w-3" />
+                    </span>
+                  </div>
+                </Link>
+              )}
+
+              {/* SUPPORTING GRID */}
+              {rest.map((p, i) => {
+                // Alternate tile widths: two small (3/12) then one wide (6/12) with image
+                const pattern = i % 3;
+                if (pattern === 2 && p.cover_image) {
+                  return (
+                    <Link
+                      key={p.id}
+                      to="/blog/$slug"
+                      params={{ slug: p.slug }}
+                      className="md:col-span-6 border border-[#0c2340]/10 bg-white p-6 flex items-center gap-6 group hover:shadow-lg transition-shadow"
+                    >
+                      <div className="w-32 h-32 flex-shrink-0 overflow-hidden">
                         <img
                           src={p.cover_image}
                           alt={p.title}
                           loading="lazy"
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                      ) : (
-                        <div className="grid h-full w-full place-items-center text-muted-foreground/40">
-                          <FileText className="h-10 w-10" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex flex-1 flex-col p-5">
-                      <div className="mb-2 flex flex-wrap gap-1.5">
-                        {p.tags.slice(0, 3).map((t) => (
-                          <span
-                            key={t}
-                            className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary"
-                          >
-                            {t}
-                          </span>
-                        ))}
                       </div>
-                      <h2 className="font-display text-lg font-bold leading-snug group-hover:text-primary">
-                        {p.title}
-                      </h2>
-                      {p.excerpt && (
-                        <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
-                          {p.excerpt}
-                        </p>
-                      )}
-                      <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                        <span className="inline-flex items-center gap-1">
-                          <Calendar className="h-3.5 w-3.5" />
-                          {new Date(p.published_at ?? p.created_at).toLocaleDateString(undefined, {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
+                      <div className="min-w-0">
+                        <span className="text-[10px] uppercase tracking-widest text-teal-600 mb-2 block">
+                          {p.tags?.[0] ?? "Article"}
                         </span>
-                        <span className="inline-flex items-center gap-1 font-semibold text-primary">
-                          Read <ArrowRight className="h-3.5 w-3.5" />
-                        </span>
+                        <h4
+                          className="text-xl md:text-2xl leading-tight group-hover:text-teal-700 transition-colors"
+                          style={{ fontFamily: "'Instrument Serif', serif" }}
+                        >
+                          {p.title}
+                        </h4>
                       </div>
+                    </Link>
+                  );
+                }
+                return (
+                  <Link
+                    key={p.id}
+                    to="/blog/$slug"
+                    params={{ slug: p.slug }}
+                    className="md:col-span-3 border border-[#0c2340]/10 p-6 flex flex-col justify-between group hover:bg-white hover:shadow-md transition-all min-h-[200px]"
+                  >
+                    <h4
+                      className="text-lg leading-snug group-hover:text-teal-700 transition-colors"
+                      style={{ fontFamily: "'Instrument Serif', serif" }}
+                    >
+                      {p.title}
+                    </h4>
+                    <div className="mt-8 flex justify-between items-center border-t border-[#0c2340]/10 pt-4">
+                      <span className="text-[10px] uppercase font-bold text-teal-600 truncate max-w-[70%]">
+                        {p.tags?.[0] ?? "Article"}
+                      </span>
+                      <span className="text-[10px] opacity-40 shrink-0">
+                        {formatDate(p.published_at ?? p.created_at)}
+                      </span>
                     </div>
                   </Link>
-                ))}
-              </div>
+                );
+              })}
+            </div>
 
-              {totalPages > 1 && (
-                <nav
-                  aria-label="Blog pagination"
-                  className="mt-12 flex flex-col items-center gap-3"
-                >
-                  <div className="flex items-center gap-2">
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <nav
+                aria-label="Blog pagination"
+                className="mt-20 flex items-center justify-between border-t border-[#0c2340]/10 pt-10"
+              >
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    aria-label="Previous page"
+                    className="w-10 h-10 flex items-center justify-center border border-[#0c2340]/10 hover:border-[#0c2340] transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-[#0c2340]/10"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
                     <button
+                      key={n}
                       type="button"
-                      onClick={() => goToPage(currentPage - 1)}
-                      disabled={currentPage === 1}
-                      aria-label="Previous page"
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
+                      onClick={() => goToPage(n)}
+                      aria-label={`Page ${n}`}
+                      aria-current={n === currentPage ? "page" : undefined}
+                      className={`w-10 h-10 flex items-center justify-center text-xs font-bold transition-colors ${
+                        n === currentPage
+                          ? "bg-[#0c2340] text-white"
+                          : "border border-[#0c2340]/10 hover:bg-[#0c2340]/5"
+                      }`}
                     >
-                      <ChevronLeft className="h-4 w-4" />
+                      {n}
                     </button>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-                      <button
-                        key={n}
-                        type="button"
-                        onClick={() => goToPage(n)}
-                        aria-label={`Page ${n}`}
-                        aria-current={n === currentPage ? "page" : undefined}
-                        className={`inline-flex h-9 min-w-9 items-center justify-center rounded-full px-3 text-sm font-semibold transition ${
-                          n === currentPage
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-white text-muted-foreground border border-border hover:border-primary hover:text-primary"
-                        }`}
-                      >
-                        {n}
-                      </button>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => goToPage(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                      aria-label="Next page"
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-border disabled:hover:text-muted-foreground"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Showing {(currentPage - 1) * PAGE_SIZE + 1}–
-                    {Math.min(currentPage * PAGE_SIZE, filtered!.length)} of {filtered!.length}
-                  </p>
-                </nav>
-              )}
-            </>
-          )}
-        </section>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    aria-label="Next page"
+                    className="w-10 h-10 flex items-center justify-center border border-[#0c2340]/10 hover:border-[#0c2340] transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-[#0c2340]/10"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+                <span className="text-[10px] uppercase tracking-widest font-bold opacity-40">
+                  Page {currentPage} of {totalPages}
+                </span>
+              </nav>
+            )}
+          </>
+        )}
       </main>
       <Footer />
     </div>
