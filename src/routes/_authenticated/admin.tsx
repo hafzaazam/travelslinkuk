@@ -4,12 +4,13 @@ import { toast } from "sonner";
 import {
   Star, Mail, Phone, Trash2, Check, X, LogOut, RefreshCw,
   Download, Search, MessageSquare, Users, ShieldCheck, Home,
-  LayoutDashboard, ArrowRight, Save, MapPin, Megaphone, Plus, Pencil, Calendar,
+  LayoutDashboard, ArrowRight, Save, MapPin, Megaphone, Plus, Pencil, Calendar, FileText,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
 import { DEFAULT_CONTACT_INFO, invalidateContactInfoCache, type ContactInfo } from "@/hooks/useContactInfo";
 import { BookingsPanel } from "@/components/admin/BookingsPanel";
+import { BlogPanel } from "@/components/admin/BlogPanel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -22,7 +23,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-type Tab = "dashboard" | "contacts" | "reviews" | "subscribers" | "site" | "popups" | "bookings";
+type Tab = "dashboard" | "contacts" | "reviews" | "subscribers" | "site" | "popups" | "bookings" | "blog";
 
 type Contact = {
   id: string; name: string; email: string; phone: string | null;
@@ -119,6 +120,7 @@ function AdminPage() {
             {([
               ["dashboard", LayoutDashboard, "Dashboard"],
               ["bookings", Calendar, "Bookings"],
+              ["blog", FileText, "Blog"],
               ["contacts", MessageSquare, "Contacts"],
               ["reviews", Star, "Reviews"],
               ["subscribers", Users, "Subscribers"],
@@ -144,6 +146,7 @@ function AdminPage() {
       <main className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
         {tab === "dashboard" && <DashboardPanel onNavigate={setTab} userEmail={userEmail} />}
         {tab === "bookings" && <BookingsPanel />}
+        {tab === "blog" && <BlogPanel />}
         {tab === "contacts" && <ContactsPanel />}
         {tab === "reviews" && <ReviewsPanel />}
         {tab === "subscribers" && <SubscribersPanel />}

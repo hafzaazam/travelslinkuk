@@ -22,7 +22,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CountriesIndexRouteImport } from './routes/countries.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CountriesSlugRouteImport } from './routes/countries.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
@@ -90,9 +92,19 @@ const CountriesIndexRoute = CountriesIndexRouteImport.update({
   path: '/countries/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CountriesSlugRoute = CountriesSlugRouteImport.update({
   id: '/countries/$slug',
   path: '/countries/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiChatRoute = ApiChatRouteImport.update({
@@ -120,7 +132,9 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/api/chat': typeof ApiChatRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/countries/$slug': typeof CountriesSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/countries/': typeof CountriesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -137,7 +151,9 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/api/chat': typeof ApiChatRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/countries/$slug': typeof CountriesSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/countries': typeof CountriesIndexRoute
 }
 export interface FileRoutesById {
@@ -156,7 +172,9 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/api/chat': typeof ApiChatRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/countries/$slug': typeof CountriesSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/countries/': typeof CountriesIndexRoute
 }
 export interface FileRouteTypes {
@@ -175,7 +193,9 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin'
     | '/api/chat'
+    | '/blog/$slug'
     | '/countries/$slug'
+    | '/blog/'
     | '/countries/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -192,7 +212,9 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin'
     | '/api/chat'
+    | '/blog/$slug'
     | '/countries/$slug'
+    | '/blog'
     | '/countries'
   id:
     | '__root__'
@@ -210,7 +232,9 @@ export interface FileRouteTypes {
     | '/terms'
     | '/_authenticated/admin'
     | '/api/chat'
+    | '/blog/$slug'
     | '/countries/$slug'
+    | '/blog/'
     | '/countries/'
   fileRoutesById: FileRoutesById
 }
@@ -228,7 +252,9 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiChatRoute: typeof ApiChatRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CountriesSlugRoute: typeof CountriesSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   CountriesIndexRoute: typeof CountriesIndexRoute
 }
 
@@ -325,11 +351,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CountriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/countries/$slug': {
       id: '/countries/$slug'
       path: '/countries/$slug'
       fullPath: '/countries/$slug'
       preLoaderRoute: typeof CountriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/chat': {
@@ -374,7 +414,9 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiChatRoute: ApiChatRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CountriesSlugRoute: CountriesSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
   CountriesIndexRoute: CountriesIndexRoute,
 }
 export const routeTree = rootRouteImport
