@@ -293,7 +293,73 @@ function PostEditor({
   const [slugLocked, setSlugLocked] = useState(isEdit);
   const [tab, setTab] = useState<"write" | "preview">("write");
   const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingInline, setUploadingInline] = useState(false);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
+  const inlineInputRef = useRef<HTMLInputElement>(null);
+
+  const insertAtCursor = useCallback((text: string) => {
+    const ta = contentRef.current;
+    if (!ta) {
+      setForm((f) => ({ ...f, content: (f.content ?? "") + `\n${text}\n` }));
+      return;
+    }
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const value = ta.value;
+    const needsNl = start > 0 && value[start - 1] !== "\n" ? "\n" : "";
+    const next = value.slice(0, start) + needsNl + text + "\n" + value.slice(end);
+    setForm((f) => ({ ...f, content: next }));
+    requestAnimationFrame(() => {
+      ta.focus();
+      const pos = start + needsNl.length + text.length + 1;
+      ta.setSelectionRange(pos, pos);
+    });
+  }, []);
+
+  const handleCoverUpload = async (file: File | null | undefined) => {
+    if (!file) return;
+    setUploadingCover(true);
+    try {
+      const url = await uploadBlogImage(file);
+      setForm((f) => ({ ...f, cover_image: url }));
+      toast.success("Cover image uploaded");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploadingCover(false);
+    }
+  };
+
+  const handleInlineUpload = async (file: File | null | undefined, alt = "") => {
+    if (!file) return;
+    setUploadingInline(true);
+    try {
+      const url = await uploadBlogImage(file);
+      const altText = alt || file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+      insertAtCursor(`![${altText}](${url})`);
+      toast.success("Image inserted");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
+    } finally {
+      setUploadingInline(false);
+    }
+  };
+
+  const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const file = Array.from(e.clipboardData.files).find((f) => f.type.startsWith("image/"));
+    if (!file) return;
+    e.preventDefault();
+    await handleInlineUpload(file, "pasted image");
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLTextAreaElement>) => {
+    const file = Array.from(e.dataTransfer.files).find((f) => f.type.startsWith("image/"));
+    if (!file) return;
+    e.preventDefault();
+    await handleInlineUpload(file);
+  };
 
   // Autosave draft to localStorage
   useEffect(() => {
