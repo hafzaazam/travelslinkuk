@@ -10,7 +10,6 @@ import { Countries } from "@/components/site/Countries";
 import { Services } from "@/components/site/Services";
 import { WhyUs } from "@/components/site/WhyUs";
 import { Process } from "@/components/site/Process";
-import { Destinations } from "@/components/site/Destinations";
 import { BlogPreview } from "@/components/site/BlogPreview";
 import { Testimonials } from "@/components/site/Testimonials";
 import { ReviewForm } from "@/components/site/ReviewForm";
@@ -112,7 +111,6 @@ function Index() {
         <Countries />
         <WhyUs />
         <Process />
-        <Destinations />
         <BlogPreview />
         <Testimonials />
         <ReviewForm />
