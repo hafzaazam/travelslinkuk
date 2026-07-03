@@ -183,7 +183,7 @@ function BlogIndex() {
                     type="button"
                     onClick={clearSearch}
                     aria-label="Clear search"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 grid h-7 w-7 place-items-center rounded-full text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 grid h-7 w-7 place-items-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
                   >
                     <X className="h-4 w-4" />
                   </button>
