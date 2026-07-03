@@ -17,6 +17,7 @@ import { ApplyDialog } from "@/components/site/ApplyDialog";
 import { NotFound } from "@/components/site/NotFound";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
+import { SitePopup } from "@/components/site/SitePopup";
 
 
 function NotFoundComponent() {
@@ -212,6 +213,7 @@ function RootComponent() {
       
       <CookieConsent />
       <WhatsAppButton />
+      <SitePopup />
     </QueryClientProvider>
   );
 }

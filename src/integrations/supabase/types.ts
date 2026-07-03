@@ -134,6 +134,60 @@ export type Database = {
         }
         Relationships: []
       }
+      site_popups: {
+        Row: {
+          active: boolean
+          body: string | null
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          dismissible: boolean
+          end_at: string | null
+          frequency: string
+          id: string
+          image_url: string | null
+          placement: string
+          priority: number
+          start_at: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          body?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          dismissible?: boolean
+          end_at?: string | null
+          frequency?: string
+          id?: string
+          image_url?: string | null
+          placement?: string
+          priority?: number
+          start_at?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          body?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          dismissible?: boolean
+          end_at?: string | null
+          frequency?: string
+          id?: string
+          image_url?: string | null
+          placement?: string
+          priority?: number
+          start_at?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
