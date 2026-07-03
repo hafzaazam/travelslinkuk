@@ -17,6 +17,8 @@ import { ApplyDialog } from "@/components/site/ApplyDialog";
 import { NotFound } from "@/components/site/NotFound";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
+import { ChatWidget } from "@/components/site/ChatWidget";
+
 import { SitePopup } from "@/components/site/SitePopup";
 
 
