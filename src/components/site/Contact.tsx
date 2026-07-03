@@ -106,9 +106,13 @@ export function Contact() {
     <section id="contact" className="py-24 px-5 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          eyebrow="Get in Touch"
-          title={<>Start your visa journey <span className="text-gradient-brand">today</span></>}
-          description="Tell us about your goals and we'll get back within 24 hours with a tailored plan."
+          eyebrow={bookingActive ? "Book a Consultation" : "Get in Touch"}
+          title={bookingActive
+            ? <>Reserve your consultation <span className="text-gradient-brand">slot</span></>
+            : <>Start your visa journey <span className="text-gradient-brand">today</span></>}
+          description={bookingActive
+            ? "Pick a time, choose how you'd like to pay, and our advisors will confirm your booking within one business day."
+            : "Tell us about your goals and we'll get back within 24 hours with a tailored plan."}
         />
 
         <div className="mt-14 grid lg:grid-cols-2 gap-8 lg:gap-12">
