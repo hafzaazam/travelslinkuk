@@ -4,14 +4,29 @@ import { useState } from "react";
 
 import { SectionHeading } from "./Section";
 
-
 const STEPS = [
-  { icon: MessageSquare, title: "Free Consultation", text: "Tell us your goal and we'll outline your options." },
-  { icon: ClipboardList, title: "Profile Evaluation", text: "We assess your eligibility and best pathway." },
-  { icon: FileText, title: "Document Preparation", text: "Forms, letters and certified copies — all handled." },
+  {
+    icon: MessageSquare,
+    title: "Free Consultation",
+    text: "Tell us your goal and we'll outline your options.",
+  },
+  {
+    icon: ClipboardList,
+    title: "Profile Evaluation",
+    text: "We assess your eligibility and best pathway.",
+  },
+  {
+    icon: FileText,
+    title: "Document Preparation",
+    text: "Forms, letters and certified copies — all handled.",
+  },
   { icon: Send, title: "Application Submission", text: "Filed correctly the first time." },
   { icon: Loader2, title: "Visa Processing", text: "We track your case and respond to queries." },
-  { icon: CheckCircle2, title: "Visa Approval", text: "Receive your visa and travel with confidence." },
+  {
+    icon: CheckCircle2,
+    title: "Visa Approval",
+    text: "Receive your visa and travel with confidence.",
+  },
 ];
 
 function StepCard({
@@ -21,7 +36,7 @@ function StepCard({
   passed,
   onHover,
 }: {
-  step: typeof STEPS[number];
+  step: (typeof STEPS)[number];
   index: number;
   active: boolean;
   passed: boolean;
@@ -50,7 +65,9 @@ function StepCard({
         }}
         className="mx-auto grid h-20 w-20 place-items-center rounded-2xl bg-white border-2 relative z-10"
       >
-        <Icon className={`h-7 w-7 transition-colors ${active ? "text-primary" : "text-muted-foreground"}`} />
+        <Icon
+          className={`h-7 w-7 transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
+        />
         <motion.span
           animate={{ scale: active ? 1.2 : 1 }}
           className="absolute -top-2 -right-2 grid h-7 w-7 place-items-center rounded-full bg-gradient-brand text-white text-xs font-bold shadow-glow"
@@ -95,16 +112,13 @@ export function Process() {
   return (
     <section id="process" className="relative">
       <div className="relative flex flex-col justify-center px-5 lg:px-8 bg-gradient-soft overflow-hidden py-24">
-        {/* dot pattern */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.4]"
           style={{
-            backgroundImage:
-              "radial-gradient(hsl(var(--foreground)/0.08) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(hsl(var(--foreground)/0.08) 1px, transparent 1px)",
             backgroundSize: "22px 22px",
-            maskImage:
-              "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+            maskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
           }}
         />
         <div className="relative mx-auto max-w-7xl w-full">
@@ -116,53 +130,46 @@ export function Process() {
               </>
             }
           />
+        </div>
 
-          <div className="mt-6 flex justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground shadow-soft">
-              <span className="h-1.5 w-1.5 rounded-full bg-gradient-brand" />
-              Step {String(activeIndex + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
-            </span>
+        <div className="mt-6 flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground shadow-soft">
+            <span className="h-1.5 w-1.5 rounded-full bg-gradient-brand" />
+            Step {String(activeIndex + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="mt-16 relative" onMouseLeave={() => setActiveIndex(0)}>
+          <div className="absolute left-0 right-0 top-10 hidden lg:block h-0.5 bg-border" />
+          <motion.div
+            animate={{ width: `${progress * 100}%` }}
+            transition={{ type: "spring", stiffness: 120, damping: 22 }}
+            className="absolute left-0 top-10 hidden lg:block h-0.5 bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua"
+          />
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 lg:hidden">
+            {STEPS.map((s, i) => (
+              <StepCard
+                key={s.title}
+                step={s}
+                index={i}
+                active={i === activeIndex}
+                passed={i < activeIndex}
+                onHover={() => setActiveIndex(i)}
+              />
+            ))}
           </div>
 
-          <div
-            className="mt-16 relative"
-            onMouseLeave={() => setActiveIndex(0)}
-          >
-            <div className="absolute left-0 right-0 top-10 hidden lg:block h-0.5 bg-border" />
-            <motion.div
-              animate={{ width: `${progress * 100}%` }}
-              transition={{ type: "spring", stiffness: 120, damping: 22 }}
-              className="absolute left-0 top-10 hidden lg:block h-0.5 bg-gradient-to-r from-brand-deep via-brand-cyan to-brand-aqua"
-            />
-            {/* Mobile / tablet: 2-per-row grid */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 lg:hidden">
-              {STEPS.map((s, i) => (
-                <StepCard
-                  key={s.title}
-                  step={s}
-                  index={i}
-                  active={i === activeIndex}
-                  passed={i < activeIndex}
-                  onHover={() => setActiveIndex(i)}
-                />
-              ))}
-            </div>
-
-
-            {/* Desktop: single row */}
-            <div className="hidden lg:grid grid-cols-6 gap-6">
-              {STEPS.map((s, i) => (
-                <StepCard
-                  key={s.title}
-                  step={s}
-                  index={i}
-                  active={i === activeIndex}
-                  passed={i < activeIndex}
-                  onHover={() => setActiveIndex(i)}
-                />
-              ))}
-            </div>
-
+          <div className="hidden lg:grid grid-cols-6 gap-6">
+            {STEPS.map((s, i) => (
+              <StepCard
+                key={s.title}
+                step={s}
+                index={i}
+                active={i === activeIndex}
+                passed={i < activeIndex}
+                onHover={() => setActiveIndex(i)}
+              />
+            ))}
           </div>
         </div>
       </div>
